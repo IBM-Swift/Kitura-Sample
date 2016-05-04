@@ -119,10 +119,46 @@ router.get("/redir") { _, response, next in
 }
 
 // Reading parameters
-// Accepts user as a parameter
+// Accepts user as a parameter in querystring (GET)
 router.get("/users/:user") { request, response, next in
     response.setHeader("Content-Type", value: "text/html; charset=utf-8")
     let p1 = request.params["user"] ?? "(nil)"
+    do {
+        try response.status(HttpStatusCode.OK).send(
+            "<!DOCTYPE html><html><body>" +
+            "<b>User:</b> \(p1)" +
+            "</body></html>\n\n").end()
+    } catch {
+        Log.error("Failed to send response \(error)")
+    }
+}
+
+// Accepts user as a parameter in body (POST)
+router.all("/users*", middleware: BodyParser())
+router.post("/users/") { request, response, next in
+    response.setHeader("Content-Type", value: "text/html; charset=utf-8")
+    
+    guard let body = request.body else {
+      do {
+        try response.status(HttpStatusCode.BAD_REQUEST).end()
+      } catch {
+        Log.error("Failed to send response")
+      }
+      Log.error("Missing body")
+      return
+    }
+
+    guard let params = body.asUrlEncoded() else {
+      do {
+        try response.status(HttpStatusCode.BAD_REQUEST).end()
+      } catch {
+        Log.error("Failed to send response")
+      }
+      Log.error("Body is invalid")
+      return
+    }
+    
+    let p1 = params["user"] ?? "(nil)"
     do {
         try response.status(HttpStatusCode.OK).send(
             "<!DOCTYPE html><html><body>" +
