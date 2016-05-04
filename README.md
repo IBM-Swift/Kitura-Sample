@@ -20,6 +20,12 @@ This is a sample [Kitura](https://github.com/IBM-Swift/Kitura) application. See 
   You should see message _Listening on port 8090_. The result executable is located in `.build/debug` directory: `./.build/debug/KituraSample`
 3. Open your browser at [http://localhost:8090](http://localhost:8090)
 
+## Pushing to Bluemix
+1. Update `manifest.yml` with your app name.
+
+2. `cf push`
+> Note: You will need to be logged in to the Cloud Foundry CLI.
+
 ## Kitura Wiki
 Feel free to visit our [Wiki](https://github.com/IBM-Swift/Kitura/wiki) for our roadmap and some tutorials.
 
