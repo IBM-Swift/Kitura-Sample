@@ -15,6 +15,7 @@
  **/
 
 // KituraSample shows examples for creating custom routes.
+import Foundation
 
 import Kitura
 import KituraSys
@@ -31,7 +32,7 @@ let router = Router()
 // Using an implementation for a Logger
 Log.logger = HeliumLogger()
 
-// Host static content in "public"
+// Serve static content from "public"
 router.all("/static", middleware: StaticFileServer())
 
 // Basic GET request
@@ -44,7 +45,77 @@ router.get("/hello") { _, response, next in
      }
 }
 
-// Start server
+// Basic POST request
+router.post("/hello") {request, response, next in
+    response.setHeader("Content-Type", value: "text/plain; charset=utf-8")
+    do {
+        if let name = try request.readString() {
+            try response.status(HttpStatusCode.OK).send("Hello \(name), from Kitura!").end()
+        } else {
+            try response.status(HttpStatusCode.OK).send("Hello POST to Kitura!").end()
+        }
+    } catch {
+        Log.error("Failed to send response \(error)")
+    }
+}
+
+// Basic PUT request
+router.put("/hello") {request, response, next in
+    response.setHeader("Content-Type", value: "text/plain; charset=utf-8")
+    do {
+        if let name = try request.readString() {
+            try response.status(HttpStatusCode.OK).send("Hello \(name), from Kitura!").end()
+        } else {
+            try response.status(HttpStatusCode.OK).send("Hello PUT to Kitura!").end()
+        }
+    } catch {
+        Log.error("Failed to send response \(error)")
+    }
+}
+
+// Basic DELETE request
+router.delete("/hello") {request, response, next in
+    response.setHeader("Content-Type", value: "text/plain; charset=utf-8")
+    do {
+        try response.status(HttpStatusCode.OK).send("Got a DELETE request!").end()
+    } catch {
+        Log.error("Failed to send response \(error)")
+    }
+}
+
+// Reading Parameters
+router.get("/users/:user") { request, response, next in
+    response.setHeader("Content-Type", value: "text/html; charset=utf-8")
+    let user = request.params["user"] ?? "(nil)"
+    do {
+        try response.status(HttpStatusCode.OK).send(
+            "<!DOCTYPE html><html><body>" +
+            "<b>User:</b> \(user)" +
+            "</body></html>\n\n").end()
+    } catch {
+        Log.error("Failed to send response \(error)")
+    }
+}
+
+// Redirection
+router.get("/redir") { _, response, next in
+    do {
+        try response.redirect("http://www.ibm.com")
+    } catch {
+         Log.error("Failed to redirect \(error)")
+    }
+    next()
+}
+
+// Error Handling
+router.get("/error") { _, response, next in
+    Log.error("Example of error being set")
+    response.status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+    response.error = NSError(domain: "RouterTestDomain", code: 1, userInfo: [:])
+    next()
+}
+
+// Start Server
 do {
     
     let appEnv = try CFEnvironment.getAppEnv()
