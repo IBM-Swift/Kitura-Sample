@@ -19,7 +19,7 @@
 import Foundation
 
 import Kitura
-//import KituraMustache
+import KituraMustache
 
 import LoggerAPI
 import HeliumLogger
@@ -121,29 +121,29 @@ router.get("/multi") { request, response, next in
 }
 
 // Support for Mustache implemented for OSX only yet
-//#if !os(Linux)
-//router.setDefaultTemplateEngine(templateEngine: MustacheTemplateEngine())
-//
-//router.get("/trimmer") { _, response, next in
-//    defer {
-//        next()
-//    }
-//    // the example from https://github.com/groue/GRMustache.swift/blob/master/README.md
-//    var context: [String: Any] = [
-//        "name": "Arthur",
-//        "date": NSDate(),
-//        "realDate": NSDate().addingTimeInterval(60*60*24*3),
-//        "late": true
-//    ]
-//
-//    // Let template format dates with `{{format(...)}}`
-//    let dateFormatter = NSDateFormatter()
-//    dateFormatter.dateStyle = .mediumStyle
-//    context["format"] = dateFormatter
-//
-//    try response.render("document", context: context).end()
-//}
-//#endif
+#if !os(Linux)
+router.setDefault(templateEngine: MustacheTemplateEngine())
+
+router.get("/trimmer") { _, response, next in
+    defer {
+        next()
+    }
+    // the example from https://github.com/groue/GRMustache.swift/blob/master/README.md
+    var context: [String: Any] = [
+        "name": "Arthur",
+        "date": NSDate(),
+        "realDate": NSDate().addingTimeInterval(60*60*24*3),
+        "late": true
+    ]
+
+    // Let template format dates with `{{format(...)}}`
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateStyle = .medium
+    context["format"] = dateFormatter
+
+    try response.render("document", context: context).end()
+}
+#endif
 
 // Handles any errors that get set
 router.error { request, response, next in
