@@ -84,10 +84,23 @@ router.delete("/hello") {request, response, next in
 }
 
 // Error handling example
+enum SampleError: Swift.Error {
+    case sampleError
+}
+
+extension SampleError: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .sampleError:
+            return "Example of error being set"
+        }
+    }
+}
+
 router.get("/error") { _, response, next in
     Log.error("Example of error being set")
     response.status(.internalServerError)
-    response.error = NSError(domain: "RouterTestDomain", code: 1, userInfo: [:])
+    response.error = SampleError.sampleError
     next()
 }
 
