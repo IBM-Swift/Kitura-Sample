@@ -16,7 +16,6 @@
 
 import XCTest
 import Foundation
-import KituraStencil
 
 @testable import Kitura
 @testable import KituraNet
