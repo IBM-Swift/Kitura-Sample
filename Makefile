@@ -22,7 +22,7 @@ Package-Builder/build/Makefile:
 	git submodule update --init --remote --merge --recursive
 
 run: build
-	@echo --- Invoking KituraSample executable
-	./.build/debug/KituraSample
+	@echo --- Invoking Kitura-Sample executable
+	./.build/debug/Kitura-Sample
 
 .PHONY: run
