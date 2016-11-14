@@ -17,8 +17,7 @@
 import XCTest
 import Kitura
 import HeliumLogger
-
-@testable import KituraNet
+import KituraNet
 
 import Foundation
 import Dispatch
