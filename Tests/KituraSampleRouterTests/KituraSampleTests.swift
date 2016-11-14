@@ -15,10 +15,7 @@
  **/
 
 import XCTest
-import Foundation
-
-@testable import Kitura
-@testable import KituraNet
+import KituraNet
 
 class KituraSampleTests: XCTestCase {
 

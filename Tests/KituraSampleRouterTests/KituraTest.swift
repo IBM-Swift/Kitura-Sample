@@ -19,7 +19,6 @@ import Kitura
 import HeliumLogger
 import KituraNet
 
-import Foundation
 import Dispatch
 
 import KituraSampleRouter
