@@ -47,10 +47,10 @@ class KituraSampleTests: XCTestCase {
     }
 
     func testMulitplicity() {
-        performServerTest { expecatation in
+        performServerTest { expectation in
             self.performRequest("get", path: "/multi") { response in
                 XCTAssertEqual(response!.statusCode, HTTPStatusCode.OK, "Route did not match")
-                expecatation.fulfill()
+                expectation.fulfill()
             }
         }
     }
