@@ -22,7 +22,7 @@ import KituraNet
 import Foundation
 import Dispatch
 
-import KituraSample
+import KituraSampleRouter
 
 protocol KituraTest {
     func expectation(_ index: Int) -> XCTestExpectation

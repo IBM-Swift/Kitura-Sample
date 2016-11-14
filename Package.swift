@@ -19,9 +19,9 @@ import PackageDescription
 let package = Package(
         name: "KituraSample",
         targets: [
-            Target(name: "KituraSampleMain",
-                   dependencies: [.Target(name: "KituraSample")]),
-            Target(name: "KituraSample")],
+            Target(name: "Kitura-Sample",
+                   dependencies: [.Target(name: "KituraSampleRouter")]),
+            Target(name: "KituraSampleRouter")],
 
     dependencies: [
         .Package(url: "https://github.com/IBM-Swift/Kitura.git", majorVersion: 1, minor: 1),

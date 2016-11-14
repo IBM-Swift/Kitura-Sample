@@ -19,7 +19,7 @@
 import Foundation
 
 import Kitura
-import KituraSample
+import KituraSampleRouter
 
 import LoggerAPI
 import HeliumLogger
