@@ -20,6 +20,7 @@ import HeliumLogger
 import KituraNet
 
 import Dispatch
+import Foundation
 
 import KituraSampleRouter
 
