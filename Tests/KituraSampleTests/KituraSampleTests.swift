@@ -21,124 +21,37 @@ import Foundation
 @testable import KituraNet
 
 class KituraSampleTests: XCTestCase {
-    
+
     static var allTests: [(String, (KituraSampleTests) -> () throws -> Void)] {
         return [
             ("testURLParameters", testURLParameters),
-            ("testCustomMiddlewareURLParameter", testCustomMiddlewareURLParameter),
-            ("testCustomMiddlewareURLParameterWithQueryParam", testCustomMiddlewareURLParameterWithQueryParam),
             ("testMultiplicity", testMulitplicity)
         ]
     }
-    
 
-    
     override func setUp() {
         doSetUp()
     }
-    
+
     override func tearDown() {
         doTearDown()
     }
-    
-    let router = KituraSampleTests.setupRouter()
-    
-    func testURLParameters() {
-        // Set up router for this test
-        let router = Router()
-        
-        router.get("/users/qwerty") { request, _, next in
-            let parameter = request.parameters["user"]
-            XCTAssertNotNil(parameter, "URL paramter was nil")
-            XCTAssertEqual(parameter, "qwerty")
-            next()
-        }
 
-        router.all() { _, response, next in
-            response.status(.OK).send("OK")
-            next()
-        }
-        
-        performServerTest(router) { expectation in
-            self.performRequest("get", path: "/users/:user", callback: { response in
+    func testURLParameters() {
+        performServerTest { expectation in
+            self.performRequest("get", path: "/users/:user") { response in
                 XCTAssertNotNil(response, "ERROR!!! ClientRequest response object was nil")
                 expectation.fulfill()
-            })
-        }
-    }
-    
-    func testMulitplicity() {
-        performServerTest(router, asyncTasks: { expecatation in
-            self.performRequest("get", path: "/multi", callback: {response in
-                XCTAssertEqual(response!.statusCode, HTTPStatusCode.OK, "Route did not match")
-                expecatation.fulfill()
-            })
-        })
-    }
-    
-    private func runMiddlewareTest(path: String) {
-        class CustomMiddleware: RouterMiddleware {
-            func handle(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) {
-                let id = request.parameters["id"]
-                XCTAssertNotNil(id, "URL parameter 'id' in custom middleware was nil")
-                XCTAssertEqual("my_custom_id", id, "URL parameter 'id' in custom middleware was wrong")
-                response.status(.OK)
-                next()
             }
         }
-        
-        let router = Router()
-        
-        router.get("/user/:id", allowPartialMatch: false, middleware: CustomMiddleware())
-        router.get("/user/:id") { request, response, next in
-            let id = request.parameters["id"]
-            XCTAssertNotNil(id, "URL parameter 'id' in middleware handler was nil")
-            XCTAssertEqual("my_custom_id", id, "URL parameter 'id' in middleware handler was wrong")
-            response.status(.OK)
-            next()
-        }
-        
-        performServerTest(router) { expectation in
-            self.performRequest("get", path: path, callback: { response in
-                XCTAssertNotNil(response, "ERROR!!! ClientRequest response object was nil")
-                expectation.fulfill()
-            })
-        }
     }
-    
-    func testCustomMiddlewareURLParameter() {
-        runMiddlewareTest(path: "/user/my_custom_id")
-    }
-    
-    func testCustomMiddlewareURLParameterWithQueryParam() {
-        runMiddlewareTest(path: "/user/my_custom_id?some_param=value")
-    }
-    
-    static func setupRouter() -> Router {
-        let router = Router()
-        
-        // Uses multiple handler blocks
-        router.get("/multi", handler: { request, response, next in
-            response.send("I'm here!\n")
-            next()
-            }, { request, response, next in
-                response.send("Me too!\n")
-                next()
-        })
-        router.get("/multi") { request, response, next in
-            try response.send("I come afterward..\n").end()
+
+    func testMulitplicity() {
+        performServerTest { expecatation in
+            self.performRequest("get", path: "/multi") { response in
+                XCTAssertEqual(response!.statusCode, HTTPStatusCode.OK, "Route did not match")
+                expecatation.fulfill()
+            }
         }
-        
-        router.get("/users/:user") { request, response, next in
-            response.headers["Content-Type"] = "text/html"
-            request.parameters["user"] = "rob"
-            let p1 = request.parameters["user"] ?? "(nil)"
-            try response.send(
-                "<!DOCTYPE html><html><body>" +
-                    "<b>User:</b> \(p1)" +
-                "</body></html>\n\n").end()
-        }
-        
-        return router
     }
 }
