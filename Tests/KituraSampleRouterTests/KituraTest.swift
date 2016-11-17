@@ -43,7 +43,7 @@ extension KituraTest {
         let router = RouterCreator.create()
         Kitura.addHTTPServer(onPort: 8090, with: router)
         Kitura.start()
-        sleep(1)
+
         let requestQueue = DispatchQueue(label: "Request queue")
 
         for (index, asyncTask) in asyncTasks.enumerated() {
