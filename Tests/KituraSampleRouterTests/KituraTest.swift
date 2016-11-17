@@ -45,7 +45,6 @@ extension KituraTest {
         // add expectations on the main thread
         let expectations = (0..<asyncTasks.count).map { expectation($0) }
 
-
         Kitura.addHTTPServer(onPort: 8090, with: router).started {
             let requestQueue = DispatchQueue(label: "Request queue")
 
