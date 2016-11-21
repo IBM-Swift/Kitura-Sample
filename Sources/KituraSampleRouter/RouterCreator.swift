@@ -34,6 +34,25 @@ enum SampleError: Swift.Error {
     case sampleError
 }
 
+let customParameterHandler: RouterHandler = { request, response, next in
+    let id = request.parameters["id"] ?? "unknown"
+    response.send("id|").status(.OK)
+    next()
+}
+
+class CustomParameterMiddleware: RouterMiddleware {
+    func handle(request: RouterRequest, response: RouterResponse, next: @escaping () -> Void) {
+        do {
+            try customParameterHandler(request, response, next)
+        } catch {
+            Log.error("customParameterHandler returned error: \(error)")
+        }
+
+    }
+}
+
+let router = Router()
+
 extension SampleError: CustomStringConvertible {
     var description: String {
         switch self {
@@ -131,6 +150,9 @@ public struct RouterCreator {
         router.get("/multi") { request, response, next in
             try response.send("I come afterward..\n").end()
         }
+
+        router.get("/user/:id", allowPartialMatch: false, middleware: CustomParameterMiddleware())
+        router.get("/user/:id", handler: customParameterHandler)
 
         router.add(templateEngine: StencilTemplateEngine())
 
