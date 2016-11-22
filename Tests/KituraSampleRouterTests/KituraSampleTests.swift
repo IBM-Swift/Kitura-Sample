@@ -16,6 +16,7 @@
 
 import XCTest
 import KituraNet
+import Foundation
 
 class KituraSampleTests: XCTestCase {
 
@@ -152,5 +153,42 @@ class KituraSampleTests: XCTestCase {
 
     func testStaticHTMLWithDifferentExtension() {
         runTestUnknownPath(path: "/static/test.htm")
+    }
+
+    private func runTestThatCorrectHTMLTitleIsReturned(expectedTitle: String, path: String) {
+        let pattern = "<title>(.*?)</title>"
+
+        runGetResponseTest(path: path) { body in
+            do {
+                #if os(Linux)
+                    let regularExpressionOptional: RegularExpression? =
+                        try RegularExpression(pattern: pattern, options: [])
+                #else
+                    let regularExpressionOptional: NSRegularExpression? =
+                        try NSRegularExpression(pattern: pattern, options: [])
+                #endif
+                guard let regularExpression = regularExpressionOptional else {
+                    XCTFail("failed to create regular expression")
+                    return
+                }
+
+                let matches = regularExpression.matches(in: body, options: [],
+                    range: NSMakeRange(0, body.characters.count))
+
+                guard let match = matches.first else {
+                    XCTFail("no match of title tag in body")
+                    return
+                }
+                let titleInBody = (body as NSString).substring(with: match.rangeAt(1))
+                XCTAssertEqual(titleInBody, expectedTitle,
+                               "returned title does not match the expected one")
+            } catch {
+                XCTFail("failed to create regular expression: \(error)")
+            }
+        }
+    }
+
+    func testRedirection() {
+        runTestThatCorrectHTMLTitleIsReturned(expectedTitle: "IBM - United States", path: "/redir")
     }
 }
