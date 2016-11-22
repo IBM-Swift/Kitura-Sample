@@ -54,10 +54,11 @@ class KituraSampleTests: XCTestCase {
         }
     }
 
-    private func runGetResponseTest(path: String, expectedResponseText: String) {
+    private func runGetResponseTest(path: String, expectedResponseText: String,
+                                    expectedStatusCode: HTTPStatusCode = HTTPStatusCode.OK) {
         performServerTest { expectation in
             self.performRequest("get", path: path, expectation: expectation) { response in
-                XCTAssertEqual(response.statusCode, HTTPStatusCode.OK,
+                XCTAssertEqual(response.statusCode, expectedStatusCode,
                                "No success status code returned")
                 if let body = try? response.readString() {
                     XCTAssertEqual(body, expectedResponseText, "mismatch in body")
