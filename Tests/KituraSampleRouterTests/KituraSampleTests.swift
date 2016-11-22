@@ -36,8 +36,7 @@ class KituraSampleTests: XCTestCase {
 
     func testURLParameters() {
         performServerTest { expectation in
-            self.performRequest("get", path: "/users/:user") { response in
-                XCTAssertNotNil(response, "ERROR!!! ClientRequest response object was nil")
+            self.performRequest("get", path: "/users/:user", expectation: expectation) { response in
                 expectation.fulfill()
             }
         }
@@ -45,8 +44,8 @@ class KituraSampleTests: XCTestCase {
 
     func testMulitplicity() {
         performServerTest { expectation in
-            self.performRequest("get", path: "/multi") { response in
-                XCTAssertEqual(response!.statusCode, HTTPStatusCode.OK, "Route did not match")
+            self.performRequest("get", path: "/multi", expectation: expectation) { response in
+                XCTAssertEqual(response.statusCode, HTTPStatusCode.OK, "Route did not match")
                 expectation.fulfill()
             }
         }

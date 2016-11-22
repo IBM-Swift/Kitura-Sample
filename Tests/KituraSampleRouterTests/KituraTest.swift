@@ -60,7 +60,10 @@ extension KituraTest {
         }
     }
 
-    func performRequest(_ method: String, path: String,  headers: [String: String]? = nil, requestModifier: ((ClientRequest) -> Void)? = nil, callback: @escaping ClientRequest.Callback) {
+    func performRequest(_ method: String, path: String,  expectation: XCTestExpectation,
+                        headers: [String: String]? = nil,
+                        requestModifier: ((ClientRequest) -> Void)? = nil,
+                        callback: @escaping (ClientResponse) -> Void) {
         var allHeaders = [String: String]()
         if  let headers = headers {
             for  (headerName, headerValue) in headers {
@@ -72,7 +75,14 @@ extension KituraTest {
         }
         let options: [ClientRequest.Options] =
             [.method(method), .hostname("localhost"), .port(8090), .path(path), .headers(allHeaders)]
-        let req = HTTP.request(options, callback: callback)
+        let req = HTTP.request(options) { response in
+            guard let response = response else {
+                XCTFail("response object is nil")
+                expectation.fulfill()
+                return
+            }
+            callback(response)
+        }
         if let requestModifier = requestModifier {
             requestModifier(req)
         }
