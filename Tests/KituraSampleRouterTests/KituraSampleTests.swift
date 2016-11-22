@@ -108,4 +108,12 @@ class KituraSampleTests: XCTestCase {
                            expectedResponseText: "Route not found in Sample application!",
                            expectedStatusCode: HTTPStatusCode.notFound)
     }
+
+    func testStencil() {
+        let expectedResponseText = "\n\nThere are 2 articles.\n\n\n" +
+            "  - Migrating from OCUnit to XCTest by Kyle Fuller.\n\n" +
+            "  - Memory Management with ARC by Kyle Fuller.\n\n"
+
+        runGetResponseTest(path: "/articles", expectedResponseText: expectedResponseText)
+    }
 }
