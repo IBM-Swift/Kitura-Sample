@@ -54,11 +54,13 @@ class KituraSampleTests: XCTestCase {
         }
     }
 
-    private func runMiddlewareTest(path: String, responseText: String) {
+    private func runGetResponseTest(path: String, expectedResponseText: String) {
         performServerTest { expectation in
             self.performRequest("get", path: path, expectation: expectation) { response in
+                XCTAssertEqual(response.statusCode, HTTPStatusCode.OK,
+                               "No success status code returned")
                 if let body = try? response.readString() {
-                    XCTAssertEqual(body, responseText, "mismatch in body")
+                    XCTAssertEqual(body, expectedResponseText, "mismatch in body")
                 } else {
                     XCTFail("No response body")
                 }
@@ -68,11 +70,12 @@ class KituraSampleTests: XCTestCase {
     }
 
     func testCustomMiddlewareURLParameter() {
-        runMiddlewareTest(path: "/user/my_custom_id", responseText: "my_custom_id|my_custom_id|")
+        runGetResponseTest(path: "/user/my_custom_id",
+                           expectedResponseText: "my_custom_id|my_custom_id|")
     }
 
     func testCustomMiddlewareURLParameterWithQueryParam() {
-        runMiddlewareTest(path: "/user/my_custom_id?some_param=value",
-                          responseText: "my_custom_id|my_custom_id|")
+        runGetResponseTest(path: "/user/my_custom_id?some_param=value",
+                           expectedResponseText: "my_custom_id|my_custom_id|")
     }
 }
