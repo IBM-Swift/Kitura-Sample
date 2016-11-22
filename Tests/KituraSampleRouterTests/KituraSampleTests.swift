@@ -134,4 +134,12 @@ class KituraSampleTests: XCTestCase {
                                    "</body>\n</html>\n\n"
         runGetResponseTest(path: "/static/test.html", expectedResponseText: expectedResponseText)
     }
+
+    func testStaticHTMLWithoutExtension() {
+        runTestUnknownPath(path: "/static/test")
+    }
+
+    func testStaticHTMLWithDifferentExtension() {
+        runTestUnknownPath(path: "/static/test.htm")
+    }
 }
