@@ -32,7 +32,8 @@ class KituraSampleTests: XCTestCase {
             ("testMulti", testMulti),
             ("testParameter", testParameter),
             ("testStencil", testStencil),
-            ("testMustache", testMustache),
+            //TODO: enable the test on Linux
+            // ("testMustache", testMustache),
             ("testStaticHTML", testStaticHTML),
             ("testStaticHTMLWithoutExtension", testStaticHTMLWithoutExtension),
             ("testStaticHTMLWithDifferentExtension", testStaticHTMLWithDifferentExtension),
