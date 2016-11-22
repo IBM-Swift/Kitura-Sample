@@ -102,4 +102,10 @@ class KituraSampleTests: XCTestCase {
         let responseText = "<!DOCTYPE html><html><body><b>User:</b> \(user)</body></html>\n\n"
         runGetResponseTest(path: "/users/\(user)", expectedResponseText: responseText)
     }
+
+    func testUnknownRoute() {
+        runGetResponseTest(path: "/aaa",
+                           expectedResponseText: "Route not found in Sample application!",
+                           expectedStatusCode: HTTPStatusCode.notFound)
+    }
 }
