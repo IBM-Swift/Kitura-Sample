@@ -26,7 +26,17 @@ class KituraSampleTests: XCTestCase {
             ("testMultiplicity", testMulitplicity),
             ("testCustomMiddlewareURLParameter", testCustomMiddlewareURLParameter),
             ("testCustomMiddlewareURLParameterWithQueryParam",
-             testCustomMiddlewareURLParameterWithQueryParam)
+             testCustomMiddlewareURLParameterWithQueryParam),
+            ("testGetHello", testGetHello),
+            ("testGetError", testGetError),
+            ("testMulti", testMulti),
+            ("testParameter", testParameter),
+            ("testStencil", testStencil),
+            ("testMustache", testMustache),
+            ("testStaticHTML", testStaticHTML),
+            ("testStaticHTMLWithoutExtension", testStaticHTMLWithoutExtension),
+            ("testStaticHTMLWithDifferentExtension", testStaticHTMLWithDifferentExtension),
+            ("testRedirection", testRedirection)
         ]
     }
 
