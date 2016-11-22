@@ -22,7 +22,10 @@ class KituraSampleTests: XCTestCase {
     static var allTests: [(String, (KituraSampleTests) -> () throws -> Void)] {
         return [
             ("testURLParameters", testURLParameters),
-            ("testMultiplicity", testMulitplicity)
+            ("testMultiplicity", testMulitplicity),
+            ("testCustomMiddlewareURLParameter", testCustomMiddlewareURLParameter),
+            ("testCustomMiddlewareURLParameterWithQueryParam",
+             testCustomMiddlewareURLParameterWithQueryParam)
         ]
     }
 
@@ -49,5 +52,27 @@ class KituraSampleTests: XCTestCase {
                 expectation.fulfill()
             }
         }
+    }
+
+    private func runMiddlewareTest(path: String, responseText: String) {
+        performServerTest { expectation in
+            self.performRequest("get", path: path, expectation: expectation) { response in
+                if let body = try? response.readString() {
+                    XCTAssertEqual(body, responseText, "mismatch in body")
+                } else {
+                    XCTFail("No response body")
+                }
+                expectation.fulfill()
+            }
+        }
+    }
+
+    func testCustomMiddlewareURLParameter() {
+        runMiddlewareTest(path: "/user/my_custom_id", responseText: "my_custom_id|my_custom_id|")
+    }
+
+    func testCustomMiddlewareURLParameterWithQueryParam() {
+        runMiddlewareTest(path: "/user/my_custom_id?some_param=value",
+                          responseText: "my_custom_id|my_custom_id|")
     }
 }
