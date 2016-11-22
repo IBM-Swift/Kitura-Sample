@@ -114,10 +114,13 @@ class KituraSampleTests: XCTestCase {
                            expectedResponseText: "I'm here!\nMe too!\nI come afterward..\n")
     }
 
-    func testParameter() {
-        let user = "John"
+    private func runTestParameter(user: String) {
         let responseText = "<!DOCTYPE html><html><body><b>User:</b> \(user)</body></html>\n\n"
         runGetResponseTest(path: "/users/\(user)", expectedResponseText: responseText)
+    }
+
+    func testParameter() {
+        runTestParameter(user: "John")
     }
 
     private func runTestUnknownPath(path: String) {
