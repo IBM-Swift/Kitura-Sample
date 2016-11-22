@@ -91,4 +91,15 @@ class KituraSampleTests: XCTestCase {
                            expectedResponseText: "Caught the error: Example of error being set",
                            expectedStatusCode: HTTPStatusCode.internalServerError)
     }
+
+    func testMulti() {
+        runGetResponseTest(path: "/multi",
+                           expectedResponseText: "I'm here!\nMe too!\nI come afterward..\n")
+    }
+
+    func testParameter() {
+        let user = "John"
+        let responseText = "<!DOCTYPE html><html><body><b>User:</b> \(user)</body></html>\n\n"
+        runGetResponseTest(path: "/users/\(user)", expectedResponseText: responseText)
+    }
 }
