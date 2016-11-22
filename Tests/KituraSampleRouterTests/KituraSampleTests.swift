@@ -122,9 +122,15 @@ class KituraSampleTests: XCTestCase {
     }
 
     func testMustache() {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+
+        let arrivalDate = formatter.string(from: Date())
+        let postponementDate = formatter.string(from: Date().addingTimeInterval(60*60*24*3))
+
         let expectedResponseText = "\n\nHello Arthur\n" +
-                                   "Your beard trimmer will arrive on Nov 22, 2016.\n\n" +
-                                   "Well, on Nov 25, 2016 because of a Martian attack.\n\n"
+            "Your beard trimmer will arrive on \(arrivalDate).\n\n" +
+            "Well, on \(postponementDate) because of a Martian attack.\n\n"
         runGetResponseTest(path: "/trimmer", expectedResponseText: expectedResponseText)
     }
 
