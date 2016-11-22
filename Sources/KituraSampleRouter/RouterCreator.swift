@@ -36,7 +36,7 @@ enum SampleError: Swift.Error {
 
 let customParameterHandler: RouterHandler = { request, response, next in
     let id = request.parameters["id"] ?? "unknown"
-    response.send("id|").status(.OK)
+    response.send("\(id)|").status(.OK)
     next()
 }
 
