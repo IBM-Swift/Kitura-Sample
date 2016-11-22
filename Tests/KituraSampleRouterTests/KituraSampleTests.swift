@@ -179,7 +179,14 @@ class KituraSampleTests: XCTestCase {
                     XCTFail("no match of title tag in body")
                     return
                 }
-                let titleInBody = (body as NSString).substring(with: match.rangeAt(1))
+
+                #if os(Linux)
+                    let titleRange = match.range(at: 1)
+                #else
+                    let titleRange = match.rangeAt(1)
+                #endif
+
+                let titleInBody = NSString(string: body).substring(with: titleRange)
                 XCTAssertEqual(titleInBody, expectedTitle,
                                "returned title does not match the expected one")
             } catch {
