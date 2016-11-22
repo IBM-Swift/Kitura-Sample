@@ -71,13 +71,15 @@ class KituraSampleTests: XCTestCase {
     }
 
     func testCustomMiddlewareURLParameter() {
-        runGetResponseTest(path: "/user/my_custom_id",
-                           expectedResponseText: "my_custom_id|my_custom_id|")
+        let id = "my_custom_id"
+        runGetResponseTest(path: "/user/\(id)",
+                           expectedResponseText: "\(id)|\(id)|")
     }
 
     func testCustomMiddlewareURLParameterWithQueryParam() {
-        runGetResponseTest(path: "/user/my_custom_id?some_param=value",
-                           expectedResponseText: "my_custom_id|my_custom_id|")
+        let id = "my_custom_id"
+        runGetResponseTest(path: "/user/\(id)?some_param=value",
+                           expectedResponseText: "\(id)|\(id)|")
     }
 
     func testGetHello() {
