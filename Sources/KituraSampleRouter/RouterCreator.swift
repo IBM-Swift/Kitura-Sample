@@ -124,7 +124,7 @@ public struct RouterCreator {
 
         // Redirection example
         router.get("/redir") { _, response, next in
-            try response.redirect("http://www.ibm.com")
+            try response.redirect("http://www.ibm.com/us-en/")
             next()
         }
 
