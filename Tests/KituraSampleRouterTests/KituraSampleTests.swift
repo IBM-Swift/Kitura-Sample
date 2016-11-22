@@ -83,4 +83,10 @@ class KituraSampleTests: XCTestCase {
     func testGetHello() {
         runGetResponseTest(path: "/hello", expectedResponseText: "Hello World, from Kitura!")
     }
+
+    func testGetError() {
+        runGetResponseTest(path: "/error",
+                           expectedResponseText: "Caught the error: Example of error being set",
+                           expectedStatusCode: HTTPStatusCode.internalServerError)
+    }
 }
