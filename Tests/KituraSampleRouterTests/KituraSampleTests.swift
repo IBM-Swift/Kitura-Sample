@@ -116,4 +116,11 @@ class KituraSampleTests: XCTestCase {
 
         runGetResponseTest(path: "/articles", expectedResponseText: expectedResponseText)
     }
+
+    func testMustache() {
+        let expectedResponseText = "\n\nHello Arthur\n" +
+                                   "Your beard trimmer will arrive on Nov 22, 2016.\n\n" +
+                                   "Well, on Nov 25, 2016 because of a Martian attack.\n\n"
+        runGetResponseTest(path: "/trimmer", expectedResponseText: expectedResponseText)
+    }
 }
