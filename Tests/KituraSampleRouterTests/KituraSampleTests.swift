@@ -78,4 +78,8 @@ class KituraSampleTests: XCTestCase {
         runGetResponseTest(path: "/user/my_custom_id?some_param=value",
                            expectedResponseText: "my_custom_id|my_custom_id|")
     }
+
+    func testGetHello() {
+        runGetResponseTest(path: "/hello", expectedResponseText: "Hello World, from Kitura!")
+    }
 }
