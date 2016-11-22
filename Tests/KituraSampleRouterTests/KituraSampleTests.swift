@@ -123,4 +123,11 @@ class KituraSampleTests: XCTestCase {
                                    "Well, on Nov 25, 2016 because of a Martian attack.\n\n"
         runGetResponseTest(path: "/trimmer", expectedResponseText: expectedResponseText)
     }
+
+    func testStaticHTML() {
+        let expectedResponseText = "<!DOCTYPE html>\n<html>\n<body>\n\n" +
+                                   "<h1>Hello from Kitura </h1>\n\n" +
+                                   "</body>\n</html>\n\n"
+        runGetResponseTest(path: "/static/test.html", expectedResponseText: expectedResponseText)
+    }
 }
