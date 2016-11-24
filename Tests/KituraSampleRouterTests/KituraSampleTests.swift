@@ -212,4 +212,16 @@ class KituraSampleTests: XCTestCase {
     func testRedirection() {
         runTestThatCorrectHTMLTitleIsReturned(expectedTitle: "IBM - United States", path: "/redir")
     }
+
+    func testDefaultIndex() {
+        runTestThatCorrectHTMLTitleIsReturned(expectedTitle: "Index", path: "/static")
+    }
+
+    func testIndex() {
+        runTestThatCorrectHTMLTitleIsReturned(expectedTitle: "Index", path: "/static/index.html")
+    }
+
+    func testDefaultPage() {
+        runTestThatCorrectHTMLTitleIsReturned(expectedTitle: "Kitura", path: "")
+    }
 }
