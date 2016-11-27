@@ -131,6 +131,10 @@ class KituraSampleTests: XCTestCase {
         runTestParameter(user: "John")
     }
 
+    func testParameterWithWhiteSpace() {
+        runTestParameter(user: "John Doe")
+    }
+
     private func runTestUnknownPath(path: String) {
         runGetResponseTest(path: path,
                            expectedResponseText: "Route not found in Sample application!",
