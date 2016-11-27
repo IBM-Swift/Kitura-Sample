@@ -67,21 +67,28 @@ class KituraSampleTests: XCTestCase {
     }
 
     private typealias BodyChecker =  (String) -> Void
+    private func checkResponse(response: ClientResponse, expectedResponseText: String? = nil,
+        expectedStatusCode: HTTPStatusCode = HTTPStatusCode.OK, bodyChecker: BodyChecker? = nil) {
+        XCTAssertEqual(response.statusCode, expectedStatusCode,
+                       "No success status code returned")
+        if let optionalBody = try? response.readString(), let body = optionalBody {
+            if let expectedResponseText = expectedResponseText {
+                XCTAssertEqual(body, expectedResponseText, "mismatch in body")
+            }
+            bodyChecker?(body)
+        } else {
+            XCTFail("No response body")
+        }
+
+    }
+
     private func runGetResponseTest(path: String, expectedResponseText: String? = nil,
                                     expectedStatusCode: HTTPStatusCode = HTTPStatusCode.OK,
                                     bodyChecker: BodyChecker? = nil) {
         performServerTest { expectation in
             self.performRequest("get", path: path, expectation: expectation) { response in
-                XCTAssertEqual(response.statusCode, expectedStatusCode,
-                               "No success status code returned")
-                if let optionalBody = try? response.readString(), let body = optionalBody {
-                    if let expectedResponseText = expectedResponseText {
-                        XCTAssertEqual(body, expectedResponseText, "mismatch in body")
-                    }
-                    bodyChecker?(body)
-                } else {
-                    XCTFail("No response body")
-                }
+                self.checkResponse(response: response, expectedResponseText: expectedResponseText,
+                                   expectedStatusCode: expectedStatusCode, bodyChecker: bodyChecker)
                 expectation.fulfill()
             }
         }
