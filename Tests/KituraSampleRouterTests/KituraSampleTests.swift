@@ -231,4 +231,59 @@ class KituraSampleTests: XCTestCase {
     func testDefaultPage() {
         runTestThatCorrectHTMLTitleIsReturned(expectedTitle: "Kitura", path: "")
     }
+
+    private func runTestUser(expectedUser: String, expectation: XCTestExpectation) {
+        self.performRequestSynchronous("get", path: "/hello", expectation: expectation) {
+            response, dispatchGroup in
+            self.checkResponse(response: response,
+                               expectedResponseText: "Hello \(expectedUser), from Kitura!")
+            dispatchGroup.leave()
+            expectation.fulfill()
+        }
+    }
+
+    private func runTestModifyUser(method: String, userToSet: String? = nil,
+                                   expectation: XCTestExpectation) {
+        self.performRequestSynchronous(method, path: "/hello", expectation: expectation,
+                                       requestModifier: { request in
+                                           if let userToSet = userToSet {
+                                               request.write(from: userToSet)
+                                           }
+                                       }) { response, dispatchGroup in
+            self.checkResponse(response: response,
+                expectedResponseText: "Got a \(method.uppercased()) request")
+            dispatchGroup.leave()
+            expectation.fulfill()
+        }
+    }
+
+    func testPostHello() {
+        performServerTest(asyncTasks: { expectation in
+            self.runTestUser(expectedUser: "World", expectation: expectation)
+        }, { expectation in
+            self.runTestModifyUser(method: "post", userToSet: "John", expectation: expectation)
+        }, { expectation in
+            self.runTestUser(expectedUser: "John", expectation: expectation)
+        })
+    }
+
+    func testPutHello() {
+        performServerTest(asyncTasks: { expectation in
+            self.runTestUser(expectedUser: "World", expectation: expectation)
+        }, { expectation in
+            self.runTestModifyUser(method: "put", userToSet: "John", expectation: expectation)
+        }, { expectation in
+            self.runTestUser(expectedUser: "John", expectation: expectation)
+        })
+    }
+
+    func testDeleteHello() {
+        performServerTest(asyncTasks: { expectation in
+            self.runTestUser(expectedUser: "World", expectation: expectation)
+        }, { expectation in
+            self.runTestModifyUser(method: "delete", expectation: expectation)
+        }, { expectation in
+            self.runTestUser(expectedUser: "World", expectation: expectation)
+        })
+    }
 }
