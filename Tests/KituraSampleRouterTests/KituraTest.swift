@@ -88,6 +88,19 @@ extension KituraTest {
         }
         req.end()
     }
+
+    func performRequestSynchronous(_ method: String, path: String,  expectation: XCTestExpectation,
+                        headers: [String: String]? = nil,
+                        requestModifier: ((ClientRequest) -> Void)? = nil,
+                        callback: @escaping (ClientResponse, DispatchGroup) -> Void) {
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        performRequest(method, path: path, expectation: expectation, headers: headers,
+                       requestModifier: requestModifier) { response in
+                        callback(response, dispatchGroup)
+        }
+        dispatchGroup.wait()
+    }
 }
 
 extension XCTestCase: KituraTest {
