@@ -286,4 +286,48 @@ class KituraSampleTests: XCTestCase {
             self.runTestUser(expectedUser: "World", expectation: expectation)
         })
     }
+
+    func testPostPutDeletePostHello() {
+        performServerTest(asyncTasks: { expectation in
+            self.runTestUser(expectedUser: "World", expectation: expectation)
+        }, { expectation in
+            self.runTestModifyUser(method: "post", userToSet: "John", expectation: expectation)
+        }, { expectation in
+            self.runTestUser(expectedUser: "John", expectation: expectation)
+        }, { expectation in
+            self.runTestModifyUser(method: "put", userToSet: "Mary", expectation: expectation)
+        }, { expectation in
+            self.runTestUser(expectedUser: "Mary", expectation: expectation)
+        }, { expectation in
+            self.runTestModifyUser(method: "delete", expectation: expectation)
+        }, { expectation in
+            self.runTestUser(expectedUser: "World", expectation: expectation)
+        }, { expectation in
+            self.runTestModifyUser(method: "post", userToSet: "Bob", expectation: expectation)
+        }, { expectation in
+            self.runTestUser(expectedUser: "Bob", expectation: expectation)
+        })
+    }
+
+    func testPutPostDeletePutHello() {
+        performServerTest(asyncTasks: { expectation in
+            self.runTestUser(expectedUser: "World", expectation: expectation)
+        }, { expectation in
+            self.runTestModifyUser(method: "put", userToSet: "John", expectation: expectation)
+        }, { expectation in
+            self.runTestUser(expectedUser: "John", expectation: expectation)
+        }, { expectation in
+            self.runTestModifyUser(method: "post", userToSet: "Mary", expectation: expectation)
+        }, { expectation in
+            self.runTestUser(expectedUser: "Mary", expectation: expectation)
+        }, { expectation in
+            self.runTestModifyUser(method: "delete", expectation: expectation)
+        }, { expectation in
+            self.runTestUser(expectedUser: "World", expectation: expectation)
+        }, { expectation in
+            self.runTestModifyUser(method: "put", userToSet: "Bob", expectation: expectation)
+        }, { expectation in
+            self.runTestUser(expectedUser: "Bob", expectation: expectation)
+        })
+    }
 }
