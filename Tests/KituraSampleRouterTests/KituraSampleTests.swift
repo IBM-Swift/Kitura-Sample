@@ -31,13 +31,23 @@ class KituraSampleTests: XCTestCase {
             ("testGetError", testGetError),
             ("testMulti", testMulti),
             ("testParameter", testParameter),
+            ("testParameterWithWhiteSpace", testParameterWithWhiteSpace),
+            ("testUnknownPath", testUnknownPath),
             ("testStencil", testStencil),
             //TODO: enable the test on Linux
             // ("testMustache", testMustache),
             ("testStaticHTML", testStaticHTML),
             ("testStaticHTMLWithoutExtension", testStaticHTMLWithoutExtension),
             ("testStaticHTMLWithDifferentExtension", testStaticHTMLWithDifferentExtension),
-            ("testRedirection", testRedirection)
+            ("testRedirection", testRedirection),
+            ("testDefaultIndex", testDefaultIndex),
+            ("testIndex", testIndex),
+            ("testDefaultPage", testDefaultPage),
+            ("testPostHello", testPostHello),
+            ("testPutHello", testPutHello),
+            ("testDeleteHello", testDeleteHello),
+            ("testPostPutDeletePostHello", testPostPutDeletePostHello),
+            ("testPutPostDeletePutHello", testPutPostDeletePutHello)
         ]
     }
 
