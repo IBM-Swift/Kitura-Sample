@@ -122,8 +122,9 @@ class KituraSampleTests: XCTestCase {
     }
 
     private func runTestParameter(user: String) {
+        let userInPath = user.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? user
         let responseText = "<!DOCTYPE html><html><body><b>User:</b> \(user)</body></html>\n\n"
-        runGetResponseTest(path: "/users/\(user)", expectedResponseText: responseText)
+        runGetResponseTest(path: "/users/\(userInPath)", expectedResponseText: responseText)
     }
 
     func testParameter() {
