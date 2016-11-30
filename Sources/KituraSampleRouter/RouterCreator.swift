@@ -51,8 +51,6 @@ class CustomParameterMiddleware: RouterMiddleware {
     }
 }
 
-let router = Router()
-
 extension SampleError: CustomStringConvertible {
     var description: String {
         switch self {
