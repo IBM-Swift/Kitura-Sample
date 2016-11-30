@@ -215,7 +215,8 @@ public struct RouterCreator {
         router.all { request, response, next in
             if  response.statusCode == .unknown  {
                 // Remove this wrapping if statement, if you want to handle requests to / as well
-                if  request.originalURL != "/"  &&  request.originalURL != ""  {
+                let path = request.urlComponents.path
+                if  path != "/" && path != ""  {
                     try response.status(.notFound).send("Route not found in Sample application!").end()
                 }
             }
