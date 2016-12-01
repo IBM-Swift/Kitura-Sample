@@ -34,6 +34,7 @@ class KituraSampleTests: XCTestCase {
             ("testParameterWithWhiteSpace", testParameterWithWhiteSpace),
             ("testUnknownPath", testUnknownPath),
             ("testStencil", testStencil),
+            ("testStencilIncludedDocument", testStencil),
             //TODO: enable the test on Linux
             // ("testMustache", testMustache),
             ("testStaticHTML", testStaticHTML),
@@ -155,12 +156,16 @@ class KituraSampleTests: XCTestCase {
         runTestUnknownPath(path: "aaa")
     }
 
-    func testStencil() {
-        let expectedResponseText = "\n\nThere are 2 articles.\n\n\n" +
-            "  - Migrating from OCUnit to XCTest by Kyle Fuller.\n\n" +
-            "  - Memory Management with ARC by Kyle Fuller.\n\n"
+    let expectedStencilResponseText = "There are 2 articles.\n\n\n" +
+                               "  - Migrating from OCUnit to XCTest by Kyle Fuller.\n\n" +
+                               "  - Memory Management with ARC by Kyle Fuller.\n\n"
 
-        runGetResponseTest(path: "/articles", expectedResponseText: expectedResponseText)
+    func testStencil() {
+        runGetResponseTest(path: "/articles", expectedResponseText: expectedStencilResponseText)
+    }
+
+    func testStencilIncludedDocument() {
+        runGetResponseTest(path: "/articles_include", expectedResponseText: expectedStencilResponseText)
     }
 
     func testMustache() {
