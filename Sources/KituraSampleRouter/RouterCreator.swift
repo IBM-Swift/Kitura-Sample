@@ -20,8 +20,8 @@ import Foundation
 
 import Kitura
 import KituraMustache
-import KituraStencil
-import Stencil // required for adding a namespace to Stencil Template Engine
+import KituraStencil // required for using StencilTemplateEngine
+import Stencil // required for adding a Stencil namespace to StencilTemplateEngine
 
 import LoggerAPI
 import HeliumLogger
