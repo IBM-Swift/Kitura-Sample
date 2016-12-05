@@ -35,6 +35,7 @@ class KituraSampleTests: XCTestCase {
             ("testUnknownPath", testUnknownPath),
             ("testStencil", testStencil),
             ("testStencilIncludedDocument", testStencil),
+            ("testCustomTagStencil", testCustomTagStencil),
             //TODO: enable the test on Linux
             // ("testMustache", testMustache),
             ("testStaticHTML", testStaticHTML),
@@ -166,6 +167,10 @@ class KituraSampleTests: XCTestCase {
 
     func testStencilIncludedDocument() {
         runGetResponseTest(path: "/articles_include", expectedResponseText: expectedStencilResponseText)
+    }
+
+    func testCustomTagStencil() {
+        runGetResponseTest(path: "/custom_tag_stencil", expectedResponseText: "\n\nHello World\n")
     }
 
     func testMustache() {

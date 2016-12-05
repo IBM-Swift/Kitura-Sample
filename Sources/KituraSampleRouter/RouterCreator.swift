@@ -21,6 +21,7 @@ import Foundation
 import Kitura
 import KituraMustache
 import KituraStencil
+import Stencil // required for adding a namespace
 
 import LoggerAPI
 import HeliumLogger
@@ -152,7 +153,13 @@ public struct RouterCreator {
         router.get("/user/:id", allowPartialMatch: false, middleware: CustomParameterMiddleware())
         router.get("/user/:id", handler: customParameterHandler)
 
-        router.add(templateEngine: StencilTemplateEngine())
+        // add Stencil Template Engine with a namespace with a custom tag
+        let namespace = Namespace()
+        // from https://github.com/kylef/Stencil/blob/master/ARCHITECTURE.md#simple-tags
+        namespace.registerSimpleTag("custom") { _ in
+            return "Hello World"
+        }
+        router.add(templateEngine: StencilTemplateEngine(namespace: namespace))
 
         // Support for Mustache implemented for OSX only yet
         #if !os(Linux)
@@ -214,6 +221,18 @@ public struct RouterCreator {
 
                 // we have to specify file extension here since Stencil is not the default engine
                 try response.render("includingDocument.stencil", context: context).end()
+            } catch {
+                Log.error("Failed to render template \(error)")
+            }
+        }
+
+        router.get("/custom_tag_stencil") { _, response, next in
+            defer {
+                next()
+            }
+            do {
+                // we have to specify file extension here since Stencil is not the default engine
+                try response.render("customTag.stencil", context: [:]).end()
             } catch {
                 Log.error("Failed to render template \(error)")
             }
