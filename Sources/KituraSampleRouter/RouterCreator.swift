@@ -21,7 +21,7 @@ import Foundation
 import Kitura
 import KituraMustache
 import KituraStencil
-import Stencil // required for adding a namespace
+import Stencil // required for adding a namespace to Stencil Template Engine
 
 import LoggerAPI
 import HeliumLogger
