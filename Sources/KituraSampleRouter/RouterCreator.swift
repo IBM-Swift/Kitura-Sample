@@ -19,6 +19,7 @@
 import Foundation
 
 import Kitura
+import KituraMarkdown
 import KituraMustache
 import KituraStencil // required for using StencilTemplateEngine
 import Stencil // required for adding a Stencil namespace to StencilTemplateEngine
@@ -236,6 +237,23 @@ public struct RouterCreator {
             } catch {
                 Log.error("Failed to render template \(error)")
             }
+        }
+
+        // Add KituraMarkdown as a TemplateEngine
+        router.add(templateEngine: KituraMarkdown())
+
+        router.get("/docs") { _, response, next in
+            try response.render("/docs/index.md", context: [String:Any]())
+            response.status(.OK)
+            next()
+        }
+
+        router.get("/docs/*") { request, response, next in
+            if request.urlComponents.path != "/docs/" {
+                try response.render(request.urlComponents.path, context: [String:Any]())
+                response.status(.OK)
+            }
+            next()
         }
 
         // Handles any errors that get set
