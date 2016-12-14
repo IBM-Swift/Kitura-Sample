@@ -249,8 +249,8 @@ public struct RouterCreator {
         }
 
         router.get("/docs/*") { request, response, next in
-            if request.urlComponents.path != "/docs/" {
-                try response.render(request.urlComponents.path, context: [String:Any]())
+            if request.urlURL.path != "/docs/" {
+                try response.render(request.urlURL.path, context: [String:Any]())
                 response.status(.OK)
             }
             next()
@@ -272,7 +272,7 @@ public struct RouterCreator {
         router.all { request, response, next in
             if  response.statusCode == .unknown  {
                 // Remove this wrapping if statement, if you want to handle requests to / as well
-                let path = request.urlComponents.path
+                let path = request.urlURL.path
                 if  path != "/" && path != ""  {
                     try response.status(.notFound).send("Route not found in Sample application!").end()
                 }
