@@ -17,7 +17,7 @@ This is a sample [Kitura](https://github.com/IBM-Swift/Kitura/) application. See
 
 2. `swift build`
 
-3. `./.build/debug/KituraSample`
+3. `./.build/debug/Kitura-Sample`
 
   You should see message _Listening on port 8090_.
   
