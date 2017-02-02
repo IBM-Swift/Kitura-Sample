@@ -24,19 +24,16 @@ import Foundation
 
 import KituraSampleRouter
 
-protocol KituraTest {
-    func expectation(_ index: Int) -> XCTestExpectation
-    func waitExpectation(timeout t: TimeInterval, handler: XCWaitCompletionHandler?)
-}
-
-extension KituraTest {
-
-    func doSetUp() {
+class KituraTest: XCTestCase {
+    private static let initOnce: () = {
         HeliumLogger.use()
+    }()
+
+    override func setUp() {
+        KituraTest.initOnce
     }
 
-    func doTearDown() {
-        // sleep(10)
+    override func tearDown() {
     }
 
     func performServerTest(asyncTasks: @escaping (XCTestExpectation) -> Void...) {
@@ -101,9 +98,7 @@ extension KituraTest {
         }
         dispatchGroup.wait()
     }
-}
 
-extension XCTestCase: KituraTest {
     func expectation(_ index: Int) -> XCTestExpectation {
         let expectationDescription = "\(type(of: self))-\(index)"
         return self.expectation(description: expectationDescription)

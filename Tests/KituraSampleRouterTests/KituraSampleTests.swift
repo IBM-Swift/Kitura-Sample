@@ -18,7 +18,7 @@ import XCTest
 import KituraNet
 import Foundation
 
-class KituraSampleTests: XCTestCase {
+class KituraSampleTests: KituraTest {
 
     static var allTests: [(String, (KituraSampleTests) -> () throws -> Void)] {
         return [
@@ -51,14 +51,6 @@ class KituraSampleTests: XCTestCase {
             ("testPostPutDeletePostHello", testPostPutDeletePostHello),
             ("testPutPostDeletePutHello", testPutPostDeletePutHello)
         ]
-    }
-
-    override func setUp() {
-        doSetUp()
-    }
-
-    override func tearDown() {
-        doTearDown()
     }
 
     func testURLParameters() {
