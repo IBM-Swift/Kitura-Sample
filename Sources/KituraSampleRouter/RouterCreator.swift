@@ -154,13 +154,13 @@ public struct RouterCreator {
         router.get("/user/:id", allowPartialMatch: false, middleware: CustomParameterMiddleware())
         router.get("/user/:id", handler: customParameterHandler)
 
-        // add Stencil Template Engine with a namespace with a custom tag
-        let namespace = Namespace()
+        // add Stencil Template Engine with an extension with a custom tag
+        let `extension` = Extension()
         // from https://github.com/kylef/Stencil/blob/master/ARCHITECTURE.md#simple-tags
-        namespace.registerSimpleTag("custom") { _ in
+        `extension`.registerSimpleTag("custom") { _ in
             return "Hello World"
         }
-        router.add(templateEngine: StencilTemplateEngine(namespace: namespace))
+        router.add(templateEngine: StencilTemplateEngine(extension: `extension`))
 
         // Support for Mustache implemented for OSX only yet
         #if !os(Linux)
