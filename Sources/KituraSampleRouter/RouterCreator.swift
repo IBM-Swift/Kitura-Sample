@@ -163,7 +163,7 @@ public struct RouterCreator {
         router.add(templateEngine: StencilTemplateEngine(extension: _extension))
 
         // Support for Mustache implemented for OSX only yet
-        #if !os(Linux)
+        #if !os(Linux) || (swift>=3.1)
             router.setDefault(templateEngine: MustacheTemplateEngine())
 
             router.get("/trimmer") { _, response, next in
