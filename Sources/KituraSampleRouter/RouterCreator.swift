@@ -173,8 +173,8 @@ public struct RouterCreator {
                 // the example from https://github.com/groue/GRMustache.swift/blob/master/README.md
                 var context: [String: Any] = [
                     "name": "Arthur",
-                    "date": NSDate(),
-                    "realDate": NSDate().addingTimeInterval(60*60*24*3),
+                    "date": Date(),
+                    "realDate": Date().addingTimeInterval(60*60*24*3),
                     "late": true
                 ]
 
