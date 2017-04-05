@@ -21,7 +21,7 @@ import Foundation
 class KituraSampleTests: KituraTest {
 
     static var allTests: [(String, (KituraSampleTests) -> () throws -> Void)] {
-        return [
+        var testsToReturn: [(String, (KituraSampleTests) -> () throws -> Void)]  = [
             ("testURLParameters", testURLParameters),
             ("testMultiplicity", testMulitplicity),
             ("testCustomMiddlewareURLParameter", testCustomMiddlewareURLParameter),
@@ -36,8 +36,6 @@ class KituraSampleTests: KituraTest {
             ("testStencil", testStencil),
             ("testStencilIncludedDocument", testStencil),
             ("testCustomTagStencil", testCustomTagStencil),
-            //TODO: enable the test on Linux
-            // ("testMustache", testMustache),
             ("testStaticHTML", testStaticHTML),
             ("testStaticHTMLWithoutExtension", testStaticHTMLWithoutExtension),
             ("testStaticHTMLWithDifferentExtension", testStaticHTMLWithDifferentExtension),
@@ -51,6 +49,10 @@ class KituraSampleTests: KituraTest {
             ("testPostPutDeletePostHello", testPostPutDeletePostHello),
             ("testPutPostDeletePutHello", testPutPostDeletePutHello)
         ]
+        #if !os(Linux) || swift(>=3.1)
+            testsToReturn.append(("testMustache", testMustache))
+        #endif
+        return testsToReturn
     }
 
     func testURLParameters() {
