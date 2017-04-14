@@ -19,9 +19,9 @@ This is a sample [Kitura](https://github.com/IBM-Swift/Kitura/) application. See
 
 3. `./.build/debug/Kitura-Sample`
 
-  You should see message _Listening on port 8090_.
-  
-4. Open your browser at [http://localhost:8090](http://localhost:8090)
+  You should see message _Listening on port 8080_.
+
+4. Open your browser at [http://localhost:8080](http://localhost:8080)
 
 ## Testing
 `swift test`
