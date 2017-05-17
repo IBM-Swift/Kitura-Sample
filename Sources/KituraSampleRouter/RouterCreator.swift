@@ -207,6 +207,26 @@ public struct RouterCreator {
             }
         }
 
+        router.get("/articles_subdirectory") { _, response, next in
+            defer {
+                next()
+            }
+            do {
+                // the example from https://github.com/kylef/Stencil
+                let context: [String: Any] = [
+                    "articles": [
+                        [ "title": "Migrating from OCUnit to XCTest", "author": "Kyle Fuller" ],
+                        [ "title": "Memory Management with ARC", "author": "Kyle Fuller" ],
+                    ]
+                ]
+
+                // we have to specify file extension here since Stencil is not the default engine
+                try response.render("subdirectory/documentInSubdirectory.stencil", context: context).end()
+            } catch {
+                Log.error("Failed to render template \(error)")
+            }
+        }
+
         router.get("/articles_include") { _, response, next in
             defer {
                 next()

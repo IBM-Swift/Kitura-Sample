@@ -34,7 +34,8 @@ class KituraSampleTests: KituraTest {
             ("testParameterWithWhiteSpace", testParameterWithWhiteSpace),
             ("testUnknownPath", testUnknownPath),
             ("testStencil", testStencil),
-            ("testStencilIncludedDocument", testStencil),
+            ("testStencilIncludedDocument", testStencilIncludedDocument),
+            ("testStencilInSubdirectory", testStencilInSubdirectory),
             ("testCustomTagStencil", testCustomTagStencil),
             ("testStaticHTML", testStaticHTML),
             ("testStaticHTMLWithoutExtension", testStaticHTMLWithoutExtension),
@@ -161,6 +162,10 @@ class KituraSampleTests: KituraTest {
 
     func testStencilIncludedDocument() {
         runGetResponseTest(path: "/articles_include", expectedResponseText: expectedStencilResponseText)
+    }
+
+    func testStencilInSubdirectory() {
+        runGetResponseTest(path: "/articles_subdirectory", expectedResponseText: expectedStencilResponseText)
     }
 
     func testCustomTagStencil() {
