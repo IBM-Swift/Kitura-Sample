@@ -160,7 +160,9 @@ public struct RouterCreator {
             return "Hello World"
         }
 
-        router.add(templateEngine: StencilTemplateEngine(extension: _extension),
+        let templateEngine = StencilTemplateEngine(extension: _extension)
+        router.setDefault(templateEngine: templateEngine)
+        router.add(templateEngine: templateEngine,
                    forFileExtensions: ["html"])
 
         // the example from https://github.com/kylef/Stencil
@@ -176,8 +178,7 @@ public struct RouterCreator {
                 next()
             }
             do {
-                // we have to specify file extension here since Stencil is not the default engine
-                try response.render("document.stencil", context: stencilContext).end()
+                try response.render("document", context: stencilContext).end()
             } catch {
                 Log.error("Failed to render template \(error)")
             }
@@ -200,8 +201,7 @@ public struct RouterCreator {
                 next()
             }
             do {
-                // we have to specify file extension here since Stencil is not the default engine
-                try response.render("subdirectory/documentInSubdirectory.stencil",
+                try response.render("subdirectory/documentInSubdirectory",
                                     context: stencilContext).end()
             } catch {
                 Log.error("Failed to render template \(error)")
@@ -213,8 +213,7 @@ public struct RouterCreator {
                 next()
             }
             do {
-                // we have to specify file extension here since Stencil is not the default engine
-                try response.render("includingDocument.stencil",
+                try response.render("includingDocument",
                                     context: stencilContext).end()
             } catch {
                 Log.error("Failed to render template \(error)")
@@ -226,8 +225,7 @@ public struct RouterCreator {
                 next()
             }
             do {
-                // we have to specify file extension here since Stencil is not the default engine
-                try response.render("customTag.stencil", context: [:]).end()
+                try response.render("customTag", context: [:]).end()
             } catch {
                 Log.error("Failed to render template \(error)")
             }
