@@ -21,7 +21,7 @@ import Foundation
 class KituraSampleTests: KituraTest {
 
     static var allTests: [(String, (KituraSampleTests) -> () throws -> Void)] {
-        var testsToReturn: [(String, (KituraSampleTests) -> () throws -> Void)]  = [
+        return [
             ("testURLParameters", testURLParameters),
             ("testMultiplicity", testMulitplicity),
             ("testCustomMiddlewareURLParameter", testCustomMiddlewareURLParameter),
@@ -51,10 +51,6 @@ class KituraSampleTests: KituraTest {
             ("testPostPutDeletePostHello", testPostPutDeletePostHello),
             ("testPutPostDeletePutHello", testPutPostDeletePutHello)
         ]
-        #if !os(Linux) || swift(>=3.1)
-            testsToReturn.append(("testMustache", testMustache))
-        #endif
-        return testsToReturn
     }
 
     func testURLParameters() {
@@ -176,19 +172,6 @@ class KituraSampleTests: KituraTest {
 
     func testCustomTagStencil() {
         runGetResponseTest(path: "/custom_tag_stencil", expectedResponseText: "\n\nHello World\n")
-    }
-
-    func testMustache() {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-
-        let arrivalDate = formatter.string(from: Date())
-        let postponementDate = formatter.string(from: Date().addingTimeInterval(60*60*24*3))
-
-        let expectedResponseText = "\n\nHello Arthur\n" +
-            "Your beard trimmer will arrive on \(arrivalDate).\n\n" +
-            "Well, on \(postponementDate) because of a Martian attack.\n\n"
-        runGetResponseTest(path: "/trimmer", expectedResponseText: expectedResponseText)
     }
 
     func testStaticHTML() {

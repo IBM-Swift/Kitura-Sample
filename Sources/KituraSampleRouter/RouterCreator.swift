@@ -20,7 +20,6 @@ import Foundation
 
 import Kitura
 import KituraMarkdown
-import KituraMustache
 import KituraStencil // required for using StencilTemplateEngine
 import Stencil // required for adding a Stencil namespace to StencilTemplateEngine
 
@@ -160,33 +159,9 @@ public struct RouterCreator {
         _extension.registerSimpleTag("custom") { _ in
             return "Hello World"
         }
+
         router.add(templateEngine: StencilTemplateEngine(extension: _extension),
                    forFileExtensions: ["html"])
-
-        // Support for Mustache implemented for OSX only yet
-        #if !os(Linux) || swift(>=3.1)
-            router.setDefault(templateEngine: MustacheTemplateEngine())
-
-            router.get("/trimmer") { _, response, next in
-                defer {
-                    next()
-                }
-                // the example from https://github.com/groue/GRMustache.swift/blob/master/README.md
-                var context: [String: Any] = [
-                    "name": "Arthur",
-                    "date": Date(),
-                    "realDate": Date().addingTimeInterval(60*60*24*3),
-                    "late": true
-                ]
-
-                // Let template format dates with `{{format(...)}}`
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateStyle = .medium
-                context["format"] = dateFormatter
-
-                try response.render("document", context: context).end()
-            }
-        #endif
 
         // the example from https://github.com/kylef/Stencil
         let stencilContext: [String: Any] = [
@@ -195,7 +170,6 @@ public struct RouterCreator {
                 [ "title": "Memory Management with ARC", "author": "Kyle Fuller" ],
             ]
         ]
-
 
         router.get("/articles") { _, response, next in
             defer {
