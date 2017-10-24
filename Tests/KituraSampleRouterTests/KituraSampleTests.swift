@@ -214,10 +214,10 @@ class KituraSampleTests: KituraTest {
                     return
                 }
 
-                #if os(Linux)
-                    let titleRange = match.range(at: 1)
-                #else
+                #if !os(Linux) && !swift(>=3.2)
                     let titleRange = match.rangeAt(1)
+                #else
+                    let titleRange = match.range(at: 1)
                 #endif
 
                 let titleInBody = NSString(string: body).substring(with: titleRange)

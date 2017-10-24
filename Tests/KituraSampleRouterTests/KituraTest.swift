@@ -36,7 +36,7 @@ class KituraTest: XCTestCase {
     override func tearDown() {
     }
 
-    func performServerTest(asyncTasks: @escaping (XCTestExpectation) -> Void...) {
+    func performServerTest(asyncTasks: (XCTestExpectation) -> Void...) {
         let router = RouterCreator.create()
         Kitura.addHTTPServer(onPort: 8080, with: router)
         Kitura.start()

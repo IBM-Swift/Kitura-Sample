@@ -3,3 +3,4 @@
 Packages
 *.pkg
 *.xcodeproj
+Package.resolved
