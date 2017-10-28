@@ -1,5 +1,8 @@
+// swift-tools-version:4.0
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+
 /**
- * Copyright IBM Corporation 2016
+ * Copyright IBM Corporation 2016, 2017
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,16 +20,25 @@
 import PackageDescription
 
 let package = Package(
-        name: "KituraSample",
-        targets: [
-            Target(name: "Kitura-Sample",
-                   dependencies: [.Target(name: "KituraSampleRouter")]),
-            Target(name: "KituraSampleRouter")],
-
+    name: "Kitura-Sample",
+    products: [
+        .executable(
+            name: "Kitura-Sample",
+            targets: ["Kitura-Sample"]
+        )
+    ],
     dependencies: [
-        .Package(url: "https://github.com/IBM-Swift/Kitura.git", majorVersion: 1, minor: 7),
-        .Package(url: "https://github.com/IBM-Swift/HeliumLogger.git", majorVersion: 1, minor: 7),
-        .Package(url: "https://github.com/IBM-Swift/Kitura-StencilTemplateEngine.git", majorVersion: 1, minor: 8),
-        .Package(url: "https://github.com/IBM-Swift/Kitura-Markdown", majorVersion: 0, minor: 9)
+        .package(url: "https://github.com/IBM-Swift/Kitura.git", .upToNextMinor(from: "1.7.0")),
+        .package(url: "https://github.com/IBM-Swift/HeliumLogger.git", .upToNextMinor(from: "1.7.0")),
+        .package(url: "https://github.com/IBM-Swift/Kitura-StencilTemplateEngine.git", .upToNextMinor(from: "1.8.0")),
+        .package(url: "https://github.com/IBM-Swift/Kitura-Markdown", .upToNextMinor(from: "0.9.0")),
+    ],
+    targets: [
+      .target(name: "Kitura-Sample",
+              dependencies: ["KituraSampleRouter", "Kitura"]),
+      .target(name: "KituraSampleRouter",
+              dependencies: ["Kitura", "HeliumLogger", "KituraStencil", "KituraMarkdown"]),
+      .testTarget(name: "KituraSampleRouterTests",
+              dependencies: ["KituraSampleRouter"]),
     ]
 )
