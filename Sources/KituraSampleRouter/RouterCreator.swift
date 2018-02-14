@@ -22,6 +22,7 @@ import Kitura
 import KituraMarkdown
 import KituraStencil // required for using StencilTemplateEngine
 import Stencil // required for adding a Stencil namespace to StencilTemplateEngine
+import KituraWebSocket
 
 import LoggerAPI
 import HeliumLogger
@@ -174,14 +175,12 @@ public struct RouterCreator {
         ]
 
         router.get("/articles") { _, response, next in
-            defer {
-                next()
-            }
             do {
                 try response.render("document", context: stencilContext).end()
             } catch {
                 Log.error("Failed to render template \(error)")
             }
+            next()
         }
 
         router.get("/articles.html") { _, response, next in
