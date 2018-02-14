@@ -87,6 +87,7 @@ public struct RouterCreator {
         router.all(middleware: BasicAuthMiddleware())
 
         router.all("/static", middleware: StaticFileServer())
+        router.all("/chat", middleware: StaticFileServer(path: "./chat"))
 
         router.get("/hello") { _, response, next in
             response.headers["Content-Type"] = "text/plain; charset=utf-8"
@@ -258,6 +259,7 @@ public struct RouterCreator {
             }
             try response.send("Caught the error: \(errorDescription)").end()
         }
+
 
         // A custom Not found handler
         router.all { request, response, next in

@@ -1,0 +1,327 @@
+/**
+ * Copyright IBM Corporation 2015
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ html,
+ body {
+     margin:0;
+     padding:0;
+     height:100%;
+ }
+
+ .clock {
+     border: 3px solid #000;
+     border-radius: 28px;
+     display: inline-block;
+     height: 52px;
+     width: 52px;
+ }
+
+ .clockHours {
+     background-color: #000;
+     display: inline-block;
+     height: 4px;
+     margin: 0 0 30px -47px;
+     transform: rotate(40deg);
+     width: 21px;
+ }
+
+ .clockMinutes {
+     background-color: #000;
+     display: inline-block;
+     height: 3px;
+     margin: 0 0 33px -16px;
+     transform: rotate(-40deg);
+     width: 29px;
+ }
+
+ .coverFrame {
+     z-index: 295;
+     position: absolute;
+     background-color: #555;
+     opacity: .5;
+     width: 100%;
+ }
+
+.displayNameArea {
+    z-index: 300;
+    position: absolute;
+    background-color: white;
+    padding: 20px;
+    border: 5px solid #555;
+}
+
+.documentContents {
+    padding: 30px 20px 60px; /* 60px = Height of footerBar */
+}
+
+.documentWrapper {
+    min-height: 100%;
+    position: relative;
+}
+
+.footerBar {
+    background: #0099e7;
+    bottom: 0;
+    height: 40px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    vertical-align: bottom;
+}
+
+.footerSwift, .footerText {
+    color: #ffffff;
+    display: inline-block;
+    font-family: HelveticaNeue-Light;
+    font-size: 20px;
+    font-weight: 300;
+    text-decoration: none;
+}
+
+.footerSwift {
+    float: right;
+    text-align: right;
+    margin: 10px 40px 0 0;
+}
+
+.footerText {
+    margin: 10px 5px 0 40px;
+    vertical-align: top;
+}
+
+.inputArea {
+    height: 60px;
+    position: absolute;
+    left: 250px;
+    bottom: 40px;
+    padding: 10px;
+}
+
+.inputAreaField {
+    height: 100%;
+    width: 100%;
+    border: none;
+    font-family: HelveticaNeue;
+    font-size: 12px;
+}
+
+.messagesArea {
+    display: inline-block;
+    vertical-align: top;
+    position: absolute;
+    left: 250px;
+    top: 60px;
+    padding: 15px 30px;
+    font-family: HelveticaNeue;
+    background-color: #f7f7f8;
+    overflow-y: scroll;
+}
+
+.messagelocalUserBox, .messageRemoteUserBox {
+    display: inline-block;
+    border-radius: 5px;
+}
+
+.messagelocalUserBox {
+    background-color: #d8eaff;
+}
+
+.messageRemoteUserBox {
+    border: solid 1px #bababa;
+}
+
+.messageCircle {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    line-height: 30px;
+    vertical-align: top;
+    font-size: 14px;
+    text-align: center;
+}
+
+.messageDisplayName {
+    display: inline-block;
+    margin: 10px 0 0 15px;
+    font-size: 14px;
+}
+
+.messageLine {
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.messageParticipantLine {
+    height: 10px;
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.05);
+    margin-bottom: 25px;
+    font-size: 11px;
+    font-weight: 300;
+    color: #4a4a4a;
+}
+
+.messageText {
+    margin: 9px 69px 14px 15px;
+    vertical-align: top;
+    color: #4a4a4a;
+}
+
+.messageTime {
+    display: inline-block;
+    float: right;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: right;
+    color: #9b9b9b;
+    margin: 13px 9px 0 0;
+}
+
+.localUserText {
+    background-color: #d8eaff;
+}
+
+.remoteUserText {
+    border: solid 1px #bab9b9;
+}
+
+.participant {
+    margin: 15px 0 0 16px;
+}
+
+.participantsArea {
+    display: inline-block;
+    vertical-align: top;
+    position: absolute;
+    left: 0px;
+    top: 60px;
+    width: 248px;
+    color: #000000;
+    font-family: HelveticaNeue;
+    font-style: normal;
+    font-stretch: normal;
+    font-size: 12px;
+    font-weight: 500;
+    border: solid 1px #d8d8d8;
+}
+
+.participantCircle {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: center;
+}
+
+.participantsCount {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #9b9b9b;
+    margin: 38px 0 0 6px;
+}
+
+.participantsSeparator {
+    width: 249px;
+    height: 1px;
+    background-color: #e5e4e4;
+    margin-top: 15px;
+}
+
+.participantText {
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.participantTyping {
+    vertical-align: middle;
+    float: right;
+    margin: 12px 16px 0 0;
+}
+
+.titleBar {
+    background: #0099e7;
+    height: 60px;
+    width: 100%;
+}
+
+.titleIcon {
+    height: 26px;
+    margin: 17px 0 0 19px;
+    width: 37px;
+}
+
+.titleSeparator {
+    border: 1px solid #52b8ee;
+    display: inline-block;
+    height: 18px;
+    margin: 20px 0 0 17px;
+    vertical-align: top;
+    width: 0;
+}
+
+.titleText {
+    color: #ffffff;
+    display: inline-block;
+    font-family: HelveticaNeue-Light;
+    font-size: 27px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin: 18px 0 0 16px;
+    vertical-align: top;
+}
+
+.leftTriangle, .rightTriangle, .rightOverlayTriangle {
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 10px;
+}
+
+.leftTriangle {
+    border-right: 10px solid #d8eaff;
+}
+
+.rightTriangle {
+    border-left: 10px solid #bab9b9;
+}
+
+.rightOverlayTriangle {
+    border-left: 10px solid #f7f7f8;
+    margin-left: -12px;   /* two pixels more than the width */
+}
+
+.waitingForAddition {
+  width: 140px;
+  height: 51px;
+  margin-top: 10px;
+  opacity: 0.5;
+  font-family: HelveticaNeue;
+  font-size: 14px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  text-align: center;
+  color: #000000;
+}
