@@ -58,9 +58,6 @@ Support for multiple handlers per route is supported in [Kitura](https://github.
 
 This route accepts a parameter in its URL and uses that parameter in it's HTML creation. It does this using a colon (:) in the URL which defines the item following it as a parameter. It then assigns this to a variable, and concatenates it into the HTML.
 
-### Many more coming soon!
-
-We are going to be adding to this Sample to show off the features in Kitura, including updating it to include the new codable routing methods available in Kitura 2. We aim for this project to be a one-stop-shop for all the Kitura demos you could need, making example code as easy as possible to find for the community.
 
 ## Testing
 To run local tests, run `swift test` from the projects directory locally.
