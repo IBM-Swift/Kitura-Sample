@@ -176,12 +176,14 @@ public struct RouterCreator {
         ]
 
         router.get("/articles") { _, response, next in
+            defer {
+                next()
+            }
             do {
                 try response.render("document", context: stencilContext).end()
             } catch {
                 Log.error("Failed to render template \(error)")
             }
-            next()
         }
 
         router.get("/articles.html") { _, response, next in
