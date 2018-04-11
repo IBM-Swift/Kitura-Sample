@@ -30,7 +30,7 @@ matrix:
       sudo: required
       env: SWIFT_SNAPSHOT=4.0.3
     - os: osx
-      osx_image: xcode9.3beta
+      osx_image: xcode9.3
       sudo: required
 
 before_install:
