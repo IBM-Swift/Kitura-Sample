@@ -22,6 +22,7 @@ import Kitura
 import KituraMarkdown
 import KituraStencil // required for using StencilTemplateEngine
 import Stencil // required for adding a Stencil namespace to StencilTemplateEngine
+import KituraWebSocket
 
 import LoggerAPI
 
@@ -85,6 +86,7 @@ public struct RouterCreator {
         router.all(middleware: BasicAuthMiddleware())
 
         router.all("/static", middleware: StaticFileServer())
+        router.all("/chat", middleware: StaticFileServer(path: "./chat"))
 
         router.get("/hello") { _, response, next in
             response.headers["Content-Type"] = "text/plain; charset=utf-8"
@@ -258,6 +260,7 @@ public struct RouterCreator {
             }
             try response.send("Caught the error: \(errorDescription)").end()
         }
+
 
         // A custom Not found handler
         router.all { request, response, next in

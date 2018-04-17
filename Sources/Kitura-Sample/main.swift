@@ -20,6 +20,7 @@ import Foundation
 
 import Kitura
 import KituraSampleRouter
+import KituraWebSocket
 
 import LoggerAPI
 import HeliumLogger
@@ -27,6 +28,8 @@ import HeliumLogger
 
 // All Web apps need a router to define routes
 let router = RouterCreator.create()
+
+WebSocket.register(service: ChatService(), onPath: "kitura-chat")
 
 // Using an implementation for a Logger
 Log.logger = HeliumLogger()

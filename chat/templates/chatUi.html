@@ -1,0 +1,64 @@
+<div position="relative">
+    <div class="participantsArea">
+        <div class="participant">
+            <div class="participantCircle localUserText">{{initials}}</div>
+            <div class="participantText">{{displayName}}</div>
+        </div>
+        <div class="participantsSeparator"></div>
+
+        <div style="overflow-y: scroll;">
+            <div ng-show="participants.length > 0">
+                <img src="images/group.svg" height="30px" width="30px"
+                     style="margin: 30px 0 0 20px; vertical-align: top;"/>
+                <div class="participantsCount">
+                    Online members ({{participants.length}})
+                </div>
+                <div style="overflow-y: scroll;">
+                    <div ng-repeat="participant in participants">
+                        <div class="participant">
+                            <div class="participantCircle remoteUserText">{{participant.initials}}</div>
+                            <div class="participantText">{{participant.displayName}}</div>
+                            <img src="images/typing.gif"
+                                 class="participantTyping" ng-show="participant.typing"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="participants.length == 0">
+                <div id="waitingMessage" style="position: absolute;" align="center">
+                    <div>
+                        <div class="clock"></div>
+                        <div class="clockHours"></div>
+                        <div class="clockMinutes"></div>
+                    </div>
+                    <div class="waitingForAddition">
+                        Waiting for additional members to join the chat
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="messagesArea"></div>
+
+    <div class="inputArea localUserText">
+        <textarea id="inputAreaField" class="inputAreaField localUserText"
+                  placeholder="Enter your message" ng-keydown="inputAreaInput($event)"></textarea>
+    </div>
+
+    <div class="coverFrame"></div>
+
+    <div class="displayNameArea">
+        <div>Please enter your display name to be used in the chat</div>
+        <form id="displayNameForm" >
+            <input type="text" ng-model="displayName" style="margin-top: 20px;"/>
+            <div style="margin-top: 20px;">
+                <button ng-click="displayNameEntered()" ng-disabled="displayName.length == 0"
+                        style="background-color: #0099e7; color: white;">
+                    OK
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
