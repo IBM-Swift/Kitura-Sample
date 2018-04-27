@@ -1,0 +1,181 @@
+
+html {
+    font-family: 'Open Sans',  sans-serif, 'helvetica Neue', Helvetica, Arial, "Lucida Grande";
+    height:100%;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+}
+
+.header {
+    width: 100%;
+    height: 60px;
+    background: white;
+    position: fixed;
+    top: 0;
+    overflow: hidden;
+    border-bottom: 1px solid rgb(240, 240, 240);
+    z-index: 2;
+    
+}
+
+.header img {
+    float: left;
+    padding-top: 10px;
+    padding-left: 40px;
+    padding-right: 10px;
+    width: 40px;
+}
+
+.header h2 {
+    color: rgb(40, 40, 40);
+    margin-top: 0;
+    padding-top: 15px;
+    font-size: 20px;
+    font-weight: 100;
+}
+
+.homeLink {
+    text-decoration: none;
+}
+
+.socialLinks {
+    float: right;
+    margin-top: 5px;
+}
+
+.socialLinks img {
+    width: 30px;
+    margin-top: 10px;
+    padding-top: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-right: 20px;
+}
+
+.sidebar {
+    position: absolute;
+    width: 20%;
+    height: 100%;
+    min-width: 20%;
+    margin: 0;
+    z-index: 0;
+}
+
+.sidebar ul {
+    padding-top: 20px;
+    list-style-type: none;
+    text-decoration: none;
+    background: rgb(0, 188, 228);
+    margin: 0; 
+    width: 85%;
+    height: 100%;
+    color: white;
+    word-wrap: normal;
+    padding-right: 40px;
+    overflow: auto;
+    border-right: 1px solid rgb(240, 240, 240);
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.sidebar p {
+    padding-top: 5px;
+    margin: auto;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.list {
+    margin: 35px -10px;
+}
+
+.kituraio {
+    margin: 1px -10px 1px;
+    position: relative;
+}
+
+.kituraio p {
+    font-size: 10px;
+}
+
+.mainPane {
+    margin-top: 60px;
+    height: 100% !important;
+    margin-left: 5%;
+}
+
+
+
+#fillerTitle {
+    text-align:center;
+    display: block;
+    vertical-align: baseline;
+    margin-left: 20%;
+    padding-top: 20%;
+    color: rgba(40, 40, 40, 0.65);
+    font-weight: 200;
+}
+
+
+#innerPage {
+    width: 75%;
+    margin-left: 20%;
+    margin-right: 5%;
+    height: 90%;
+    margin-bottom: 0px;
+    z-index: -2;
+    padding-top: 10px;
+    display: block;
+    height: 90% !important;
+}
+
+
+
+.button {
+    width: 100%;
+    background: rgb(0, 168, 204);
+    color: white;
+    border: 1px solid white;
+    padding-bottom: 8px;
+    padding-top: 6px;
+}
+
+.button p {
+    font-family: 'Open Sans';
+    font-size: 1.3em;
+}
+
+.button:hover {
+    background: rgb(0, 138, 180);
+}
+
+.button-kituraio {
+    width: 100%;
+    background: white;
+    color: black;
+    border: 1px solid black;
+    padding-bottom: 8px;
+    padding-top: 6px;
+}
+
+.button-kituraio p {
+    font-family: 'Open Sans';
+        font-size: 1.3em;
+
+}
+
+.button-kituraio:hover {
+    background: rgb(220,220,220);
+}
+
+.sidebar-mobile  {
+    display: none;
+}

@@ -1,0 +1,115 @@
+
+html {
+    font-family: 'Open Sans', 'helvetica Neue', Helvetica, Arial, sans-serif;
+    height:100%;
+
+}
+
+body {
+    margin: 0px;
+    padding: 0
+}
+
+.header {
+    height: 60px;
+    background: white;
+    position: fixed;
+    top: 0;
+    border-bottom: 1px solid rgb(240 240, 240);
+    z-index: 2;
+}
+
+.header img {
+    float: left;
+    padding-top: 10px;
+    padding-left: 12px;
+    width: 40px;
+}
+
+.header h2 {
+    color: black;
+    margin-top: 0;
+    padding-top: 15px;
+    font-weight: 300;
+    font-size: 1.5em;
+}
+
+.socialLinks {
+    display: none;
+}
+
+.socialLinks img {
+    display: none;
+}
+
+.sidebar {
+    display: none;
+}
+
+.sidebar-mobile {
+    display: inline-block;
+    width: 100vw;
+    background: rgb(0, 188, 228);
+    z-index: 0;
+    margin: 0;
+    padding: 0;
+    align-content: center;
+    text-align: center;
+}
+
+.sidebar-mobile ul {
+    padding-top: 80px;
+    list-style-type: none;
+    text-decoration: none;
+    background: rgb(0, 188, 228);
+    margin: 0; 
+    height: 100%;
+    color: white;
+    word-wrap: normal;
+    padding-right: 40px;
+    border-right: 1px solid rgb(240, 240, 240);
+    text-align: center;
+    align-content: center;
+    padding: auto;
+    margin: 0px;
+    padding-bottom: 40px;
+}
+
+.sidebar-mobile a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.sidebar-mobile p {
+    display: absolute;
+}
+
+.mainPane {
+    display: none;
+}
+
+.mainPane h1 {
+
+    display: none;
+}
+
+.mainPane img {
+    display: none;
+    
+}
+
+#innerPage {
+    display: none;
+}
+
+#fillerTitle {
+    display: none;
+}
+
+.button {
+    width: 100%;
+}
+
+

@@ -88,6 +88,17 @@ public struct RouterCreator {
 
         router.all("/static", middleware: StaticFileServer())
         router.all("/chat", middleware: StaticFileServer(path: "./chat"))
+        
+        router.all("/", middleware: StaticFileServer(path: "./Views"))
+        router.get("/") { request, response, next in
+            response.headers["Content-Type"] = "text/html; charset=utf-8"
+            do {
+                try response.render("home.stencil", context: [String: Any]()).end()
+            } catch {
+                Log.error("Failed to render template \(error)")
+            }
+            
+        }
 
         router.get("/hello") { _, response, next in
             response.headers["Content-Type"] = "text/plain; charset=utf-8"
@@ -120,6 +131,9 @@ public struct RouterCreator {
             Log.error("Example of error being set")
             response.status(.internalServerError)
             response.error = SampleError.sampleError
+            // Set status code to 200, because status code 500 doesn't display the message in a web
+            // broswer window.
+            response.statusCode = .OK
             next()
         }
 
@@ -163,7 +177,7 @@ public struct RouterCreator {
         }
 
         let templateEngine = StencilTemplateEngine(extension: _extension)
-        router.setDefault(templateEngine: templateEngine)
+        //router.setDefault(templateEngine: templateEngine)
         router.add(templateEngine: templateEngine,
                    forFileExtensions: ["html"])
 
@@ -180,7 +194,7 @@ public struct RouterCreator {
                 next()
             }
             do {
-                try response.render("document", context: stencilContext).end()
+                try response.render("document.stencil", context: stencilContext).end()
             } catch {
                 Log.error("Failed to render template \(error)")
             }
@@ -236,13 +250,17 @@ public struct RouterCreator {
         // Add KituraMarkdown as a TemplateEngine
         router.add(templateEngine: KituraMarkdown())
 
+        router.setDefault(templateEngine: KituraMarkdown())
+        
         router.get("/docs") { _, response, next in
+            response.headers["Content-Type"] = "text/html"
             try response.render("/docs/index.md", context: [String:Any]())
             response.status(.OK)
             next()
         }
 
         router.get("/docs/*") { request, response, next in
+            response.headers["Content-Type"] = "text/html"
             if request.urlURL.path != "/docs/" {
                 try response.render(request.urlURL.path, context: [String:Any]())
                 response.status(.OK)
@@ -269,7 +287,7 @@ public struct RouterCreator {
                 // Remove this wrapping if statement, if you want to handle requests to / as well
                 let path = request.urlURL.path
                 if  path != "/" && path != ""  {
-                    try response.status(.notFound).send("Route not found in Sample application!").end()
+                    try response.status(.notFound).send("404: Route not found in Sample application!").end()
                 }
             }
             next()
