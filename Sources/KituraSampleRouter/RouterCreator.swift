@@ -217,7 +217,7 @@ public struct RouterCreator {
                 next()
             }
             do {
-                try response.render("subdirectory/documentInSubdirectory",
+                try response.render("subdirectory/documentInSubdirectory.stencil",
                                     context: stencilContext).end()
             } catch {
                 Log.error("Failed to render template \(error)")
@@ -229,7 +229,7 @@ public struct RouterCreator {
                 next()
             }
             do {
-                try response.render("includingDocument",
+                try response.render("includingDocument.stencil",
                                     context: stencilContext).end()
             } catch {
                 Log.error("Failed to render template \(error)")
@@ -241,7 +241,7 @@ public struct RouterCreator {
                 next()
             }
             do {
-                try response.render("customTag", context: [:]).end()
+                try response.render("customTag.stencil", context: [:]).end()
             } catch {
                 Log.error("Failed to render template \(error)")
             }
@@ -287,7 +287,7 @@ public struct RouterCreator {
                 // Remove this wrapping if statement, if you want to handle requests to / as well
                 let path = request.urlURL.path
                 if  path != "/" && path != ""  {
-                    try response.status(.notFound).send("404: Route not found in Sample application!").end()
+                    try response.status(.notFound).send("Route not found in Sample application!").end()
                 }
             }
             next()

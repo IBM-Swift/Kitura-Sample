@@ -117,7 +117,7 @@ class KituraSampleTests: KituraTest {
     func testGetError() {
         runGetResponseTest(path: "/error",
                            expectedResponseText: "Caught the error: Example of error being set",
-                           expectedStatusCode: HTTPStatusCode.internalServerError)
+                           expectedStatusCode: HTTPStatusCode.OK)
     }
 
     func testMulti() {
@@ -237,7 +237,7 @@ class KituraSampleTests: KituraTest {
     }
 
     func testDefaultPage() {
-        runTestThatCorrectHTMLTitleIsReturned(expectedTitle: "Kitura", path: "")
+        runTestThatCorrectHTMLTitleIsReturned(expectedTitle: "Kitura Sample", path: "")
     }
 
     private func runTestUser(expectedUser: String, expectation: XCTestExpectation) {
