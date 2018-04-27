@@ -93,12 +93,13 @@ public struct RouterCreator {
         router.get("/") { request, response, next in
             response.headers["Content-Type"] = "text/html; charset=utf-8"
             do {
-                try response.render("home.stencil", context: [String: Any]()).end()
+                try response.render("home.html", context: [String: Any]()).end()
             } catch {
                 Log.error("Failed to render template \(error)")
             }
-            
+
         }
+
 
         router.get("/hello") { _, response, next in
             response.headers["Content-Type"] = "text/plain; charset=utf-8"
@@ -177,7 +178,6 @@ public struct RouterCreator {
         }
 
         let templateEngine = StencilTemplateEngine(extension: _extension)
-        //router.setDefault(templateEngine: templateEngine)
         router.add(templateEngine: templateEngine,
                    forFileExtensions: ["html"])
 
