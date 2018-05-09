@@ -49,7 +49,9 @@ class KituraSampleTests: KituraTest {
             ("testPutHello", testPutHello),
             ("testDeleteHello", testDeleteHello),
             ("testPostPutDeletePostHello", testPostPutDeletePostHello),
-            ("testPutPostDeletePutHello", testPutPostDeletePutHello)
+            ("testPutPostDeletePutHello", testPutPostDeletePutHello),
+            ("testCodableGet", testCodableGet),
+            ("testCodablePost", testCodablePost),
         ]
     }
 
@@ -338,4 +340,84 @@ class KituraSampleTests: KituraTest {
             self.runTestUser(expectedUser: "Bob", expectation: expectation)
         })
     }
+
+    func testCodableGet() {
+        let book: Book = Book(name: "Sample", author: "zzz", rating: 5)
+        runGetCodableResponseTest(path: "/books", expectedResponse: book)
+    }
+
+    func testCodablePost() {
+        let book: String = "{\"name\": \"xxx\",\"author\": \"yyy\",\"rating\": 4}"
+        performServerTest(asyncTasks: { expectation in
+            self.runTestSubmitBook(method: "post", book: book, expectation: expectation)
+        }, { expectation in
+            self.runGetBook(method: "get", expectation: expectation)
+        })
+    }
+
+    private func runGetCodableResponseTest(path: String, expectedResponse: Book? = nil, expectedStatusCode: HTTPStatusCode = HTTPStatusCode.OK) {
+        performServerTest { expectation in
+            self.performRequest("get", path: path, expectation: expectation) { response in
+                self.checkCodableResponse(response: response, expectedResponse: expectedResponse,
+                expectedStatusCode: expectedStatusCode)
+                expectation.fulfill()
+           }
+        }
+    }
+
+    private func runTestSubmitBook(method: String, book: String? = nil, expectation: XCTestExpectation) {
+        self.performRequestSynchronous(method, path: "/books", expectation: expectation, headers: ["Content-Type":"application/json"],requestModifier: { request in request.write(from: book!)}) { response, dispatchGroup in
+                let expectedBook: Book = Book(name: "xxx", author: "yyy", rating: 4)
+                self.checkCodableResponse(response: response, expectedResponse: expectedBook, expectedStatusCode: HTTPStatusCode.created)
+                dispatchGroup.leave()
+                expectation.fulfill()
+        }
+    }
+
+    private func runGetBook(method: String, expectation: XCTestExpectation) {
+        self.performRequestSynchronous(method, path: "/books", expectation: expectation, headers: ["Content-Type":"application/json"]) {
+            response, dispatchGroup in
+            let book: Book = Book(name: "xxx", author: "yyy", rating: 4)
+            self.checkCodableResponse(response: response,
+                               expectedResponse: book)
+            dispatchGroup.leave()
+            expectation.fulfill()
+        }
+    }
+
+    private func checkCodableResponse(response: ClientResponse, expectedResponse: Book? = nil,
+                               expectedStatusCode: HTTPStatusCode = HTTPStatusCode.OK) {
+        XCTAssertEqual(response.statusCode, expectedStatusCode,
+                       "No success status code returned")
+        if let optionalBody = try? response.readString(), let body = optionalBody {
+            var responseString = body
+            if(responseString.hasPrefix("[")) {
+                responseString.removeFirst()
+                responseString.removeLast()
+            }
+            if responseString == "" {
+                XCTAssertNil(expectedResponse)
+            } else {
+                let json = responseString.data(using: .utf8)!
+                do {
+                    let myStruct = try JSONDecoder().decode(Book.self, from: json)
+                    if let expectedBook = expectedResponse {
+                        XCTAssertEqual(myStruct.name, expectedBook.name)
+                        XCTAssertEqual(myStruct.author, expectedBook.author)
+                        XCTAssertEqual(myStruct.rating, expectedBook.rating)
+                    }
+                } catch {
+                    print("Error")
+                }
+            }
+            } else {
+                XCTFail("No response body")
+        }
+    }
+}
+
+struct Book: Decodable {
+    let name: String
+    let author: String
+    let rating: Int
 }

@@ -23,7 +23,7 @@ import KituraMarkdown
 import KituraStencil // required for using StencilTemplateEngine
 import Stencil // required for adding a Stencil namespace to StencilTemplateEngine
 import KituraWebSocket
-
+import KituraContracts
 import LoggerAPI
 
 #if os(Linux)
@@ -34,6 +34,8 @@ import LoggerAPI
 enum SampleError: Error {
     case sampleError
 }
+
+private var bookStore: [String: Book] = [:]
 
 let customParameterHandler: RouterHandler = { request, response, next in
     let id = request.parameters["id"] ?? "unknown"
@@ -267,6 +269,28 @@ public struct RouterCreator {
             next()
         }
 
+        //Codable route for post
+        router.post("/books", handler: persistBookHandler)
+
+        //Codable route for get with and without parameters
+        router.get("/books") { (query: BookQuery, respondWith: ([Book]?, RequestError?) -> Void) in
+            // Filter data using query parameters provided to the application
+            var books: [Book]
+            if let bookName = query.name {
+                books = bookStore.map({ $0.value }).filter( {
+                    ( $0.name == bookName )
+                })
+            } else {
+                books = bookStore.map({ $0.value })
+            }
+            if books.count == 0 {
+                let book = Book(name: "Sample", author: "zzz", rating: 5)
+                books = [book!]
+            }
+            // Return list of books
+            respondWith(books, nil)
+        }
+
         // Handles any errors that get set
         router.error { request, response, next in
             response.headers["Content-Type"] = "text/plain; charset=utf-8"
@@ -294,4 +318,9 @@ public struct RouterCreator {
 
         return router
     }
+}
+
+func persistBookHandler(book: Book, completion: (Book?, RequestError?) -> Void ) {
+    bookStore[book.name] = book
+    completion(bookStore[book.name], nil)
 }

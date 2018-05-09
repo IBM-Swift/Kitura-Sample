@@ -22,7 +22,7 @@
       
     <div class="sidebar">
         <ul>                  
-            <li style="margin: 5px -10px"><button class="button" onclick="loadInnerPage('./hello')">./hello<p>Simple Hello World response in a browser window.</p></button></li>
+            <li style="margin: 5px -15px"><button class="button" onclick="loadInnerPage('./hello')">./hello<p>Simple Hello World response in a browser window.</p></button></li>
 
             <li class="list"><button class="button" onclick="loadInnerPage('./multi')">./multi<p>Multiple response handlers working together, in sequence.</p></button></li>
 
@@ -34,13 +34,15 @@
             
             <li class="list"><button class="button" onclick="loadInnerPage('./chat')">./chat<p>Kitura WebSockets demo using a Chat Room application.</p></button></li>
             
+            <li class="list"><button class="button" onclick="loadInnerPage('./books')">./books<p>Codable route demo of fetching a struct object book.</p></button></li>
+
             <li class="kituraio"><button class="button-kituraio" onclick="window.open('http://kitura.io')">www.kitura.io<p>Open Kitura.io in a new tab.</p></button></li>
         </ul>
     </div>
       
     <div class="sidebar-mobile">
         <ul>                  
-            <li style="margin: 5px -10px"><button class="button" onclick="window.open('./hello')">./hello<p>Simple Hello World response in a new browser tab.</p></button></li>
+            <li style="margin: 5px -15px"><button class="button" onclick="window.open('./hello')">./hello<p>Simple Hello World response in a new browser tab.</p></button></li>
 
             <li class="list"><button class="button" onclick="window.open('./multi')">./multi<p>Multiple response handlers working together, in sequence.</p></button></li>
 
@@ -51,6 +53,8 @@
             <li class="list"><button class="button" onclick="window.open('./error')">./error<p>Displays an error message in a new tab.</p></button></li>
             
             <li class="list"><button class="button" onclick="window.open('./chat')">./chat<p>Kitura WebSockets demo using a Chat Room application.</p></button></li>
+
+            <li class="list"><button class="button" onclick="loadInnerPage('./books')">./books<p>Codable route demo of fetching a struct object book.</p></button></li>
             
             <li class="kituraio"><button class="button-kituraio" onclick="window.open('http://kitura.io')">www.kitura.io<p>Open Kitura.io in a new tab.</p></button></li>
         </ul>
