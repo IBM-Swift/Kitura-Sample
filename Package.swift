@@ -22,7 +22,7 @@ import PackageDescription
 let package = Package(
     name: "Kitura-Sample",
     dependencies: [
-        .package(url: "https://github.com/IBM-Swift/Kitura.git", from: "2.4.0"),
+        .package(url: "https://github.com/IBM-Swift/Kitura.git", from: "2.3.0"),
         .package(url: "https://github.com/IBM-Swift/HeliumLogger.git", from: "1.7.1"),
         .package(url: "https://github.com/IBM-Swift/CloudEnvironment.git", from: "8.0.0"),
         .package(url: "https://github.com/RuntimeTools/SwiftMetrics.git", from: "2.0.0"),
@@ -36,6 +36,6 @@ let package = Package(
         .target(name: "Kitura-Sample", dependencies: [ .target(name: "Application"), .target(name: "ChatService"), "Kitura" , "HeliumLogger"]),
         .target(name: "Application", dependencies: [ "Kitura", "CloudEnvironment","SwiftMetrics","Health", "KituraOpenAPI", "KituraMarkdown", "KituraStencil"]),
         .target(name: "ChatService", dependencies: ["Kitura-WebSocket"]),
-      .testTarget(name: "KituraSampleRouterTests" , dependencies: [.target(name: "Application"), "Kitura","HeliumLogger" ])
+        .testTarget(name: "KituraSampleRouterTests" , dependencies: [.target(name: "Application"), "Kitura","HeliumLogger" ])
     ]
 )
