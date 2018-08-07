@@ -207,7 +207,7 @@ class KituraTest: XCTestCase {
         }
     }
     
-    func runGetCodableResponseTest(path: String, expectedResponse: Book? = nil, expectedStatusCode: HTTPStatusCode = HTTPStatusCode.OK) {
+    func runGetCodableResponseTest(path: String, expectedResponse: [Book]? = nil, expectedStatusCode: HTTPStatusCode = HTTPStatusCode.OK) {
         performServerTest { expectation in
             self.performRequest("get", path: path, expectation: expectation) { response in
                 self.checkCodableResponse(response: response, expectedResponse: expectedResponse,
@@ -217,26 +217,19 @@ class KituraTest: XCTestCase {
         }
     }
     
-    func checkCodableResponse(response: ClientResponse, expectedResponse: Book? = nil,
+    func checkCodableResponse(response: ClientResponse, expectedResponse: [Book]? = nil,
                               expectedStatusCode: HTTPStatusCode = HTTPStatusCode.OK) {
         XCTAssertEqual(response.statusCode, expectedStatusCode,
                        "No success status code returned")
         if let optionalBody = try? response.readString(), let body = optionalBody {
-            var responseString = body
-            if(responseString.hasPrefix("[")) {
-                responseString.removeFirst()
-                responseString.removeLast()
-            }
-            if responseString == "" {
+            if body.isEmpty {
                 XCTAssertNil(expectedResponse)
             } else {
-                let json = responseString.data(using: .utf8)!
+                let json = body.data(using: .utf8)!
                 do {
-                    let myStruct = try JSONDecoder().decode(Book.self, from: json)
-                    if let expectedBook = expectedResponse {
-                        XCTAssertEqual(myStruct.name, expectedBook.name)
-                        XCTAssertEqual(myStruct.author, expectedBook.author)
-                        XCTAssertEqual(myStruct.rating, expectedBook.rating)
+                    let myStruct = try JSONDecoder().decode([Book].self, from: json)
+                    if let expectedBooks = expectedResponse {
+                        XCTAssertTrue(myStruct.elementsEqual(expectedBooks))
                     }
                 } catch {
                     print("Error")

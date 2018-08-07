@@ -31,7 +31,7 @@ class TestCodableRoutes: KituraTest {
         let book: Book = Book(name: "Sample", author: "zzz", rating: 5)
         performServerTest { expectation in
             self.performRequest("get", path: "/books", expectation: expectation) { response in
-                self.checkCodableResponse(response: response, expectedResponse: book)
+                self.checkCodableResponse(response: response, expectedResponse: [book])
                 expectation.fulfill()
             }
         }
@@ -39,12 +39,12 @@ class TestCodableRoutes: KituraTest {
     
     func testCodablePost() {
         let book: String = "{\"name\": \"xxx\",\"author\": \"yyy\",\"rating\": 4}"
-        let expectedBook: Book = Book(name: "xxx", author: "yyy", rating: 4)
+        let expectedBooks: [Book] = [Book(name: "Sample", author: "zzz", rating: 5), Book(name: "xxx", author: "yyy", rating: 4)]
         performServerTest(asyncTasks: { expectation in
             self.performRequest("post", path: "/books", body: book, expectation: expectation, headers: ["Content-Type":"application/json"]) { response in
-                self.checkCodableResponse(response: response, expectedResponse: expectedBook, expectedStatusCode: HTTPStatusCode.created)
+                self.checkCodableResponse(response: response, expectedResponse: expectedBooks, expectedStatusCode: HTTPStatusCode.created)
                 self.performRequest("get", path: "/books", expectation: expectation, headers: ["Content-Type":"application/json"]) { response in
-                    self.checkCodableResponse(response: response, expectedResponse: expectedBook)
+                    self.checkCodableResponse(response: response, expectedResponse: expectedBooks)
                     expectation.fulfill()
                 }
             }
@@ -53,8 +53,15 @@ class TestCodableRoutes: KituraTest {
 }
 
 
-struct Book: Decodable {
+struct Book: Decodable, Equatable {
+    
     let name: String
     let author: String
     let rating: Int
+    
+    static func ==(lhs: Book, rhs: Book) -> Bool {
+        return lhs.name == rhs.name &&
+            lhs.author == rhs.author &&
+            lhs.rating == rhs.rating
+    }
 }
