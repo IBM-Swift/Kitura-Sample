@@ -49,7 +49,7 @@ extension App {
     func getBooks() -> [Book] {
         bookSemaphore.wait()
         let safeBooks = bookStore
-        nameSemaphore.signal()
+        bookSemaphore.signal()
         return safeBooks
     }
 }
