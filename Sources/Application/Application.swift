@@ -38,7 +38,6 @@ public class App {
     public init() throws {
         // Run the metrics initializer
         initializeMetrics(router: router)
-        KituraOpenAPI.addEndpoints(to: router)
     }
     
     func postInit() throws {
@@ -53,6 +52,7 @@ public class App {
         initializeStaticFileServers(app: self)
         initializeMiscRoutes(app: self)
         initializeNotFoundRoute(app: self)
+        KituraOpenAPI.addEndpoints(to: router)
     }
     
     public func run() throws {
