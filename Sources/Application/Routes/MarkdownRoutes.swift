@@ -21,15 +21,24 @@ func initializeMarkdownRoutes(app: App) {
     app.router.add(templateEngine: KituraMarkdown())
 
     app.router.setDefault(templateEngine: KituraMarkdown())
+    
+
+    app.router.get("/docs") { _, response, next in
+        response.headers["Content-Type"] = "text/html"
+        try response.render("/docs/index.md", context: [String:Any]())
+        try response.status(.OK).end()
+
+    }
 
     app.router.get("/docs/*") { request, response, next in
         response.headers["Content-Type"] = "text/html"
-        if request.urlURL.path == "/docs/" || request.urlURL.path == "/docs" {
+        if request.urlURL.path == "/docs" {
             try response.render("/docs/index.md", context: [String:Any]())
             response.status(.OK)
         }else {
             try response.render(request.urlURL.path, context: [String:Any]())
             response.status(.OK)
         }
+        try response.end()
     }
 }
