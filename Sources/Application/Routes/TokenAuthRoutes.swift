@@ -38,6 +38,7 @@ func initializeTokenAuthRoutes(app: App) {
     app.router.get("/typesafemultitoken", handler: app.tsMultiHandler)
     
     // Oauth tokens in raw routes
+    
     // Initialize credentials
     let tokenCredentials = Credentials()
     
@@ -49,6 +50,8 @@ func initializeTokenAuthRoutes(app: App) {
 }
 
 extension App {
+    // Oauth token handlers in Codable routes
+    
     func tsGoogleHandler(user: GoogleTokenProfile, respondWith: (GoogleTokenProfile?, RequestError?) -> Void) {
         Log.verbose("User \(user.name) authenticated with type-safe Google token authentication")
         respondWith(user, nil)
@@ -64,6 +67,7 @@ extension App {
         respondWith(user, nil)
     }
     
+    // Oauth token handlers in raw routes
     func rawHandler(request: RouterRequest, response: RouterResponse, next: () -> Void) throws -> Void {
             // If there is no userProfile they failed authentication
             guard let userProfile = request.userProfile else {

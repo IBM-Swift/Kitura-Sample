@@ -91,8 +91,19 @@
          If you provide a valid token you will be authenticated with the third party provider. <br>
          If the token is not valid the request will be rejected. <br>
       </p>
-      <p>Create a google user access token using the <a href="https://developers.google.com/oauthplayground/" target="_blank">google oauth playground</a>.</p>
-      <p>Create a facebook user access token using the <a href="https://developers.facebook.com/tools/explorer" target="_blank">facebook tools explorer</a>.</p>
+      <h2>
+          Create your access tokens
+      </h2>
+      <p>
+        This step would normally performed by logging into <a href="https://developers.facebook.com/docs/facebook-login/ios/" target="_blank">Facebook</a>
+        /<a href="https://developers.google.com/identity/sign-in/ios/backend-auth" target="_blank">Google</a>
+        in your mobile application. <br>
+      </p>
+      <p>Create a google user access token using the <a href="https://developers.google.com/oauthplayground/" target="_blank">google oauth playground</a>.<br>
+         Create a facebook user access token using the <a href="https://developers.facebook.com/tools/explorer" target="_blank">facebook tools explorer</a>.</p>
+      <h2>
+          Access the protected routes
+      </h2>
      <ul><li>
          <p>View your public google profile by sending a token via HTTP GET request to &quot;/typesafegoogletoken&quot;</p>
          <form action="" method="get" id="tsgoogle_form">
