@@ -19,6 +19,13 @@ import SwiftKueryORM
 import SwiftKueryPostgreSQL
 import LoggerAPI
 
+/*
+ You need a postgresql database running locally to run these routes:
+ 
+ brew install postgresql
+ brew services start postgresql
+ createdb school
+ */
 func initializeDatabaseRoutes(app: App) {
     let pool = PostgreSQLConnection.createPool(host: "localhost", port: 5432, options: [.databaseName("school")], poolOptions: ConnectionPoolOptions(initialCapacity: 1, maxCapacity: 5, timeout: 10000))
     Database.default = Database(pool)
@@ -29,7 +36,6 @@ func initializeDatabaseRoutes(app: App) {
     }
     
     app.router.get("/grades", handler: app.loadHandler)
-    app.router.get("/grades", handler: app.getOneHandler)
     app.router.post("/grades", handler: app.postHandler)
     app.router.delete("/grades", handler: app.deleteAllHandler)
     app.router.delete("/grades", handler: app.deleteOneHandler)
@@ -38,10 +44,6 @@ func initializeDatabaseRoutes(app: App) {
 extension App {
     func loadHandler(query: GradesQuery?, completion: @escaping([Grade]?, RequestError?) -> Void) {
         Grade.findAll(matching: query, completion)
-    }
-    
-    func getOneHandler(id: Int, completion: @escaping (Grade?, RequestError?) -> Void ) {
-        Grade.find(id: id, completion)
     }
     
     func postHandler(grade: Grade, completion: @escaping (Grade?, RequestError?) -> Void ) {
