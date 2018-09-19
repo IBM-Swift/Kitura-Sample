@@ -33,7 +33,7 @@ public class App {
     let nameSemaphore = DispatchSemaphore(value: 1)
     var name: Name?
     let bookSemaphore = DispatchSemaphore(value: 1)
-    var bookStore: [Book] = [Book(name: "Sample", author: "zzz", rating: 5)!]
+    var bookStore: [Book] = [Book(name: "Sample", author: "zzz", rating: 5)]
     
     public init() throws {
         // Run the metrics initializer
@@ -48,11 +48,15 @@ public class App {
         initializeMarkdownRoutes(app: self)
         initializeErrorRoutes(app: self)
         initializeCodableRoutes(app: self)
+        initializeBasicAuthRoutes(app: self)
+        initializeTokenAuthRoutes(app: self)
+        initializeSessionsRoutes(app: self)
         initializeHealthRoutes(app: self)
         initializeOauth2Routes(app: self)
         initializeStaticFileServers(app: self)
-        initializeNotFoundRoute(app: self)
         KituraOpenAPI.addEndpoints(to: router)
+        // The not found route must be last since it matches all requests.
+        initializeNotFoundRoute(app: self)
     }
     
     public func run() throws {

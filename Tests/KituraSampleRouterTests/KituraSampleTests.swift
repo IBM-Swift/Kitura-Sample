@@ -44,6 +44,7 @@ class KituraSampleTests: KituraTest {
             ("testDefaultIndex", testDefaultIndex),
             ("testIndex", testIndex),
             ("testDefaultPage", testDefaultPage),
+            ("testMarkdownRoute", testMarkdownRoute),
         ]
     }
 
@@ -87,6 +88,28 @@ class KituraSampleTests: KituraTest {
         runGetResponseTest(path: "/multi",
                            expectedResponseText: "I'm here!\nMe too!\nI come afterward..\n")
     }
+    
+    func testMarkdownRoute() {
+        let expectedStencilResponseText = """
+        <h1>Sample documentation Table of Contents</h1>
+        <ol>
+        <li>
+        <p><a href="/docs/doc1.md">First chapter</a></p>
+        </li>
+        <li>
+        <p><a href="/docs/doc2.md">Second chapter</a></p>
+        </li>
+        </ol>\n
+        """
+
+        runGetResponseTest(path: "/docs",
+                           expectedResponseText: expectedStencilResponseText)
+        
+        runGetResponseTest(path: "/docs/",
+                           expectedResponseText: expectedStencilResponseText)
+
+    }
+
 
     func testParameter() {
         runTestParameter(user: "John")
@@ -141,7 +164,7 @@ class KituraSampleTests: KituraTest {
     func testStaticHTMLWithoutExtension() {
         runTestUnknownPath(path: "/static/test")
     }
-
+    
     func testStaticHTMLWithDifferentExtension() {
         runTestUnknownPath(path: "/static/test.htm")
     }

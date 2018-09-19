@@ -27,30 +27,6 @@ public struct Book: Codable {
     var author: String
     var rating: Int
     
-    //MARK: Initialization
-    
-    init?(name: String, author: String, rating: Int) {
-        
-        // The name must not be empty
-        guard !name.isEmpty else {
-            return nil
-        }
-        
-        // The rating must be between 0 and 5 inclusively
-        guard 0...5 ~= rating else {
-            return nil
-        }
-        
-        // Initialization should fail if there is no author or if the rating is negative.
-        if author.isEmpty || rating < 0  {
-            return nil
-        }
-        
-        // Initialize stored properties.
-        self.name = name
-        self.author = author
-        self.rating = rating
-    }
 }
 
 public struct BookQuery: QueryParams {

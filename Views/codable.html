@@ -108,7 +108,7 @@ $(document).ready(function(){
            url: '/books',
            type: 'DELETE',
            success: function(data,status){
-               alert("Server response data: " + data + "\nStatus: " + status);
+               alert("Server successfully deleted \nStatus: " + status);
            }
          });
      });
@@ -121,12 +121,13 @@ $(document).ready(function(){
          This page will send HTTP requests to the "/books" route
          of the Kitura sample server.<br> The server will then process the
          incoming request to return or change the global "Books" dictionary.<br>
-         This is a demonstration of Codable routing in Kitura.
+         This is a demonstration of Codable routing in Kitura.<br>
+         <a href="https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/CodableRoutes.swift" target="_blank">View the code</a>
       </p>
+
      <ul><li>
          <p>Send an HTTP GET request to &quot;/books&quot; to receive an array of books</p>
          <input type="button" value="GET to &quot;/books&quot;" id="getButton" >
-         </button>
      </li></ul>
      <ul><li>
          <p>Add a book by sending a JSON-encoded HTTP POST request to &quot;/books&quot;</p>
@@ -139,7 +140,7 @@ $(document).ready(function(){
      </li></ul>
      <ul><li>
          <p>Add a book by sending a URL-encoded HTTP POST request to &quot;/books&quot;</p>
-         <form action="/books" method="post" enctype="application/x-www-form-urlencoded">
+         <form action="" method="post" id="urlencoded_post_form">
              Name: <input type="text" name="name" required="required"><br>
              author: <input type="text" name="author" required="required"><br>
              rating: <input type="number" name="rating" required="required" min="1" max="5"><br>

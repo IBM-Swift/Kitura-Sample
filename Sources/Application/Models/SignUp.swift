@@ -14,6 +14,7 @@
  * limitations under the License.
  **/
 
-public struct Name: Codable {
-    let name: String
+public struct SignUp: Codable {
+    let username: String
+    let password: String
 }
