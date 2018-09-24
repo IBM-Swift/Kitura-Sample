@@ -17,12 +17,22 @@
 html {
     font-family: 'Open Sans',  sans-serif, 'helvetica Neue', Helvetica, Arial, "Lucida Grande";
     height:100%;
+    background: rgb(242, 242, 245);
 }
 
 body {
     margin: 0;
     height: 100%;
+    background: rgb(242, 242, 245);
 }
+
+/*.anim-type{
+  animation: typewriter 4s steps(65) 0s 1 normal both
+}
+@keyframes typewriter{
+  from{width: 0;}
+  to{width: 24em;}
+}*/
 
 .header {
     width: 100%;
@@ -33,7 +43,11 @@ body {
     overflow: hidden;
     border-bottom: 1px solid rgb(240, 240, 240);
     z-index: 2;
-    
+
+}
+
+.shifted img {
+  margin-top: 14px;
 }
 
 .header img {
@@ -45,11 +59,11 @@ body {
 }
 
 .header h2 {
-    color: rgb(40, 40, 40);
+    color: rgb(80, 80, 90);
     margin-top: 0;
     padding-top: 15px;
     font-size: 20px;
-    font-weight: 100;
+    font-weight: bold;
 }
 
 .homeLink {
@@ -83,15 +97,21 @@ body {
     padding-top: 20px;
     list-style-type: none;
     text-decoration: none;
-    background: rgb(0, 188, 228);
-    margin: 0; 
+    background: rgb(242, 242, 245);
+    /*background: rgb(98, 182, 245);*/
+    margin: 0;
     width: 85%;
     height: 100%;
     color: white;
     word-wrap: normal;
     padding-right: 40px;
-    overflow: auto;
-    border-right: 1px solid rgb(240, 240, 240);
+    overflow: scroll;
+    border-right: 1px solid rgb(242, 242, 240);
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
 }
 
 .sidebar a {
@@ -123,11 +143,10 @@ body {
 
 .mainPane {
     margin-top: 60px;
-    height: 100% !important;
+    height: 100%;
     margin-left: 5%;
+      background: rgb(242, 242, 245);
 }
-
-
 
 #fillerTitle {
     text-align:center;
@@ -135,41 +154,248 @@ body {
     vertical-align: baseline;
     margin-left: 20%;
     padding-top: 20%;
-    color: rgba(40, 40, 40, 0.65);
     font-weight: 200;
+    font-size: 1.4em;
+    color: rgb(100, 100, 112);
+    background: rgb(242, 242, 245);
 }
 
 
 #innerPage {
     width: 75%;
-    margin-left: 20%;
-    margin-right: 5%;
-    height: 90%;
+    margin-left: 24%;
+    margin-right: 10%;
+    height: 100%;
     margin-bottom: 0px;
     z-index: -2;
     padding-top: 10px;
     display: block;
-    height: 90% !important;
+    height: 100% !important;
 }
 
 
 
 .button {
     width: 100%;
-    background: rgb(0, 168, 204);
+    background: white;
+    /*background: rgb(98, 182, 245);*/
+    color: rgb(140, 140, 144);
+    border: 0.8px solid white;
+    padding: 15px;
+    font-size: 0.8em;
+    text-align: left;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.04), 0 14px 16px 0 rgba(0, 0, 0, 0.04);
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.6s;
+}
+
+
+.grayscale {
+  filter: grayscale(100%);
+  transition-duration: 0.4s;
+}
+.grayscale:hover {
+  filter: grayscale(0%);
+}
+
+.mainTitle {
+  padding-left: 30px;
+  font-weight: bold;
+}
+
+p {
+    color: rgb(90, 90, 94);
+    font-size: 1em;
+}
+
+h2 {
+    color: rgb(80, 80, 90);
+    font-size: 1.5em;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: bold;
+}
+
+input[type=text] {
+    padding:5px;
+    border:0px solid #ccc;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: rgb(224, 224, 229);
+    transition-duration: 0.6s;
+}
+
+input[type=text]:hover {
+    background: white;
+    outline: none;
+    border:0px solid #ccc;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.06), 0 10px 8px 0 rgba(0, 0, 0, 0.03);
+}
+
+input[type=text]:focus {
+    background: white;
+    outline: none;
+    border:0px solid #ccc;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.06), 0 10px 8px 0 rgba(0, 0, 0, 0.03);
+}
+
+input[type=button] {
+    padding:10px 15px;
+    background: white;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    font-size: 0.7em;
+    font-weight: bold;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.06), 0 10px 8px 0 rgba(0, 0, 0, 0.03);
+}
+
+input[type=button]:hover {
+    padding:10px 15px;
+    background: white;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 14px 12px 0 rgba(0, 0, 0, 0.07);
+}
+
+input[type=number] {
+    padding:5px 10px;
+    background: rgb(224, 224, 229);
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    transition-duration: 0.4s;
+    font-size: 0.7em;
+}
+
+input[type=number]:hover {
+    outline: none;
+    padding:5px 10px;
+    background: white;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.06), 0 10px 8px 0 rgba(0, 0, 0, 0.03);
+    background: white;
+}
+
+input[type=number]:focus {
+    outline: none;
+    padding:5px 15px;
+    background: white;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.06), 0 10px 8px 0 rgba(0, 0, 0, 0.03);
+    background: white;
+}
+
+
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    cursor:pointer;
+    display:block;
+    width:10px;
     color: white;
-    border: 1px solid white;
-    padding-bottom: 8px;
-    padding-top: 6px;
+    text-align:center;
+    position:relative;
+    right: 0px;
+    padding: 0px;
+    background: rgb(224, 224, 229);
+}
+input[type=number]:hover::-webkit-inner-spin-button {
+    background: #eee url('http://i.stack.imgur.com/YYySO.png') no-repeat 75% 25%;
+    width: 10px;
+    height: 20px;
+    padding: 0px;
+    position: relative;
+    right: 0px;
+    border-radius: 0px;
+    background: white;
+}
+
+label {
+  display: inline-block;
+  width: 80px;
+  text-align: left;
+}
+
+a:link {
+    color: rgb(76, 160, 225);
+    text-decoration: none;
+    transition-duration: 0.4s;
+}
+
+a:visited {
+    color: rgb(76, 160, 225);
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+li {
+  color: rgb(156, 156, 166);
+ list-style-type: none;
+ margin-bottom: 50px;
+}
+
+.inLink {
+border: 1px solid rgb(76, 160, 225);
+padding-left: 10px;
+padding-right: 10px;
+padding-top: 5px;
+padding-bottom: 5px;
+border-radius: 12px;
+}
+
+.inLink:hover {
+background: rgb(76, 160, 225);
+border: 1px solid rgb(76, 160, 225);
+}
+
+a:active {
+    color: rgb(76, 160, 225);
+    text-decoration: none;
 }
 
 .button p {
     font-family: 'Open Sans';
-    font-size: 1.3em;
+    color: rgb(80, 80, 84);
+    font-size: 1.2em;
+    /*font-weight: bold;*/
+    text-align: left;
 }
 
 .button:hover {
-    background: rgb(0, 138, 180);
+    /*padding-left: 20px;*/
+    color: rgb(20, 20, 24);
+    /*background: rgb(84, 170, 245);*/
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15), 0 22px 24px 0 rgba(0, 0, 0, 0.12);
+    cursor:pointer;
+}
+
+.button:active {
+    /*padding-left: 20px;*/
+    /*background: rgb(84, 170, 245);*/
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.15), 0 22px 24px 0 rgba(0, 0, 0, 0.12);
+    cursor:pointer;
+}
+
+.button p:hover {
+    color: rgb(0, 0, 0);
 }
 
 .button-kituraio {

@@ -3,6 +3,7 @@
  <head>
    <meta charset="UTF-8">
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+   <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
    <script>
    // Script to send a DELETE request to '/hello'
    $(document).ready(function(){
@@ -99,36 +100,38 @@
  <title>Hello: Raw routing</title>
  </head>
  <body>
+   <h2 class="anim-type">Hello!</h2>
      <p>
          This page will send HTTP requests to the "/hello" route
          of the Kitura sample server.<br> The server will then process the
          incoming request to return or change the global "name" variable.<br>
-         This is a demonstration of Raw routing in Kitura.<br>
-         <a href="https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/HelloRoutes.swift" target="_blank">View the code</a>
+         This is a demonstration of Raw routing in Kitura.<br><br>
+         <a href="https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/HelloRoutes.swift" target="_blank" class="inLink">View the code</a>
       </p>
+      <br>
      <ul><li>
          <p>Send an HTTP GET request to &quot;/hello&quot; to receive a greeting</p>
-         <input type="button" value="GET to &quot;/hello&quot;" id="getButton" >
+         <input type="button" value="GET to &quot;/hello&quot;" id="getButton" ><br>
          </button>
      </li></ul>
      <ul><li>
          <p>Set the username for the greeting by sending a JSON-encoded HTTP POST request to &quot;/hello&quot;</p>
          <form action="" method="post" id="json_post_form">
-             Name: <input type="text" name="name" required="required"><br>
+             Name: <input type="text" name="name" required="required"><br><br>
              <input id="submitJSONPost" type="button" name="Submit" value="Submit">
          </form>
      </li></ul>
      <ul><li>
          <p>Set the username for the greeting by sending a URL-encoded HTTP POST request to &quot;/hello&quot;</p>
          <form action="" method="post" id="urlencoded_post_form" enctype="application/x-www-form-urlencoded">
-             Name: <input type="text" name="name" required="required"><br>
+             Name: <input type="text" name="name" required="required"><br><br>
              <input id="submitURLEncodedPost" type="button" value="Submit">
          </form>
      </li></ul>
      <ul><li>
          <p>Set the username for the greeting by sending a JSON-encoded HTTP PUT request to &quot;/hello&quot;</p>
          <form action="" method="post" id="json_put_form">
-             Name: <input type="text" name="name" required="required"><br>
+             Name: <input type="text" name="name" required="required"><br><br>
              <input id="submitPut" type="button" name="Submit" value="Submit">
          </form>
      </li></ul>

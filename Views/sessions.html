@@ -2,6 +2,7 @@
 <html>
  <head>
    <meta charset="UTF-8">
+   <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
    <script>
     // Script to send a Get request to '/sessions'
@@ -96,12 +97,14 @@
    <title>Sessions</title>
  </head>
  <body>
+   <h2>Codable!</h2>
      <p>
      This page will send HTTP requests to the "/session" and "/rawsession" routes of the Kitura sample server.<br>
      A session is created for each user and is persisted through cookies. You can test this using a private window.<br>
-     The server will process the incoming request to return or change an array "Books" that is stored within the user's session.<br>
-     <a href="https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/SessionsRoutes.swift" target="_blank">View the code</a>
+     The server will process the incoming request to return or change an array "Books" that is stored within the user's session.<br><br>
+     <a href="https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/SessionsRoutes.swift" target="_blank" class="inLink">View the code</a>
      </p>
+     <br>
      <h2>Codable Session</h2>
     <ul><li>
          <p>Send an HTTP GET request to &quot;/session&quot; to see the books in your session</p>
@@ -110,10 +113,12 @@
      <ul><li>
          <p>Send a URL encoded HTTP POST request to &quot;/session&quot; to add a book to your session</p>
          <form action="" method="post" id="post_form">
-             Name: <input type="text" name="name" required="required"><br>
-             author: <input type="text" name="author" required="required"><br>
-             rating: <input type="number" name="rating" required="required" min="1" max="5"><br>
+           <div class="block">
+             <label>Name:</label> <input type="text" name="name" required="required"><br>
+             <label>Author:</label>  <input type="text" name="author" required="required"><br>
+             <label>Rating:</label>  <input type="number" name="rating" required="required" min="1" max="5"><br><br>
              <input id="submitPost" type="button" name="Submit" value="Submit">
+           </div>
          </form>
      </li></ul>
      <ul><li>
@@ -128,10 +133,12 @@
      <ul><li>
          <p>Send a URL encoded HTTP POST request to &quot;/rawsession&quot; to add a book to your Raw session</p>
          <form action="" method="post" id="post_form_raw">
-             Name: <input type="text" name="name" required="required"><br>
-             author: <input type="text" name="author" required="required"><br>
-             rating: <input type="number" name="rating" required="required" min="1" max="5"><br>
+           <div class="block">
+             <label>Name:</label> <input type="text" name="name" required="required"><br>
+             <label>Author:</label> <input type="text" name="author" required="required"><br>
+           <label>Rating:</label> <input type="number" name="rating" required="required" min="1" max="5"><br><br>
              <input id="submitPostRaw" type="button" name="Submit" value="Submit">
+           </div>
          </form>
      </li></ul>
      <ul><li>
