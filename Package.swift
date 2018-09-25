@@ -35,13 +35,12 @@ let package = Package(
         .package(url: "https://github.com/IBM-Swift/Kitura-Session.git", from: "3.2.0"),
         .package(url: "https://github.com/IBM-Swift/Kitura-CredentialsGoogle.git", from: "2.2.0"),
         .package(url: "https://github.com/IBM-Swift/Kitura-CredentialsFacebook.git", from: "2.2.0"),
-        // AppID has been commented out since it requires flags for swift build and swift generate-xcodeproj commands.
-        //.package(url: "https://github.com/ibm-cloud-security/appid-serversdk-swift.git", from: "5.0.0"),
+        .package(url: "https://github.com/ibm-cloud-security/appid-serversdk-swift.git", from: "5.0.0"),
 
     ],
     targets: [
         .target(name: "Kitura-Sample", dependencies: [ .target(name: "Application"), .target(name: "ChatService"), "Kitura" , "HeliumLogger"]),
-        .target(name: "Application", dependencies: [ "Kitura", "CloudEnvironment","SwiftMetrics","Health", "KituraOpenAPI", "KituraMarkdown", "KituraStencil", "CredentialsHTTP", "KituraSession", "CredentialsGoogle", "CredentialsFacebook" /*, "IBMCloudAppID"*/]),
+        .target(name: "Application", dependencies: [ "Kitura", "CloudEnvironment","SwiftMetrics","Health", "KituraOpenAPI", "KituraMarkdown", "KituraStencil", "CredentialsHTTP", "KituraSession", "CredentialsGoogle", "CredentialsFacebook" , "IBMCloudAppID"]),
         .target(name: "ChatService", dependencies: ["Kitura-WebSocket"]),
         .testTarget(name: "KituraSampleRouterTests" , dependencies: [.target(name: "Application"), "Kitura","HeliumLogger" ])
     ]
