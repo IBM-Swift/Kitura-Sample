@@ -179,7 +179,7 @@ body {
     width: 100%;
     background: white;
     /*background: rgb(98, 182, 245);*/
-    color: rgb(140, 140, 144);
+    color: rgb(94, 159, 220);
     border: 0.8px solid white;
     padding: 15px;
     font-size: 0.8em;
@@ -222,7 +222,7 @@ input[type=text] {
     border:0px solid #ccc;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    background: rgb(224, 224, 229);
+    background: rgb(250, 250, 250);
     transition-duration: 0.6s;
 }
 
@@ -267,7 +267,7 @@ input[type=button]:hover {
 
 input[type=number] {
     padding:5px 10px;
-    background: rgb(224, 224, 229);
+    background: rgb(250, 250, 250);
     border:0 none;
     cursor:pointer;
     -webkit-border-radius: 5px;
@@ -311,7 +311,7 @@ input[type=number]::-webkit-inner-spin-button {
     position:relative;
     right: 0px;
     padding: 0px;
-    background: rgb(224, 224, 229);
+    background: rgb(250, 250, 250);
 }
 input[type=number]:hover::-webkit-inner-spin-button {
     background: #eee url('http://i.stack.imgur.com/YYySO.png') no-repeat 75% 25%;
