@@ -51,6 +51,7 @@ public class App {
         initializeBasicAuthRoutes(app: self)
         initializeTokenAuthRoutes(app: self)
         initializeSessionsRoutes(app: self)
+        initializeDatabaseRoutes(app: self)
         initializeHealthRoutes(app: self)
         initializeStaticFileServers(app: self)
         KituraOpenAPI.addEndpoints(to: router)
