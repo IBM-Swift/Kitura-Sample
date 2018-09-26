@@ -181,7 +181,7 @@ body {
     /*background: rgb(98, 182, 245);*/
     color: rgb(94, 159, 220);
     border: 0.8px solid white;
-    padding: 15px;
+    padding: 16px;
     font-size: 0.8em;
     text-align: left;
     border-radius: 12px;
@@ -373,8 +373,8 @@ a:active {
 
 .button p {
     font-family: 'Open Sans';
-    color: rgb(80, 80, 84);
-    font-size: 1.2em;
+    color: rgb(94, 159, 220);
+    font-size: 1.35em;
     /*font-weight: bold;*/
     text-align: left;
 }
