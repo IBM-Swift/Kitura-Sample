@@ -3,31 +3,28 @@
  <head>
    <meta charset="UTF-8">
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-   <title>Additional Raw routing</title>
+   <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+   <title>Further routing examples</title>
  </head>
  <body>
+   <h2>Further routing examples</h2>
      <p>
          This page will send HTTP requests to demonstate additional features of Raw routing.
-         They will show the user of multiple handlers, redirecting and custom path parameters.<br>
-         <a href="https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/AdditionalRoutes.swift" target="_blank">View the code</a>
+         They will show the user of multiple handlers, redirecting and custom path parameters.<br><br>
+         <a href="https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/AdditionalRoutes.swift" target="_blank" class="inLink">View the code</a>
      </p>
+     <br>
      <ul><li>
          <p>Send an HTTP GET request with multiple handlers:</p>
-         <button onclick="location.href='/multi'" type="button">
-         GET &quot;/multi&quot;
-         </button>
+         <input type="button" value="GET to &quot;/multi&quot;" id="getButton" >
      </li></ul>
      <ul><li>
          <p>Send an HTTP GET request to a redirecting handler:</p>
-         <button onclick="location.href='/redirect'" type="button">
-         GET &quot;/redirect&quot;
-         </button>
+         <input type="button" value="GET to &quot;/redirect&quot;" id="getButton" >
      </li></ul>
      <ul><li>
          <p>Send an HTTP GET request to a handler that parses the URL path as a parameter:</p>
-         <button onclick="location.href='/users/example'" type="button">
-         GET &quot;/users/example&quot;
-         </button>
+         <input type="button" value="GET to &quot;/users/example&quot;" id="getButton" >
      </li></ul>
  </body>
 </html>

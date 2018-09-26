@@ -3,6 +3,7 @@
  <head>
    <meta charset="UTF-8">
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+   <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
    <script>
    // Script to send a Get request to '/basic'
    $(document).ready(function(){
@@ -70,25 +71,28 @@
        });
    });
    </script>
-   <title>Sessions</title>
+   <title>HTTP basic authentication</title>
  </head>
  <body>
-     <p>What would you like to do?</p>
+     <h2>HTTP basic authentication</h2>
      <p>
      This page will send HTTP requests to the "/basic" and "/rawbasic" routes of the Kitura sample server.<br>
      These pages have been protected by <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#Basic_authentication_scheme" target="_blank"> HTTP basic authentication</a>.<br>
      To access the routes you must sign up and then provide the correct username and password.<br>
      The sample has a default username of "username" and password of "password".<br>
-     Once you have successfully authenticated your browser will remember your credentials for future logins.<br>
-     <a href="https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/BasicAuthRoutes.swift" target="_blank">View the code</a>
+     Once you have successfully authenticated your browser will remember your credentials for future logins.<br><br>
+     <a href="https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/BasicAuthRoutes.swift" target="_blank" class="inLink">View the code</a>
      </p>
+     <br>
      <ul><li>
          <p>Sign up a new user with an HTTP POST request to &quot;/signup&quot;</p>
+           <div class="block">
          <form action="" method="post" id="signup_form">
-             Username: <input type="text" name="username" required="required"><br>
-             Password: <input type="text" name="password" required="required"><br>
+             <label>Username:</label> <input type="text" name="username" required="required"><br>
+             <label>Password:</label> <input type="text" name="password" required="required"><br><br>
              <input id="signup" type="button" name="Submit" value="Submit">
          </form>
+       </div>
      </li></ul>
      <ul><li>
          <p> "Codable HTTP Basic authentication" </p>
