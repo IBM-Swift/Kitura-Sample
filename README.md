@@ -116,6 +116,8 @@ This page demonstrates how to protect Raw and Codable routes using [HTTP Basic A
 
 This page demonstrates how to protect Raw and Codable routes using OAuth2 tokens. You generate a user access token for either facebook or google (Which would normally be performed by another application) and send an HTTP request to the server with that token. The server authenticates the token with the provider to identify the user and allow access to the protected route. If the token is incorrect the request is rejected as unauthorized.
 
+[Link to Code](https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/TokenAuthRoutes.swift)
+
 ## Testing
 To run the tests locally, run `swift test` from the Kitura-Sample directory.
 
