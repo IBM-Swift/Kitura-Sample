@@ -22,6 +22,24 @@ import IBMCloudAppID
 
 func initializeOauth2Routes(app: App) {
     
+    // Replace these values for your application from https://developers.facebook.com/apps/
+    let fbClientId = "<your Facebook app ID>"
+    let fbClientSecret = "<your Facebook app secret>"
+    
+    // Replace these values for your application.
+    // To set up an application follow these instructions: https://support.google.com/cloud/answer/6158849?hl=en
+    let googleClientId = "<your Google app ID>"
+    let googleClientSecret = "<your Google app secret>"
+    
+    // replace these values with those from your APP-ID application: https://console.bluemix.net/docs/services/appid/index.html
+    let appIdOptions = [
+        "clientId": "<your appid clientID>",
+        "secret": "<your appid secret>",
+        "tenantId": "<your appid tenantId>",
+        "oauthServerUrl": "<your appid oauthServerUrl>",
+        "redirectUri": app.cloudEnv.url + "/oauth2/appid/callback"
+    ]
+    
     // Session is required to keep the user logged in after authentication
     // If a user is logged in with a redirecting authentication, all routes with this session will have a userProfile
     let session = Session(secret: "AuthSecret", cookie: [CookieParameter.name("Kitura-Auth-cookie")])
@@ -30,9 +48,6 @@ func initializeOauth2Routes(app: App) {
     
     // Facebook Oauth Setup
     let oauthFBCredentials = Credentials()
-    // Replace these values for your application from https://developers.facebook.com/apps/
-    let fbClientId = "<your Facebook app ID>"
-    let fbClientSecret = "<your Facebook app secret>"
 
     // Your app callback route which has credentials registered on it
     // This must be added to your Facebook app authorized Callbacks
@@ -47,15 +62,9 @@ func initializeOauth2Routes(app: App) {
     app.router.get("/oauth2/facebook", handler: oauthFBCredentials.authenticate(credentialsType: fbCredentials.name))
     // App callback route
     app.router.get("/oauth2/facebook/callback", handler: oauthFBCredentials.authenticate(credentialsType: fbCredentials.name))
-
-    
     
     // Google Oauth Setup
     let oauthGoogleCredentials = Credentials()
-    // Replace these values for your application.
-    // To set up an application follow these instructions: https://support.google.com/cloud/answer/6158849?hl=en
-    let googleClientId = "<your Google app ID>"
-    let googleClientSecret = "<your Google app secret>"
     
     // Your app callback route which has credentials registered on it.
     // This must be added to your Google app authorized Callbacks
@@ -72,20 +81,10 @@ func initializeOauth2Routes(app: App) {
     app.router.get("/oauth2/google/callback", handler: oauthGoogleCredentials.authenticate(credentialsType: googleCredentials.name))
     
     // AppID Oauth Setup
-    
-    
     let kituraCredentials = Credentials()
     
-    // replace these values with those from your APP-ID application: https://console.bluemix.net/docs/services/appid/index.html
-    let options = [
-        "clientId": "<your appid clientID>",
-        "secret": "<your appid secret>",
-        "tenantId": "<your appid tenantId>",
-        "oauthServerUrl": "<your appid oauthServerUrl>",
-        "redirectUri": app.cloudEnv.url + "/oauth2/appid/callback"
-    ]
     if #available(OSX 10.12, *) {
-        let webappKituraCredentialsPlugin = WebAppKituraCredentialsPlugin(options: options)
+        let webappKituraCredentialsPlugin = WebAppKituraCredentialsPlugin(options: appIdOptions)
         kituraCredentials.register(plugin: webappKituraCredentialsPlugin)
         app.router.get("/oauth2/appid",
                        handler: kituraCredentials.authenticate(credentialsType: webappKituraCredentialsPlugin.name,
@@ -99,8 +98,6 @@ func initializeOauth2Routes(app: App) {
                                                                failureRedirect: "/oauth2.html"
         ))
     }
-    
-    
     
     // Route which only allows access if the user has authenticated with either AppID, Facebook or Google
     app.router.get("/oauth2/protected") { request, response, next in
