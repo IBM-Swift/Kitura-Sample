@@ -14,7 +14,7 @@
  * limitations under the License.
  **/
 
-func initializeHelloRoutes(app: App) {
+func initializeHelloWorldRoutes(app: App) {
     
     // This route accepts GET requests
     app.router.get("/hello") { _, response, next in
@@ -24,13 +24,6 @@ func initializeHelloRoutes(app: App) {
     
     // This route accepts JSON or URLEncoded POST requests
     app.router.post("/hello") {request, response, next in
-        let name = try request.read(as: Name.self)
-        app.setName(name)
-        try response.send(name).end()
-    }
-
-    // This route accepts PUT requests
-    app.router.put("/hello") {request, response, next in
         let name = try request.read(as: Name.self)
         app.setName(name)
         try response.send(name).end()

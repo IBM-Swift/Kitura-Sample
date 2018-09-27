@@ -21,7 +21,6 @@ func initializeCodableRoutes(app: App) {
    //Codable route for post
     app.router.get("/books", handler: app.queryGetHandler)
     app.router.post("/books", handler: app.postBookHandler)
-    app.router.put("/books", handler: app.putBookHandler)
     app.router.delete("/books", handler: app.deleteAllBookHandler)
 }
 
@@ -39,15 +38,6 @@ extension App {
     func postBookHandler(book: Book, completion: (Book?, RequestError?) -> Void ) {
         addBook(book)
         completion(book, nil)
-    }
-
-    func putBookHandler(bookIndex: Int, book: Book, completion: (Book?, RequestError?) -> Void ) {
-        if putBook(book, index: bookIndex) {
-            completion(book, nil)
-        } else {
-            completion(nil, .badRequest)
-        }
-        
     }
 
     func deleteAllBookHandler(completion: (RequestError?) -> Void) {
@@ -70,18 +60,6 @@ extension App {
         bookSemaphore.wait()
         bookStore.append(book)
         bookSemaphore.signal()
-    }
-
-    func putBook(_ book: Book, index: Int) -> Bool {
-        bookSemaphore.wait()
-        if bookStore.indices.contains(index) {
-            bookStore[index] = book
-            bookSemaphore.signal()
-            return true
-        } else {
-            bookSemaphore.signal()
-            return false
-        }
     }
     
     func deleteBooks() {
