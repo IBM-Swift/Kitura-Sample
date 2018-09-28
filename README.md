@@ -118,6 +118,14 @@ This page demonstrates how to protect Raw and Codable routes using OAuth2 tokens
 
 [Link to Code](https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/TokenAuthRoutes.swift)
 
+## Swagger/OpenAPI
+
+The sample is using [Kitura-OpenAPI](https://github.com/IBM-Swift/Kitura-OpenAPI) to automatically generate [OpenAPI](https://www.openapis.org/) (aka Swagger) Specification for it's Codable routes. 
+
+1. Start the Kitura-Sample server
+2. Go to [http://localhost:8080/openapi](http://localhost:8080/openapi) to view OpenAPI definition
+3. Go to [http://localhost:8080/openapi/ui](http://localhost:8080/openapi/ui) to view OpenAPI User Interface
+
 ## Testing
 To run the tests locally, run `swift test` from the Kitura-Sample directory.
 
