@@ -43,27 +43,6 @@ $(document).ready(function(){
      });
  });
 
- // Script to POST URL encoded data from a HTML form
-  $(document).ready(function(){
-      // click on button submit
-      $("#submitURLEncodedPost").on('click', function(){
-          // send ajax
-          $.ajax({
-              url: '/books', // url where to submit the request
-              type : "POST", // type of action POST || GET
-              contentType: "application/x-www-form-urlencoded", // set the request Content-Type header
-              dataType : 'json', // data type
-              data : $("#urlencoded_post_form").serialize(), // post data || get data
-              success: function(data, status){
-                  alert("Server response data: " + JSON.stringify(data) + "\nStatus: " + status);
-              },
-              error: function() {
-                  alert("Failed to post JSON");
-              }
-          })
-      });
-  });
-
   // Script to send a Get request with query parameters to '/books'
   $(document).ready(function(){
       $('#submitQueryGet').click(function(){
@@ -76,32 +55,6 @@ $(document).ready(function(){
           });
       });
   });
-
- // Script to PUT JSON from a HTML form
- $(document).ready(function(){
-     // click on button submit
-     $("#submitPut").on('click', function(){
-     var jsonData = {};
-     jsonData["name"] = $("#json_put_form").serializeArray()[0].value;
-     jsonData["author"] = $("#json_put_form").serializeArray()[1].value;
-     jsonData["rating"] = parseInt($("#json_put_form").serializeArray()[2].value);
-     var position = $("#json_put_form").serializeArray()[3].value;
-         // send ajax
-         $.ajax({
-             url: '/books/' + position, // url where to submit the request
-             type : "PUT", // type of action POST || GET
-             contentType: "application/json", // set the request Content-Type header
-             dataType : 'json', // data type
-             data : JSON.stringify(jsonData), // post data || get data
-             success: function(data, status){
-                 alert("Server response data: " + JSON.stringify(data) + "\nStatus: " + status);
-             },
-             error: function() {
-                 alert("Failed to post JSON");
-             }
-         })
-     });
- });
  // Script to send a DELETE request to '/books'
  $(document).ready(function(){
      $('#deleteButton').click(function(){
@@ -122,7 +75,7 @@ $(document).ready(function(){
      <p>
          This page will send HTTP requests to the "/books" route
          of the Kitura sample server.<br> The server will then process the
-         incoming request to return or change the global "Books" dictionary.<br>
+         incoming request to return or change the global "Books" array.<br>
          This is a demonstration of Codable routing in Kitura.<br><br>
          <a href="https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/CodableRoutes.swift" target="_blank" class="inLink">View the code</a>
       </p>
@@ -132,7 +85,7 @@ $(document).ready(function(){
          <input type="button" value="GET to &quot;/books&quot;" id="getButton" >
      </li></ul>
      <ul><li>
-         <p>Add a book by sending a JSON-encoded HTTP POST request to &quot;/books&quot;</p>
+         <p>Add a book by sending an HTTP POST request to &quot;/books&quot;</p>
          <form action="" method="post" id="json_post_form">
            <div class="block">
              <label>Name:</label> <input type="text" name="name" required="required"><br>
@@ -143,33 +96,10 @@ $(document).ready(function(){
          </form>
      </li></ul>
      <ul><li>
-         <p>Add a book by sending a URL-encoded HTTP POST request to &quot;/books&quot;</p>
-         <form action="" method="post" id="urlencoded_post_form">
-           <div class="block">
-             <label>Name:</label> <input type="text" name="name" required="required"><br>
-           <label>Author:</label> <input type="text" name="author" required="required"><br>
-           <label>Rating:</label> <input type="number" name="rating" required="required" min="1" max="5"><br><br>
-             <input id="submitURLEncodedPost" type="button" value="Submit">
-           </div>
-         </form>
-     </li></ul>
-     <ul><li>
-         <p>Search for a book by sending a HTTP GET request with the name as query parameters to &quot;/books&quot;</p>
+         <p>Search for a book by sending an HTTP GET request using the name as query parameters to &quot;/books&quot;</p>
          <form action="/books" method="get" id="query_get_form" enctype="application/x-www-form-urlencoded">
              Name: <input type="text" name="name" required="required"><br><br>
              <input id="submitQueryGet" type="button" value="Submit">
-         </form>
-     </li></ul>
-     <ul><li>
-         <p>Replace a book by sending a JSON-encoded HTTP PUT request to &quot;/books&quot;</p>
-         <form action="" method="post" id="json_put_form">
-           <div class="block">
-             <label>Name:</label> <input type="text" name="name" required="required"><br>
-           <label>Author:</label> <input type="text" name="author" required="required"><br>
-           <label>Rating:</label> <input type="number" name="rating" required="required" min="1" max="5"><br>
-           <label>Position:</label> <input type="number" name="position"><br><br>
-             <input id="submitPut" type="button" name="Submit" value="Submit">
-           </div>
          </form>
      </li></ul>
      <ul><li>

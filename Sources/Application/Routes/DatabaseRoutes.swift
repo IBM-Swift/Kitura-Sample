@@ -35,10 +35,10 @@ func initializeDatabaseRoutes(app: App) {
         Log.error("Failed to create table in database: \(error)")
     }
     
-    app.router.get("/grades", handler: app.loadHandler)
-    app.router.post("/grades", handler: app.postHandler)
-    app.router.delete("/grades", handler: app.deleteAllHandler)
-    app.router.delete("/grades", handler: app.deleteOneHandler)
+    app.router.get("/database", handler: app.loadHandler)
+    app.router.post("/database", handler: app.postHandler)
+    app.router.delete("/database", handler: app.deleteAllHandler)
+    app.router.delete("/database", handler: app.deleteOneHandler)
 }
 
 extension App {
