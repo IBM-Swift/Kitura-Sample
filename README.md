@@ -49,8 +49,6 @@ It features the following:
 
 4. Open your browser at [http://localhost:8080](http://localhost:8080).
 
-5. Navigate to one of the example routes on the localhost URL, for example, for the chat server go to [localhost:8080/chat](localhost:8080/chat).
-
 ## Available Examples
 
 ### Hello World: Kitura Raw routing
