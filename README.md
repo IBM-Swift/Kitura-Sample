@@ -19,62 +19,110 @@
     </a>
 </p>
 
-**Sample application for Kitura Web Framework**
+## Kitura Sample
+
+Sample application for the Kitura Web Framework
 
 ## Summary
 
-
-This [Kitura](https://github.com/IBM-Swift/Kitura/) sample shows off the powerful features available in Kitura 2, baking several demos into one project. You can access the individual examples by navigating to their specific routes in a browser.
+This [Kitura](https://github.com/IBM-Swift/Kitura/) sample shows off the powerful features available in Kitura 2, baking several demos into one project. You can access the individual examples by navigating to their specific page in a browser.
 
 
 It features the following:
 
-* Kitura WebSocket based chat server
-* Stencil template engine example
-* Using multiple handlers per route
-* Reading and accepting parameters in a route
-
+* Raw and Codable routing examples
+* Database persistence using [Swift-Kuery-ORM](https://github.com/IBM-Swift/Swift-Kuery-ORM)
+* Sessions persistence using [Kitura-Session](https://github.com/IBM-Swift/Kitura-Session)
+* Rendering templates with [Markdown](https://github.com/IBM-Swift/Kitura-Markdown) and [Stencil](https://github.com/IBM-Swift/Kitura-StencilTemplateEngine)
+* HTTP Basic and Oauth2 authentication with [Kitura-Credentials](https://github.com/IBM-Swift/Kitura-Credentials)
+* A [Kitura WebSocket](https://github.com/IBM-Swift/Kitura-WebSocket) based chat server
 
 ## Getting Set Up
 
-1. Install the [prerequisites]( http://www.kitura.io/en/starter/settingup.html) (ignore the requirement to install Homebrew on macOS as it is not required for this sample).
+1. `git clone https://github.com/IBM-Swift/Kitura-Sample.git`
 
-2. `git clone https://github.com/IBM-Swift/Kitura-Sample.git && cd Kitura-Sample`
-> Note: do not use the GitHub "Download ZIP" button
+2.  `cd Kitura-Sample`
 
-3. `swift build`
-
-4. `./.build/debug/Kitura-Sample`
+3. `swift run`
 
   You should see a message _Listening on port 8080_. You may need to click "Allow" if a security pop up appears, dependent on your firewall settings.
 
-5. Open your browser at [http://localhost:8080](http://localhost:8080).
-
-6. Navigate to one of the example routes on the localhost URL, for example, for the chat server go to [localhost:8080/chat](localhost:8080/chat).
+4. Open your browser at [http://localhost:8080](http://localhost:8080).
 
 ## Available Examples
-### Kitura WebSocket
-> Route: [localhost:8080/chat](localhost:8080/chat)
 
-This demo sets up a local chat server using [Kitura's WebSocket](https://github.com/IBM-Swift/Kitura-WebSocket/) library, and the UI mimicks a chat room. Two separate browser windows pointed to the `/chat` route can be used to represent two people in the chat room if the project is running on localhost. It can also be deployed to the [IBM Cloud](https://bluemix.net) and then accessed via a Cloud Foundry App.
+### Hello World: Kitura Raw routing
+
+This page demonstrates routing in Kitura using the Raw HTTP request and response.  
+When you make a get request to [localhost:8080/hello](http://localhost:8080/hello) the server will send back with the traditional Hello World response.  
+You can then send HTTP POST or DELETE requests to change the name that the server will respond with.
+
+[Link to Code](https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/HelloWorldRoutes.swift)
+
+### Kitura Codable routing
+
+This page demonstrates [Codable routing](https://developer.ibm.com/swift/2017/10/30/codable-routing/) in Kitura where you work directly with Codable models.  
+You make HTTP requests to [localhost:8080/books](http://localhost:8080/book) to GET, POST or DELETE a swift model of a book.  
+You can then search all your books using query parameters.
+
+[Link to Code](https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/CodableRoutes.swift)
+
+### Database persistence using Swift-Kuery-ORM
+
+Prerequisite: Requires a running PostgreSQL database:
+```
+brew install postgresql
+brew services start postgresql
+createdb school
+```
+
+This page demonstrates a server which will save and retrieve a students `Grades` from a database. This adds persistance to the data since even if the server is restarted the grades will be stored.
+
+[Link to Code](https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/DatabaseRoutes.swift)
+
+### Sessions persistence using Kitura-Session
+
+This page demonstrates a server which will save an array of `Books` in a session. This array is unique to a single user who is authenticated via http cookies. You can test the session by saving books a private and a normal browser window and observing that both windows maintain their own array. The page includes example for both Raw and Codable Session routes.
+
+[Link to Code](https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/SessionsRoutes.swift)
 
 ### Stencil Templating Engine
-> Route: [localhost:8080/articles](localhost:8080/articles)
 
-Kitura supports the popular Stencil Templating Engine, using the [Kitura Stencil](https://github.com/IBM-Swift/Kitura-StencilTemplateEngine/) library. This route looks for a Stencil file in a subdirectory called `Views` and renders the page with it.
+The route looks for a Stencil template file in a subdirectory called `Views` and renders an HTML page using it. This allows for you to create dynamic web pages by inserting data from your server into your HTML.
 
-### Multiple Handlers in one Route
-> Route: [localhost:8080/multi](localhost:8080/multi)
+[Link to Code](https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/StencilRoutes.swift)
 
-[Kitura](https://github.com/IBM-Swift/Kitura) supports multiple handlers per route, this example prints several lines to the window using different `response.send()` methods.
+### Rendering Markdown files
 
-### Reading and Accepting Parameters
-> Route: [localhost:8080/users/:user](localhost:8080/users/:user)
+The route looks for a Markdown file in a subdirectory called `Views` and generates an HTML page using it. This allows for you to server Markdown formatted files as web pages.
 
-**Note:** This example uses `:users` but you can use anything you like, as long as the first part of the route is `/users/`.
+[Link to Code](https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/MarkdownRoutes.swift)
 
-This route accepts a parameter in its URL and uses that parameter in its HTML creation. It does this using a colon (:) in the URL which defines the item following it as a parameter. It then assigns this parameter to a variable, and concatenates it into the HTML.
+### Kitura WebSocket
 
+This demo sets up a local chat server using [Kitura's WebSocket](https://github.com/IBM-Swift/Kitura-WebSocket/) library, and the UI mimicks a chat room. Two separate browser windows pointed to the `/chat` route can be used to represent two people in the chat room if the project is running on localhost.
+
+[Link to Code](https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/ChatService/ChatService.swift)
+
+### HTTP Basic Authentication
+
+This page demonstrates how to protect Raw and Codable routes using [HTTP Basic Authentication](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#Basic_authentication_scheme). You can sign up to the server by providing a username and password and then to access your desired route you must provide that username and password or your request will be rejected as unauthorized.
+
+[Link to Code](https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/BasicAuthRoutes.swift)
+
+### OAuth2 token authentication
+
+This page demonstrates how to protect Raw and Codable routes using OAuth2 tokens. You generate a user access token for either facebook or google (Which would normally be performed by another application) and send an HTTP request to the server with that token. The server authenticates the token with the provider to identify the user and allow access to the protected route. If the token is incorrect the request is rejected as unauthorized.
+
+[Link to Code](https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/TokenAuthRoutes.swift)
+
+## Swagger/OpenAPI
+
+The sample is using [Kitura-OpenAPI](https://github.com/IBM-Swift/Kitura-OpenAPI) to automatically generate [OpenAPI](https://www.openapis.org/) (aka Swagger) Specification for it's Codable routes. 
+
+1. Start the Kitura-Sample server
+2. Go to [http://localhost:8080/openapi](http://localhost:8080/openapi) to view OpenAPI definition
+3. Go to [http://localhost:8080/openapi/ui](http://localhost:8080/openapi/ui) to view OpenAPI User Interface
 
 ## Testing
 To run the tests locally, run `swift test` from the Kitura-Sample directory.

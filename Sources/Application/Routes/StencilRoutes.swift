@@ -19,17 +19,50 @@ import LoggerAPI
 import Stencil
 
 func initializeStencilRoutes(app: App) {
-   // add Stencil Template Engine with a extension with a custom tag
+   
+    app.router.add(templateEngine: StencilTemplateEngine())
+    // Create a codable struct with the data we would like to render in the stencil template
+    app.router.get("/stencil") { _, response, next in
+        let stencilSummary = StencilSummary(app: app)
+        do {
+            try response.render("summary.stencil", with: stencilSummary).end()
+        } catch {
+            Log.error("Failed to render template \(error)")
+            next()
+        }
+    }
+    
+    app.router.post("/stencilname") { request, response, next in
+        let name = try? request.read(as: Name.self)
+        app.setName(name)
+        try response.redirect("/stencil")
+        next()
+    }
+    
+    app.router.post("/stencilbook") { request, response, next in
+        if let book = try? request.read(as: Book.self) {
+            app.addBook(book)
+            try response.redirect("/stencil")
+        } else {
+            let _ = response.send(status: .badRequest)
+        }
+        next()
+    }
+
+    
+    // Further stencil examples not demonstrated in the webpage.
+    
+    // add Stencil Template Engine with a extension with a custom tag
     let _extension = Extension()
     // from https://github.com/kylef/Stencil/blob/master/ARCHITECTURE.md#simple-tags
     _extension.registerSimpleTag("custom") { _ in
         return "Hello World"
     }
-
+    
     let templateEngine = StencilTemplateEngine(extension: _extension)
     app.router.add(templateEngine: templateEngine,
-               forFileExtensions: ["html"])
-
+                   forFileExtensions: ["html"])
+    
     // the example from https://github.com/kylef/Stencil
     let stencilContext: [String: Any] = [
         "articles": [
@@ -37,62 +70,51 @@ func initializeStencilRoutes(app: App) {
             [ "title": "Memory Management with ARC", "author": "Kyle Fuller" ],
         ]
     ]
-
+    
     app.router.get("/articles") { _, response, next in
-        defer {
-            next()
-        }
         do {
             try response.render("document.stencil", context: stencilContext).end()
         } catch {
             Log.error("Failed to render template \(error)")
-        }
-    }
-
-    app.router.get("/articles.html") { _, response, next in
-        defer {
             next()
         }
+    }
+    
+    app.router.get("/articles.html") { _, response, next in
         do {
             // we have to specify file extension here since it is not the extension of Stencil
             try response.render("document.html", context: stencilContext).end()
         } catch {
             Log.error("Failed to render template \(error)")
+            next()
         }
     }
 
     app.router.get("/articles_subdirectory") { _, response, next in
-        defer {
-            next()
-        }
         do {
             try response.render("subdirectory/documentInSubdirectory.stencil",
                                 context: stencilContext).end()
         } catch {
             Log.error("Failed to render template \(error)")
+            next()
         }
     }
 
     app.router.get("/articles_include") { _, response, next in
-        defer {
-            next()
-        }
         do {
-            try response.render("includingDocument.stencil",
-                                context: stencilContext).end()
+            try response.render("includingDocument.stencil", context: stencilContext).end()
         } catch {
             Log.error("Failed to render template \(error)")
+            next()
         }
     }
 
     app.router.get("/custom_tag_stencil") { _, response, next in
-        defer {
-            next()
-        }
         do {
             try response.render("customTag.stencil", context: [:]).end()
         } catch {
             Log.error("Failed to render template \(error)")
+            next()
         }
     }
 }

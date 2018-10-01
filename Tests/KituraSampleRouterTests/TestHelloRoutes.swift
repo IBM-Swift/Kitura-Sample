@@ -23,10 +23,9 @@ class TestHelloRoutes: KituraTest {
         return [
             ("testGetHello", testGetHello),
             ("testPostHello", testPostHello),
-            ("testPutHello", testPutHello),
             ("testDeleteHello", testDeleteHello),
-            ("testPostPutDeletePostHello", testPostPutDeletePostHello),
-            ("testPutPostDeletePutHello", testPutPostDeletePutHello),
+            ("testPostDeletePostHello", testPostDeletePostHello),
+            ("testPostDeleteHello", testPostDeleteHello),
         ]
     }
     
@@ -54,21 +53,6 @@ class TestHelloRoutes: KituraTest {
         })
     }
     
-    func testPutHello() {
-        performServerTest(asyncTasks: { expectation in
-            self.performRequest("get", path: "/hello", expectation: expectation) { response in
-                self.checkResponse(response: response, expectedResponseText: "Hello World, from Kitura!")
-                self.performRequest("put", path: "/hello", body: "{\"name\":\"John\"}", expectation: expectation) { response in
-                    self.checkResponse(response: response, expectedResponseText: "{\"name\":\"John\"}")
-                    self.performRequest("get", path: "/hello", expectation: expectation) { response in
-                        self.checkResponse(response: response, expectedResponseText: "Hello John, from Kitura!")
-                        expectation.fulfill()
-                    }
-                }
-            }
-        })
-    }
-    
     func testDeleteHello() {
         performServerTest(asyncTasks: { expectation in
             self.performRequest("get", path: "/hello", expectation: expectation) { response in
@@ -84,7 +68,7 @@ class TestHelloRoutes: KituraTest {
         })
     }
     
-    func testPostPutDeletePostHello() {
+    func testPostDeletePostHello() {
         performServerTest(asyncTasks: { expectation in
             self.performRequest("get", path: "/hello", expectation: expectation) { response in
                 self.checkResponse(response: response, expectedResponseText: "Hello World, from Kitura!")
@@ -92,21 +76,15 @@ class TestHelloRoutes: KituraTest {
                     self.checkResponse(response: response, expectedResponseText: "{\"name\":\"John\"}")
                     self.performRequest("get", path: "/hello", expectation: expectation) { response in
                         self.checkResponse(response: response, expectedResponseText: "Hello John, from Kitura!")
-                        self.performRequest("put", path: "/hello", body: "{\"name\":\"Mary\"}", expectation: expectation) { response in
-                            self.checkResponse(response: response, expectedResponseText: "{\"name\":\"Mary\"}")
+                        self.performRequest("delete", path: "/hello", expectation: expectation) { response in
+                            self.checkResponse(response: response, expectedResponseText: "Got a DELETE request")
                             self.performRequest("get", path: "/hello", expectation: expectation) { response in
-                                self.checkResponse(response: response, expectedResponseText: "Hello Mary, from Kitura!")
-                                self.performRequest("delete", path: "/hello", expectation: expectation) { response in
-                                    self.checkResponse(response: response, expectedResponseText: "Got a DELETE request")
+                                self.checkResponse(response: response, expectedResponseText: "Hello World, from Kitura!")
+                                self.performRequest("post", path: "/hello", body: "{\"name\":\"Bob\"}", expectation: expectation) { response in
+                                    self.checkResponse(response: response, expectedResponseText: "{\"name\":\"Bob\"}")
                                     self.performRequest("get", path: "/hello", expectation: expectation) { response in
-                                        self.checkResponse(response: response, expectedResponseText: "Hello World, from Kitura!")
-                                        self.performRequest("post", path: "/hello", body: "{\"name\":\"Bob\"}", expectation: expectation) { response in
-                                            self.checkResponse(response: response, expectedResponseText: "{\"name\":\"Bob\"}")
-                                            self.performRequest("get", path: "/hello", expectation: expectation) { response in
-                                                self.checkResponse(response: response, expectedResponseText: "Hello Bob, from Kitura!")
-                                                expectation.fulfill()
-                                            }
-                                        }
+                                        self.checkResponse(response: response, expectedResponseText: "Hello Bob, from Kitura!")
+                                        expectation.fulfill()
                                     }
                                 }
                             }
@@ -117,31 +95,19 @@ class TestHelloRoutes: KituraTest {
         })
     }
     
-    func testPutPostDeletePutHello() {
+    func testPostDeleteHello() {
         performServerTest(asyncTasks: { expectation in
             self.performRequest("get", path: "/hello", expectation: expectation) { response in
-                self.checkResponse(response: response, expectedResponseText: "Hello World, from Kitura!")
-                self.performRequest("put", path: "/hello", body: "{\"name\":\"John\"}", expectation: expectation) { response in
-                    self.checkResponse(response: response, expectedResponseText: "{\"name\":\"John\"}")
+            self.checkResponse(response: response, expectedResponseText: "Hello World, from Kitura!")
+                self.performRequest("post", path: "/hello", body: "{\"name\":\"Mary\"}", expectation: expectation) { response in
+                self.checkResponse(response: response, expectedResponseText: "{\"name\":\"Mary\"}")
                     self.performRequest("get", path: "/hello", expectation: expectation) { response in
-                        self.checkResponse(response: response, expectedResponseText: "Hello John, from Kitura!")
-                        self.performRequest("post", path: "/hello", body: "{\"name\":\"Mary\"}", expectation: expectation) { response in
-                            self.checkResponse(response: response, expectedResponseText: "{\"name\":\"Mary\"}")
+                    self.checkResponse(response: response, expectedResponseText: "Hello Mary, from Kitura!")
+                        self.performRequest("delete", path: "/hello", expectation: expectation) { response in
+                        self.checkResponse(response: response, expectedResponseText: "Got a DELETE request")
                             self.performRequest("get", path: "/hello", expectation: expectation) { response in
-                                self.checkResponse(response: response, expectedResponseText: "Hello Mary, from Kitura!")
-                                self.performRequest("delete", path: "/hello", expectation: expectation) { response in
-                                    self.checkResponse(response: response, expectedResponseText: "Got a DELETE request")
-                                    self.performRequest("get", path: "/hello", expectation: expectation) { response in
-                                        self.checkResponse(response: response, expectedResponseText: "Hello World, from Kitura!")
-                                        self.performRequest("put", path: "/hello", body: "{\"name\":\"Bob\"}", expectation: expectation) { response in
-                                            self.checkResponse(response: response, expectedResponseText: "{\"name\":\"Bob\"}")
-                                            self.performRequest("get", path: "/hello", expectation: expectation) { response in
-                                                self.checkResponse(response: response, expectedResponseText: "Hello Bob, from Kitura!")
-                                                expectation.fulfill()
-                                            }
-                                        }
-                                    }
-                                }
+                            self.checkResponse(response: response, expectedResponseText: "Hello World, from Kitura!")
+                                    expectation.fulfill()
                             }
                         }
                     }

@@ -39,50 +39,6 @@
             })
         });
     });
-
-    // Script to POST URL encoded data from a HTML form
-     $(document).ready(function(){
-         // click on button submit
-         $("#submitURLEncodedPost").on('click', function(){
-             // send ajax
-             $.ajax({
-                 url: '/hello', // url where to submit the request
-                 type : "POST", // type of action POST || GET
-                 contentType: "application/x-www-form-urlencoded", // set the request Content-Type header
-                 dataType : 'json', // data type
-                 data : $("#urlencoded_post_form").serialize(), // post data || get data
-                 success: function(data, status){
-                     alert("Server response data: " + JSON.stringify(data) + "\nStatus: " + status);
-                 },
-                 error: function() {
-                     alert("Failed to post JSON");
-                 }
-             })
-         });
-     });
-
-    // Script to PUT JSON from a HTML form
-    $(document).ready(function(){
-        // click on button submit
-        $("#submitPut").on('click', function(){
-        var jsonData = {};
-        jsonData["name"] = $("#json_put_form").serializeArray()[0].value;
-            // send ajax
-            $.ajax({
-                url: '/hello', // url where to submit the request
-                type : "PUT", // type of action POST || GET
-                contentType: "application/json", // set the request Content-Type header
-                dataType : 'json', // data type
-                data : JSON.stringify(jsonData), // post data || get data
-                success: function(data, status){
-                    alert("Server response data: " + JSON.stringify(data) + "\nStatus: " + status);
-                },
-                error: function() {
-                    alert("Failed to post JSON");
-                }
-            })
-        });
-    });
     // Script to send a DELETE request to '/hello'
     $(document).ready(function(){
         $('#deleteButton').click(function(){
@@ -106,7 +62,7 @@
          of the Kitura sample server.<br> The server will then process the
          incoming request to return or change the global "name" variable.<br>
          This is a demonstration of Raw routing in Kitura.<br><br>
-         <a href="https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/HelloRoutes.swift" target="_blank" class="inLink">View the code</a>
+         <a href="https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/HelloWorldRoutes.swift" target="_blank" class="inLink">View the code</a>
       </p>
       <br>
      <ul><li>
@@ -115,28 +71,14 @@
          </button>
      </li></ul>
      <ul><li>
-         <p>Set the username for the greeting by sending a JSON-encoded HTTP POST request to &quot;/hello&quot;</p>
+         <p>Set the username for the greeting by sending an HTTP POST request to &quot;/hello&quot;</p>
          <form action="" method="post" id="json_post_form">
              Name: <input type="text" name="name" required="required"><br><br>
              <input id="submitJSONPost" type="button" name="Submit" value="Submit">
          </form>
      </li></ul>
      <ul><li>
-         <p>Set the username for the greeting by sending a URL-encoded HTTP POST request to &quot;/hello&quot;</p>
-         <form action="" method="post" id="urlencoded_post_form" enctype="application/x-www-form-urlencoded">
-             Name: <input type="text" name="name" required="required"><br><br>
-             <input id="submitURLEncodedPost" type="button" value="Submit">
-         </form>
-     </li></ul>
-     <ul><li>
-         <p>Set the username for the greeting by sending a JSON-encoded HTTP PUT request to &quot;/hello&quot;</p>
-         <form action="" method="post" id="json_put_form">
-             Name: <input type="text" name="name" required="required"><br><br>
-             <input id="submitPut" type="button" name="Submit" value="Submit">
-         </form>
-     </li></ul>
-     <ul><li>
-         <p>Set the username to nil by sending a JSON-encoded HTTP DELETE request to &quot;/hello&quot;</p>
+         <p>Set the username to nil by sending an HTTP DELETE request to &quot;/hello&quot;</p>
          <input type="button" value="DELETE to &quot;/hello&quot;" id="deleteButton" >
      </li></ul>
  </body>
