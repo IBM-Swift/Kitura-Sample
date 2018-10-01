@@ -35,7 +35,7 @@ let package = Package(
         .package(url: "https://github.com/IBM-Swift/Kitura-Session.git", from: "3.2.0"),
         .package(url: "https://github.com/IBM-Swift/Kitura-CredentialsGoogle.git", from: "2.2.0"),
         .package(url: "https://github.com/IBM-Swift/Kitura-CredentialsFacebook.git", from: "2.2.0"),
-        .package(url: "https://github.com/ibm-cloud-security/appid-serversdk-swift.git", from: "5.0.0"),
+        .package(url: "https://github.com/Andrew-Lees11/appid-serversdk-swift.git", .branch("master")),
         .package(url: "https://github.com/IBM-Swift/Swift-Kuery-ORM.git", .upToNextMinor(from: "0.3.1")),
         .package(url: "https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL.git", from: "1.2.0"),
     ],
