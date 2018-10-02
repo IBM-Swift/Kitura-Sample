@@ -17,13 +17,13 @@
 html {
     font-family: 'Open Sans',  sans-serif, 'helvetica Neue', Helvetica, Arial, "Lucida Grande";
     height:100%;
-    background: rgb(237, 237, 240);
+    background: rgb(242, 242, 245);
 }
 
 body {
     margin: 0;
     height: 100%;
-    background: rgb(237, 237, 240);
+    background: rgb(242, 242, 245);
 }
 
 /*.anim-type{
@@ -97,7 +97,7 @@ body {
     padding-top: 10px;
     list-style-type: none;
     text-decoration: none;
-    background: rgb(237, 237, 240);
+    background: rgb(242, 242, 245);
     /*background: rgb(98, 182, 245);*/
     margin: 0;
     width: 85%;
@@ -106,7 +106,7 @@ body {
     word-wrap: normal;
     padding-right: 40px;
     overflow: scroll;
-    border-right: 1px solid rgb(237, 237, 240);
+    border-right: 1px solid rgb(242, 242, 240);
 }
 
 ::-webkit-scrollbar {
@@ -142,10 +142,10 @@ body {
 }
 
 .mainPane {
-    padding-top: 60px;
+    margin-top: 60px;
     height: 100%;
     margin-left: 5%;
-    background: rgb(237, 237, 240);
+      background: rgb(242, 242, 245);
 }
 
 #fillerTitle {
@@ -157,7 +157,7 @@ body {
     font-weight: 200;
     font-size: 1.4em;
     color: rgb(100, 100, 112);
-    background: rgb(237, 237, 240);
+    background: rgb(242, 242, 245);
 }
 
 
@@ -165,7 +165,7 @@ body {
     width: 75%;
     margin-left: 24%;
     margin-right: 10%;
-    height: 85%;
+    height: 100%;
     margin-bottom: 0px;
     z-index: -2;
     padding-top: 10px;
