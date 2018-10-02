@@ -17,12 +17,11 @@
 html {
     font-family: 'Open Sans', 'helvetica Neue', Helvetica, Arial, sans-serif;
     height:100%;
-
 }
 
 body {
     margin: 0px;
-    padding: 0
+    padding: 0;
 }
 
 .header {
@@ -76,8 +75,8 @@ body {
     padding-top: 80px;
     list-style-type: none;
     text-decoration: none;
-    background: rgb(0, 188, 228);
-    margin: 0; 
+    background: rgb(242, 242, 245);
+    margin: 0;
     height: 100%;
     color: white;
     word-wrap: normal;
@@ -112,7 +111,7 @@ body {
 
 .mainPane img {
     display: none;
-    
+
 }
 
 #innerPage {
@@ -126,5 +125,3 @@ body {
 .button {
     width: 100%;
 }
-
-
