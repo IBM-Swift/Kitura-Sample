@@ -42,17 +42,17 @@ public class App {
     
     func postInit() throws {
         // Endpoints
-        initializeHelloRoutes(app: self)
-        initializeAdditionalRoutes(app: self)
+        initializeHelloWorldRoutes(app: self)
+        initializeFurtherRoutes(app: self)
         initializeStencilRoutes(app: self)
         initializeMarkdownRoutes(app: self)
-        initializeErrorRoutes(app: self)
         initializeCodableRoutes(app: self)
         initializeBasicAuthRoutes(app: self)
         initializeTokenAuthRoutes(app: self)
         initializeSessionsRoutes(app: self)
         initializeDatabaseRoutes(app: self)
         initializeHealthRoutes(app: self)
+        initializeOauth2Routes(app: self)
         initializeStaticFileServers(app: self)
         KituraOpenAPI.addEndpoints(to: router)
         // The not found route must be last since it matches all requests.

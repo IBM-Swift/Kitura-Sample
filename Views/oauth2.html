@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+    <link rel="stylesheet" type="text/css" href="mobile.css" media="(max-width: 800px)" />
+ <title>OAuth2 redirecting authentication</title>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+ <script>
+ // Script to send a GET request to '/oauth2/protected'
+ $(document).ready(function(){
+     $('#getButton').click(function(){
+         $.ajax({
+           url: '/oauth2/protected',
+           type: 'GET',
+           success: function(data,status){
+               alert("Server response: " + JSON.stringify(data));
+           }
+         });
+     });
+ });
+ $(document).ready(function(){
+     $('#logoutButton').click(function(){
+         $.ajax({
+           url: '/oauth2/logout',
+           type: 'GET',
+           success: function(data,status){
+               alert("Server response: " + JSON.stringify(data));
+           }
+         });
+     });
+ });
+ </script>
+ </head>
+ <body>
+     <h2 class="anim-type">OAuth2 redirecting authentication</h2>
+     <p>
+         This page authenticates the user by redirecting to a trusted third party using the oauth2 framework.<br>
+         An in depth description of oauth2 is available from <a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2" target="_blank">DigitalOcean</a>.<br>
+         Once the user is logged in the server can identify them and they can access the "protected" route.
+      </p>
+      <p>
+          For these routes to work, you must create and run the corresponding Oauth2 application.<br>
+          You must then replace the credentials in <a href="https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/Oauth2Routes.swift" target="_blank">Oauth2Routes.swift</a>.<br>
+          </p><br>
+          <a href="https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/Oauth2Routes.swift" target="_blank" class="inLink">View the code</a>
+      <h2>App ID log in</h2>
+      <ul><li>
+          <a href="https://console.bluemix.net/docs/services/appid/index.html" target="_blank">Set up an App ID Oauth2 app </a><br>
+          <p>Log in with App ID by making a get request to &quot;/oauth2/appid&quot;.</p>
+          <input type="button" onclick="window.open('/oauth2/appid')" value="Login with AppID"></button></li>
+
+      </li></ul>
+      <h2>Facebook log in</h2>
+     <ul><li>
+         <a href="https://developers.facebook.com/apps/" target="_blank">Set up a Facebook Oauth2 app </a><br>
+         <p>Log in with Facebook by making a get request to &quot;/oauth2/facebook&quot;.</p>
+         <input type="button" onclick="window.open('/oauth2/facebook')" value="Login with Facebook"></button></li>
+     </li></ul>
+     <h2>Google log in</h2>
+     <ul><li>
+         <a href="https://support.google.com/cloud/answer/6158849?hl=en" target="_blank">Set up a Google Oauth2 app</a><br>
+         <p>Log in with Google by making a get request to &quot;/oauth2/google&quot;.</p>
+         <input type="button" onclick="window.open('/oauth2/google')" value="Login with Google"></button></li>
+     </li></ul>
+     <h2>Protected Route</h2>
+     <ul><li>
+         <p>Attempt to view the protected route by sending an HTTP GET request to &quot;/oauth2/protected&quot;</p>
+         <input type="button" value="GET to &quot;/oauth2/protected&quot;" id="getButton" >
+         </button>
+     </li></ul>
+     <ul><li>
+         <p>Log out by sending an HTTP GET request to &quot;/oauth2/logout&quot;</p>
+         <input type="button" value="GET to &quot;/oauth2/logout&quot;" id="logoutButton" >
+         </button>
+     </li></ul>
+ </body>
+</html>

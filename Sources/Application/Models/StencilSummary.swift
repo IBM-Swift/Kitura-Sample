@@ -14,17 +14,13 @@
  * limitations under the License.
  **/
 
-func initializeMultiHandlerRoutes(app: App) {
-    // Uses multiple handler blocks
-    app.router.get("/multi", handler: { request, response, next in
-        response.send("I'm here!\n")
-        next()
-    }, { request, response, next in
-        response.send("Me too!\n")
-        next()
-    })
-
-    app.router.get("/multi") { request, response, next in
-        try response.send("I come afterward..\n").end()
+public struct StencilSummary: Codable {
+    let name: Name
+    let books: [Book]
+    
+    public init(app: App) {
+        self.name = app.getName() ?? Name(name: "not set to any value")
+        self.books = app.getBooks()
     }
+    
 }
