@@ -116,9 +116,13 @@ This page demonstrates how to protect Raw and Codable routes using OAuth2 tokens
 
 [Link to Code](https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/TokenAuthRoutes.swift)
 
+### OAuth2 token authentication
+
+This page demonstrates how to authenticate a user with OAuth2 by redirecting to a trusted third party. You create an OAuth2 authentication application with either AppID, Facebook or Google and add it's credentials to Kitura Sample. You can then log in with any of the providers to access the protected route. If the user is not loggen in the request is rejected as unauthorized.
+
 ## Swagger/OpenAPI
 
-The sample is using [Kitura-OpenAPI](https://github.com/IBM-Swift/Kitura-OpenAPI) to automatically generate [OpenAPI](https://www.openapis.org/) (aka Swagger) Specification for it's Codable routes. 
+The sample is using [Kitura-OpenAPI](https://github.com/IBM-Swift/Kitura-OpenAPI) to automatically generate [OpenAPI](https://www.openapis.org/) (aka Swagger) Specification for it's Codable routes.
 
 1. Start the Kitura-Sample server
 2. Go to [http://localhost:8080/openapi](http://localhost:8080/openapi) to view OpenAPI definition
