@@ -118,7 +118,7 @@ This page demonstrates how to protect Raw and Codable routes using OAuth2 tokens
 
 ### OAuth2 token authentication
 
-This page demonstrates how to authenticate a user with OAuth2 by redirecting to a trusted third party. You create an OAuth2 authentication application with either AppID, Facebook or Google and add it's credentials to Kitura Sample. You can then log in with any of the providers to access the protected route. If the user is not loggen in the request is rejected as unauthorized.
+This page demonstrates how to authenticate a user with OAuth2 by redirecting to a trusted third party. You create an OAuth2 authentication application with either AppID, Facebook or Google and add its credentials to Kitura Sample. You can then log in with any of the providers to access the protected route. If the user is not logged in the request is rejected as unauthorized.
 
 ## Swagger/OpenAPI
 
