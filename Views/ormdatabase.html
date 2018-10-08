@@ -10,10 +10,13 @@
                 $(document).ready(function(){
                                   $('#getButton').click(function(){
                                                         $.ajax({
-                                                               url: '/grades',
+                                                               url: '/database',
                                                                type: 'GET',
                                                                success: function(data,status){
                                                                alert("Server response data: " + JSON.stringify(data) + "\nStatus: " + status);
+                                                               },
+                                                               error: function() {
+                                                                    alert("Failed to post JSON. Please ensure you have created a database");
                                                                }
                                                                });
                                                         });
@@ -28,7 +31,7 @@
                                                             console.log(JSON.stringify(jsonData));
                                                             // send ajax
                                                             $.ajax({
-                                                                   url: '/grades', // url where to submit the request
+                                                                   url: '/database', // url where to submit the request
                                                                    type : "POST", // type of action POST || GET
                                                                    contentType: "application/json", // set the request Content-Type header
                                                                    dataType : 'json', // data type
@@ -37,7 +40,7 @@
                                                                    alert("Server response data: " + JSON.stringify(data) + "\nStatus: " + status);
                                                                    },
                                                                    error: function() {
-                                                                   alert("Failed to post JSON");
+                                                                    alert("Failed to post JSON. Please ensure you have created a database");
                                                                    }
                                                                    })
                                                             });
@@ -46,10 +49,13 @@
                   $(document).ready(function(){
                                     $('#submitQueryGet').click(function(){
                                                                $.ajax({
-                                                                      url: '/grades?' + $("#query_get_form").serialize(),
+                                                                      url: '/database?' + $("#query_get_form").serialize(),
                                                                       type: 'GET',
                                                                       success: function(data,status){
                                                                       alert("Server response data: " + JSON.stringify(data) + "\nStatus: " + status);
+                                                                      },
+                                                                      error: function() {
+                                                                        alert("Failed to post JSON. Please ensure you have created a database");
                                                                       }
                                                                       });
                                                                });
@@ -58,10 +64,13 @@
               $(document).ready(function(){
                                 $('#deleteButton').click(function(){
                                                          $.ajax({
-                                                                url: '/grades',
+                                                                url: '/database',
                                                                 type: 'DELETE',
                                                                 success: function(data,status){
                                                                 alert("Server successfully deleted \nStatus: " + status);
+                                                                },
+                                                                error: function() {
+                                                                    alert("Failed to post JSON. Please ensure you have created a database");
                                                                 }
                                                                 });
                                                          });
@@ -82,23 +91,23 @@
         <h2>
             Start your Database:
         </h2>
+        <ul><li>
         <p>
           To run these routes you need a PostgreSQL database set up on localhost:<br>
         </p>
-        <ul>
             brew install postgresql<br>
             brew services start postgresql<br>
             createdb school
-        </ul>
+        </li></ul>
         <h2>
             Run the Database Routes:
         </h2>
         <ul><li>
-            <p>Send an HTTP GET request to &quot;/grades&quot; to receive an array of grades</p>
-            <input type="button" value="GET to &quot;/grades&quot;" id="getButton" >
+            <p>Send an HTTP GET request to &quot;/database&quot; to receive an array of grades</p>
+            <input type="button" value="GET to &quot;/database&quot;" id="getButton" >
                 </li></ul>
         <ul><li>
-            <p>Add a grade by sending a JSON-encoded HTTP POST request to &quot;/grades&quot;</p>
+            <p>Add a grade by sending a JSON-encoded HTTP POST request to &quot;/database&quot;</p>
             <form action="" method="post" id="json_post_form">
                 Course: <input type="text" name="course" required="required"><br>
                 Grade: <input type="number" name="grade" required="required" min="1" max="100"><br>
@@ -106,14 +115,14 @@
             </form>
         </li></ul>
         <ul><li>
-            <p>Search for a course's grades by sending a HTTP GET request with the course as query parameters to &quot;/grades&quot;</p>
+            <p>Search for a course's grades by sending a HTTP GET request with the course as query parameters to &quot;/database&quot;</p>
             <form action="/books" method="get" id="query_get_form" enctype="application/x-www-form-urlencoded">
                 Course: <input type="text" name="course" required="required"><br>
                         <br><input id="submitQueryGet" type="button" value="Submit">
             </form>
         </li></ul>
         <ul><li>
-            <p>Empty the &quot;grades&quot; dictionary by sending an HTTP DELETE request to &quot;/grades&quot;</p>
+            <p>Empty the &quot;database&quot; dictionary by sending an HTTP DELETE request to &quot;/database&quot;</p>
             <input type="button" value="DELETE to &quot;/grades&quot;" id="deleteButton">
                 </li></ul>
     </body>

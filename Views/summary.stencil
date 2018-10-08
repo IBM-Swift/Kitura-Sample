@@ -29,6 +29,7 @@
         The server has then rendered this HTML page by inseting dynamic content into the template tags.
         </p>
         <h2>Dynamic examples</h2>
+        <ul><li>
         <p>
             In the Hello World demo, the name is currently <b>{{ name.name }}</b>. <br><br>
             You can submit a new name with the form below:
@@ -37,6 +38,8 @@
             Name: <input type="text" name="name" required="required"><br>
             <input type="submit" value="Submit Name">
         </form>
+        </li></ul>
+        <ul><li>
         <p>
         In the Codable routing demo, there is currently the following array of books:<br><br>
         {% for book in books %}
@@ -46,10 +49,11 @@
         You can submit a new book with the form below:
         </p>
         <form action="stencilbook" method="post" enctype="application/x-www-form-urlencoded">
-        Name: <input type="text" name="name" required="required"><br>
+        Name:&nbsp; <input type="text" name="name" required="required"><br>
         Author: <input type="text" name="author" required="required"><br>
         Rating: <input type="number" name="rating" required="required" min="1" max="5"><br>
         <input type="submit" value="Submit Book">
         </form>
+        </li></ul>
     </body>
 </html>
