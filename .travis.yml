@@ -1,17 +1,14 @@
-# Travis CI build file for Kitura sample app.
-# Kitura runs on OS X and Linux (Ubuntu).
-# See the following URLs for further details on Travis CI
-# https://docs.travis-ci.com/user/customizing-the-build/
-# https://docs.travis-ci.com/user/docker/
-# https://docs.travis-ci.com/user/multi-os/
+# Travis CI build file.
 
 # whitelist (branches that should be built)
 branches:
   only:
     - master
-    - develop
     - /^issue.*$/
 
+# the matrix of builds should cover each combination of Swift version
+# and platform that is supported. The version of Swift used is specified
+# by .swift-version, unless SWIFT_SNAPSHOT is specified.
 matrix:
   include:
     - os: linux
@@ -25,20 +22,23 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
+    - os: linux
+      dist: trusty
+      sudo: required
+      services: docker
       env: DOCKER_IMAGE=ubuntu:16.04
     - os: linux
       dist: trusty
       sudo: required
+      services: docker
       env: DOCKER_IMAGE=ubuntu:16.04 KITURA_NIO=1
 # Temporarily disabled: Swift-JWK-to-PEM does not yet support OpenSSL 1.1
 # See: https://github.com/ibm-cloud-security/Swift-JWK-to-PEM/issues/6
 #    - os: linux
 #      dist: trusty
 #      sudo: required
+#      services: docker
 #      env: DOCKER_IMAGE=ubuntu:18.04 KITURA_NIO=1
-    - os: linux
-      dist: trusty
-      sudo: required
     - os: osx
       osx_image: xcode9.2
       sudo: required
