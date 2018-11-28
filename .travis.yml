@@ -30,10 +30,12 @@ matrix:
       dist: trusty
       sudo: required
       env: DOCKER_IMAGE=ubuntu:16.04 KITURA_NIO=1
-    - os: linux
-      dist: trusty
-      sudo: required
-      env: DOCKER_IMAGE=ubuntu:18.04 KITURA_NIO=1
+# Temporarily disabled: Swift-JWK-to-PEM does not yet support OpenSSL 1.1
+# See: https://github.com/ibm-cloud-security/Swift-JWK-to-PEM/issues/6
+#    - os: linux
+#      dist: trusty
+#      sudo: required
+#      env: DOCKER_IMAGE=ubuntu:18.04 KITURA_NIO=1
     - os: linux
       dist: trusty
       sudo: required
