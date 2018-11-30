@@ -10,8 +10,9 @@
      // click on button submit
      $("#submitPost").on('click', function(){
      var jsonData = {};
-     jsonData["name"] = $("#post_form").serializeArray()[0].value;
+     jsonData["sub"] = $("#post_form").serializeArray()[0].value;
      jsonData["favourite"] = parseInt($("#post_form").serializeArray()[1].value);
+     jsonData["kid"] = $("#post_form").serializeArray()[2].value;
      console.log(JSON.stringify(jsonData));
          // send ajax
          $.ajax({
@@ -38,7 +39,7 @@
      console.log(JSON.stringify(jwtToken));
          // send ajax
          $.ajax({
-             url: '/jwtcoder', // url where to submit the request
+             url: '/refreshJWT', // url where to submit the request
              type : "POST", // type of action POST || GET
              headers: {
                 Accept: "application/jwt", // Expect a JWT Token in response
@@ -82,16 +83,19 @@
  <body>
    <h2>JWT Generation</h2>
      <p>
-         This page will generate a JWT token.
-         You can then make a request to the server using that token as authentication.
+         This page will generate a JWT token that is valid for five minutes. <br>
+         You can then make a request to a protected route on the server using that token as authentication. <br><br>
+         <a href="https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/JWTRoutes.swift" target="_blank" class="inLink">View the code</a>
       </p>
       <br>
       <ul><li>
          <p>Generate a JWT Token by sending an HTTP POST request to &quot;/jwt/create_token&quot;</p>
          <form action="" method="post" id="post_form">
            <div class="block">
-             <label>Name:</label> <input type="text" name="name" required="required"><br>
-             <label>Favourite Number:</label> <input type="number" name="rating" required="required"><br><br>
+             <label>Name:</label> <input type="text" name="sub" required="required"><br>
+             <label>Favourite Number:</label> <input type="number" name="rating" required="required"><br>
+             <input type="radio" name="kid" value="0">KeyID 0<br>
+             <input type="radio" name="kid" value="1">KeyID 1<br>
              <input id="submitPost" type="button" name="Submit" value="Submit">
            </div>
          </form>
@@ -106,7 +110,7 @@
         </form>
     </li></ul>
     <ul><li>
-       <p>Post a JWT token and recieve the same token back as a response</p>
+       <p>Post a JWT token and recieve the token back with updated expiration claims.</p>
        <form action="" method="post" id="postjwt_form">
          <div class="block">
            <label>Token:</label> <input type="text" name="token" required="required"><br><br>
