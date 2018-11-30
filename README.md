@@ -67,19 +67,6 @@ You can then search all your books using query parameters.
 
 [Link to Code](https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/CodableRoutes.swift)
 
-### Database persistence using Swift-Kuery-ORM
-
-Prerequisite: Requires a running PostgreSQL database:
-```
-brew install postgresql
-brew services start postgresql
-createdb school
-```
-
-This page demonstrates a server which will save and retrieve a students `Grades` from a database. This adds persistance to the data since even if the server is restarted the grades will be stored.
-
-[Link to Code](https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/DatabaseRoutes.swift)
-
 ### Sessions persistence using Kitura-Session
 
 This page demonstrates a server which will save an array of `Books` in a session. This array is unique to a single user who is authenticated via http cookies. You can test the session by saving books a private and a normal browser window and observing that both windows maintain their own array. The page includes example for both Raw and Codable Session routes.
@@ -134,6 +121,36 @@ To run the tests locally, run `swift test` from the Kitura-Sample directory.
 ## Running in Xcode
 
 You can also run this sample application inside Xcode. For more details, visit [kitura.io](http://www.kitura.io/en/starter/xcode.html).
+
+## Running with Docker
+A description of the files related to Docker can be found in the [Docker files](#docker-files) setion. To build the two docker images, run the following commands from the root directory of the project:
+* `docker build -t myapp-run .`
+* `docker build -t myapp-build -f Dockerfile-tools .`
+You may customize the names of these images by specifying a different value after the `-t` option.
+
+To compile the application using the tools docker image, run:
+* `docker run -v $PWD:/swift-project -w /swift-project myapp-build /swift-utils/tools-utils.sh build release`
+
+To run the application:
+* `docker run -it -p 8080:8080 -v $PWD:/swift-project -w /swift-project myapp-run sh -c .build-ubuntu/release/Kitura-Sample`
+
+## Deploy to Cloud Foundry
+
+1. Log in to IBM Cloud
+
+```
+bluemix api https://api.ng.bluemix.net
+bluemix login
+bluemix target -o <YOUR_ORG> -s <YOUR_DEV_SPACE>
+```
+
+where YOUR_ORG is the organisation you used when signing up to IBM Cloud and YOUR_DEV_SPACE is the space you created.
+
+2. Deploy your application to IBM Cloud
+
+```
+bx app push
+```
 
 ---
 

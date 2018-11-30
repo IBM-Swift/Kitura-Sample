@@ -25,20 +25,17 @@ import Foundation
 @testable import Application
 
 class KituraTest: XCTestCase {
+
+    // Create a single shared instance of the Kitura-Sample app for our tests to run against
+    private static let app: App? = try? App()
+
     private static let initOnce: () = {
         HeliumLogger.use()
-    }()
-
-    override func setUp() {
-        KituraTest.initOnce
-    }
-
-    override func tearDown() {
-    }
-
-    func performServerTest(asyncTasks: (XCTestExpectation) -> Void...) {
+        guard let app = app else {
+            XCTFail("App failed to initialize")
+            return
+        }
         do {
-            let app = try App()
             try app.postInit()
             let router = app.router
             Kitura.addHTTPServer(onPort: 8080, with: router)
@@ -47,7 +44,19 @@ class KituraTest: XCTestCase {
             XCTFail("Failed to create server")
             return
         }
+    }()
 
+    override func setUp() {
+        // Initialize logging and start Kitura-Sample application
+        KituraTest.initOnce
+        // Reset Application state in between tests
+        KituraTest.app?.setName(nil)
+    }
+
+    override func tearDown() {
+    }
+
+    func performServerTest(asyncTasks: (XCTestExpectation) -> Void...) {
         let requestQueue = DispatchQueue(label: "Request queue")
 
         for (index, asyncTask) in asyncTasks.enumerated() {
@@ -59,7 +68,6 @@ class KituraTest: XCTestCase {
 
         waitExpectation(timeout: 10) { error in
             // blocks test until request completes
-            Kitura.stop()
             XCTAssertNil(error)
         }
     }

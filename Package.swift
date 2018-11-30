@@ -18,6 +18,16 @@
  **/
 
 import PackageDescription
+import Foundation
+
+var webSocketPackage: Package.Dependency
+
+// Temporarily use alternate branch of Kitura-WebSocket while building in NIO mode
+if ProcessInfo.processInfo.environment["KITURA_NIO"] != nil {
+    webSocketPackage = .package(url: "https://github.com/IBM-Swift/Kitura-WebSocket.git", .exact("0.1.0-nio"))
+} else {
+    webSocketPackage = .package(url: "https://github.com/IBM-Swift/Kitura-WebSocket.git", from: "2.0.0")
+}
 
 let package = Package(
     name: "Kitura-Sample",
@@ -25,24 +35,22 @@ let package = Package(
         .package(url: "https://github.com/IBM-Swift/Kitura.git", from: "2.5.0"),
         .package(url: "https://github.com/IBM-Swift/HeliumLogger.git", from: "1.7.1"),
         .package(url: "https://github.com/IBM-Swift/CloudEnvironment.git", from: "8.0.0"),
-        .package(url: "https://github.com/RuntimeTools/SwiftMetrics.git", from: "2.0.0"),
+        .package(url: "https://github.com/RuntimeTools/SwiftMetrics.git", from: "2.5.0"),
         .package(url: "https://github.com/IBM-Swift/Health.git", from: "1.0.0"),
         .package(url: "https://github.com/IBM-Swift/Kitura-OpenAPI.git", from: "1.1.0"),
         .package(url: "https://github.com/IBM-Swift/Kitura-StencilTemplateEngine.git", from: "1.9.0"),
         .package(url: "https://github.com/IBM-Swift/Kitura-Markdown.git", from: "1.0.0"),
-        .package(url: "https://github.com/IBM-Swift/Kitura-WebSocket.git", from: "2.0.0"),
+        webSocketPackage,
         .package(url: "https://github.com/IBM-Swift/Kitura-CredentialsHTTP.git", from: "2.1.0"),
         .package(url: "https://github.com/IBM-Swift/Kitura-Session.git", from: "3.2.0"),
         .package(url: "https://github.com/IBM-Swift/Kitura-CredentialsGoogle.git", from: "2.2.0"),
         .package(url: "https://github.com/IBM-Swift/Kitura-CredentialsFacebook.git", from: "2.2.0"),
         .package(url: "https://github.com/Andrew-Lees11/appid-serversdk-swift.git", .branch("master")),
-        .package(url: "https://github.com/IBM-Swift/Swift-Kuery-ORM.git", .upToNextMinor(from: "0.3.1")),
-        .package(url: "https://github.com/IBM-Swift/Swift-Kuery-PostgreSQL.git", from: "1.2.0"),
-        .package(url: "https://github.com/IBM-Swift/Swift-JWT", from: "3.0.0")),
+        .package(url: "https://github.com/IBM-Swift/Swift-JWT", from: "3.0.0"),
     ],
     targets: [
         .target(name: "Kitura-Sample", dependencies: [ .target(name: "Application"), .target(name: "ChatService"), "Kitura" , "HeliumLogger"]),
-        .target(name: "Application", dependencies: [ "Kitura", "CloudEnvironment","SwiftMetrics","Health", "KituraOpenAPI", "KituraMarkdown", "KituraStencil", "CredentialsHTTP", "KituraSession", "CredentialsGoogle", "CredentialsFacebook", "IBMCloudAppID" , "SwiftKueryORM", "SwiftKueryPostgreSQL", "SwiftJWT"]),
+        .target(name: "Application", dependencies: [ "Kitura", "CloudEnvironment","SwiftMetrics","Health", "KituraOpenAPI", "KituraMarkdown", "KituraStencil", "CredentialsHTTP", "KituraSession", "CredentialsGoogle", "CredentialsFacebook", "IBMCloudAppID", "SwiftJWT"]),
         .target(name: "ChatService", dependencies: ["Kitura-WebSocket"]),
         .testTarget(name: "KituraSampleRouterTests" , dependencies: [.target(name: "Application"), "Kitura","HeliumLogger" ])
     ]

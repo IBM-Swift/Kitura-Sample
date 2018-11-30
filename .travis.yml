@@ -1,21 +1,14 @@
-# Travis CI build file for Kitura sample app.
-# Kitura runs on OS X and Linux (Ubuntu).
-# See the following URLs for further details on Travis CI
-# https://docs.travis-ci.com/user/customizing-the-build/
-# https://docs.travis-ci.com/user/docker/
-# https://docs.travis-ci.com/user/multi-os/
+# Travis CI build file.
 
 # whitelist (branches that should be built)
 branches:
   only:
     - master
-    - develop
     - /^issue.*$/
 
-notifications:
-  slack:
-    secure: "S2dGrEUmtX1+kbJTYf3V/2kH15lFad7BlRLrrj7E1fZGnHeYwQZQjIB4BxdSt7kTPWMonS3CAG/HmDWpU4FoAznFaTmoxO/aUjDgf65DJQKC2pW+yT49OC6SY/FNBwiBTRSodZifwOjb9sXAEPo3qOfBfRj68oZj52TgTAXKzCGkaSHZf6n1zO2Uk6d/POq1mDeSWTOffAV5sYreCXH9apATFn5LCmgb0tyQMn5xG4qJ4AVxRA6AIXsWjTAZ8Ehqpdob+4xuKPJajZcapIPDFp46ed/oF5NAMYuzzr+8itLK+1eF136gNAKx0BS8deFktPhxVExnvLi1K058MZZ+z59iUtORHbFviie0qdL4pcOnLK2Iyr2qRT/8b4okAj3r7PsDY54z0NM8Vhv5MEDPkVB7dBJPf5KLAOg2cupeEFiBQb1+/fDmdmwIMd2ISBTn8i5q1RuIrWZ8Rmcoe0fvd06E1K5XvT33x3MPbsu071p+QPBvurLYff/9HREK7LQcwLDEWTfCqdjiTcw4C8EYg81gBniLpZFFbKHc40IQ2bS/QEtGm7bkQtr/pl0Cc2waHfW92E9RS+NUOm6BTHWRhVzEQrDqH8R2Cvr1GeIJIblsW32r4uDKQ9zzrHK55ssqXyZZMv1lgAlhXKjp8dQnik+CYpxhXC8iUqbpdq1yCSw="
-
+# the matrix of builds should cover each combination of Swift version
+# and platform that is supported. The version of Swift used is specified
+# by .swift-version, unless SWIFT_SNAPSHOT is specified.
 matrix:
   include:
     - os: linux
@@ -25,10 +18,27 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
-      env: SWIFT_SNAPSHOT=4.1
+      env: SWIFT_SNAPSHOT=4.1.3
     - os: linux
       dist: trusty
       sudo: required
+    - os: linux
+      dist: trusty
+      sudo: required
+      services: docker
+      env: DOCKER_IMAGE=ubuntu:16.04
+    - os: linux
+      dist: trusty
+      sudo: required
+      services: docker
+      env: DOCKER_IMAGE=ubuntu:16.04 KITURA_NIO=1
+# Temporarily disabled: Swift-JWK-to-PEM does not yet support OpenSSL 1.1
+# See: https://github.com/ibm-cloud-security/Swift-JWK-to-PEM/issues/6
+#    - os: linux
+#      dist: trusty
+#      sudo: required
+#      services: docker
+#      env: DOCKER_IMAGE=ubuntu:18.04 KITURA_NIO=1
     - os: osx
       osx_image: xcode9.2
       sudo: required

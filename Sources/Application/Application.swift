@@ -50,7 +50,6 @@ public class App {
         initializeBasicAuthRoutes(app: self)
         initializeTokenAuthRoutes(app: self)
         initializeSessionsRoutes(app: self)
-        initializeDatabaseRoutes(app: self)
         initializeHealthRoutes(app: self)
         initializeOauth2Routes(app: self)
         initializeJWTRoutes(app: self)
