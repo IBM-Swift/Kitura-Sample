@@ -42,7 +42,7 @@ let package = Package(
         .package(url: "https://github.com/IBM-Swift/Kitura-Markdown.git", from: "1.0.0"),
         webSocketPackage,
         .package(url: "https://github.com/IBM-Swift/Kitura-CredentialsHTTP.git", from: "2.1.0"),
-        .package(url: "https://github.com/IBM-Swift/Kitura-Session.git", from: "3.2.0"),
+        .package(url: "https://github.com/IBM-Swift/Kitura-Session.git", from: "3.3.0"),
         .package(url: "https://github.com/IBM-Swift/Kitura-CredentialsGoogle.git", from: "2.2.0"),
         .package(url: "https://github.com/IBM-Swift/Kitura-CredentialsFacebook.git", from: "2.2.0"),
         .package(url: "https://github.com/Andrew-Lees11/appid-serversdk-swift.git", .branch("master")),
