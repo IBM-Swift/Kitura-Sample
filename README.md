@@ -67,6 +67,25 @@ You can then search all your books using query parameters.
 
 [Link to Code](https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/CodableRoutes.swift)
 
+### Database persistence using Swift-Kuery-ORM
+
+This page demonstrates a server which will save and retrieve a students `Grades` using the [Swift-Kuery-ORM](https://github.com/IBM-Swift/Swift-Kuery-ORM) API. 
+The example initially uses a dummy database but you can connect it to a live PostgreSQL database by by following the steps below:
+
+1. In terminal, set up a PostgreSQL database:
+```
+brew install postgresql
+brew services start postgresql
+createdb school
+```
+
+2. Add `SwiftKueryPostgreSQL` to your dependancies in `Package.swift`
+3. Switch the connection to `PostgreSQLConnection` in `DatabaseRoutes.swift`
+
+This adds persistance to the data, meaning even if the server is restarted the grades will be stored.
+
+[Link to Code](https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/DatabaseRoutes.swift)
+
 ### Sessions persistence using Kitura-Session
 
 This page demonstrates a server which will save an array of `Books` in a session. This array is unique to a single user who is authenticated via http cookies. You can test the session by saving books a private and a normal browser window and observing that both windows maintain their own array. The page includes example for both Raw and Codable Session routes.
