@@ -18,6 +18,8 @@ import Foundation
 import SwiftKueryORM
 import LoggerAPI
 // If using PostgreSQL, uncomment the dependancy in Package.swift and import SwiftKueryPostgreSQL here:
+
+// Uncomment to use PostgreSQL
 //import SwiftKueryPostgreSQL
 
 /*
@@ -32,6 +34,7 @@ func initializeDatabaseRoutes(app: App) {
     
     let connection = DummyConnection()
     Database.default = Database(single: connection)
+    // Uncomment to use PostgreSQL
 //     let pool = PostgreSQLConnection.createPool(host: "localhost", port: 5432, options: [.databaseName("school")], poolOptions: ConnectionPoolOptions(initialCapacity: 1, maxCapacity: 5, timeout: 10000))
 //     Database.default = Database(pool)
 
