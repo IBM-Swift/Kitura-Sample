@@ -45,6 +45,12 @@
           </p><br>
           <a href="https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/Oauth2Routes.swift" target="_blank" class="inLink">View the code</a>
       <h2>App ID log in</h2>
+      <p>
+      AppID requires OpenSSL that is not included on Mac by default.<br>
+      To use this on mac, install OpenSSL:<br>
+      $ brew install openssl<br>
+      then remove all the `#if os(Linux)` tags for AppID in Kitura sample.<br>
+      </p>
       <ul><li>
           <a href="https://console.bluemix.net/docs/services/appid/index.html" target="_blank">Set up an App ID Oauth2 app </a><br>
           <p>Log in with App ID by making a get request to &quot;/oauth2/appid&quot;.</p>
