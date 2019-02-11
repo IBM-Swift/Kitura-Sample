@@ -33,7 +33,8 @@ func initializeSessionsRoutes(app: App) {
         respondWith(nil)
     }
     
-    // Raw session
+    // Raw session (Available from swift 4.1)
+    #if swift(>=4.1)
     let session = Session(secret: "secret", cookie: [CookieParameter.name("Raw-cookie")])
     app.router.all(middleware: session)
     
@@ -67,4 +68,5 @@ func initializeSessionsRoutes(app: App) {
         let _ = response.send(status: .noContent)
         next()
     }
+    #endif
 }

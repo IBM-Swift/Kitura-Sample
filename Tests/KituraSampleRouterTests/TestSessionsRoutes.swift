@@ -84,6 +84,7 @@ class TestSessionsRoutes: KituraTest {
         })
     }
     
+    #if swift(>=4.1)
     func testPostRawSession() {
         let jsonBook: String = "{\"name\": \"bookName\",\"author\": \"bookAuthor\",\"rating\": 4}"
         let objectBook = Book(name: "bookName", author: "bookAuthor", rating: 4)
@@ -114,4 +115,5 @@ class TestSessionsRoutes: KituraTest {
             })
         })
     }
+    #endif
 }
