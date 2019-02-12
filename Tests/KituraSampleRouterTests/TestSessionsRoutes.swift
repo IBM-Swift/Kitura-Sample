@@ -32,7 +32,7 @@ class TestSessionsRoutes: KituraTest {
             ("testRawSessionPersistence", testRawSessionPersistence),
         ]
         #else
-        [
+        return [
             ("testGetTypeSafeSession", testGetTypeSafeSession),
             ("testPostTypeSafeSession", testPostTypeSafeSession),
             ("testTypeSafeSessionPersistence", testTypeSafeSessionPersistence),
