@@ -12,10 +12,9 @@ branches:
 matrix:
   include:
     - os: linux
-      dist: xenial
+      dist: trusty
       sudo: required
-      services: docker
-      env: DOCKER_IMAGE=swift:4.0.3 SWIFT_SNAPSHOT=4.0.3
+      env: SWIFT_SNAPSHOT=4.0.3
     - os: linux
       dist: xenial
       sudo: required
@@ -38,13 +37,11 @@ matrix:
       sudo: required
       services: docker
       env: DOCKER_IMAGE=swift:4.2.3 KITURA_NIO=1
-# Temporarily disabled: Swift-JWK-to-PEM does not yet support OpenSSL 1.1
-# See: https://github.com/ibm-cloud-security/Swift-JWK-to-PEM/issues/6
-#    - os: linux
-#      dist: xenial
-#      sudo: required
-#      services: docker
-#      env: DOCKER_IMAGE=ubuntu:18.04 KITURA_NIO=1
+    - os: linux
+      dist: xenial
+      sudo: required
+      services: docker
+      env: DOCKER_IMAGE=ubuntu:18.04 KITURA_NIO=1
     - os: osx
       osx_image: xcode9.2
       sudo: required
