@@ -33,7 +33,8 @@ func initializeSessionsRoutes(app: App) {
         respondWith(nil)
     }
     
-    // Raw session
+    // Raw session (Available from swift 4.1)
+    #if swift(>=4.1)
     let session = Session(secret: "secret", cookie: [CookieParameter.name("Raw-cookie")])
     app.router.all(middleware: session)
     
@@ -41,17 +42,7 @@ func initializeSessionsRoutes(app: App) {
         guard let session = request.session else {
             return try response.status(.internalServerError).end()
         }
-        let bookData = session["books"] as? [[String: String]] ?? []
-        var books: [Book] = []
-        for book in bookData {
-            guard let bookName = book["name"],
-                  let bookAuthor = book["author"],
-                  let ratingString = book["rating"],
-                  let bookRating = Int(ratingString)
-            else { continue }
-            let newBook = Book(name: bookName, author: bookAuthor, rating: bookRating)
-            books.append(newBook)
-        }
+        let books: [Book] = session["books"] ?? []
         response.send(json: books)
         next()
     }
@@ -60,11 +51,10 @@ func initializeSessionsRoutes(app: App) {
         guard let session = request.session else {
             return try response.status(.internalServerError).end()
         }
-        var bookData = session["books"] as? [[String: String]] ?? []
+        var books: [Book] = session["books"] ?? []
         let inputBook = try request.read(as: Book.self)
-        let bookDict: [String: String] = ["name": inputBook.name, "author": inputBook.author, "rating": String(inputBook.rating)]
-        bookData.append(bookDict)
-        session["books"] = bookData
+        books.append(inputBook)
+        session["books"] = books
         response.status(.created)
         response.send(inputBook)
         next()
@@ -78,4 +68,5 @@ func initializeSessionsRoutes(app: App) {
         let _ = response.send(status: .noContent)
         next()
     }
+    #endif
 }

@@ -15,12 +15,11 @@
  **/
 
 import Foundation
-import Kitura
-import LoggerAPI
+import KituraContracts
+import SwiftKueryORM
 
-func initializeStaticFileServers(app: App) {
-    app.router.all("/static", middleware: StaticFileServer())
-    app.router.all("/chat", middleware: StaticFileServer(path: "./chat"))
-	app.router.all("/JWT", middleware: StaticFileServer(path: "./jwt"))
-    app.router.all("/", middleware: StaticFileServer(path: "./Views"))
+struct GradesQuery: QueryParams {
+    let course: String?
+    let grade: InclusiveRange<Int>?
+    let order: Ordering?
 }

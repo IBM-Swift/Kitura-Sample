@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+ <html>
+     <head>
+     <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+     <link rel="stylesheet" type="text/css" href="mobile.css" media="(max-width: 800px)" />
+         <meta charset="UTF-8">
+             <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+             <script>
+                 // Script to send a Get request to '/grades'
+                 $(document).ready(function(){
+                                   $('#getButton').click(function(){
+                                                         $.ajax({
+                                                                url: '/database',
+                                                                type: 'GET',
+                                                                success: function(data,status){
+                                                                alert("Server response data: " + JSON.stringify(data) + "\nStatus: " + status);
+                                                                },
+                                                                error: function() {
+                                                                     alert("Failed to post JSON. Please ensure you have created a database");
+                                                                }
+                                                                });
+                                                         });
+                                   });
+                   // Script to POST JSON from a HTML form
+                   $(document).ready(function(){
+                                     // click on button submit
+                                     $("#submitJSONPost").on('click', function(){
+                                                             var jsonData = {};
+                                                             jsonData["course"] = $("#json_post_form").serializeArray()[0].value;
+                                                             jsonData["grade"] = parseInt($("#json_post_form").serializeArray()[1].value);
+                                                             console.log(JSON.stringify(jsonData));
+                                                             // send ajax
+                                                             $.ajax({
+                                                                    url: '/database', // url where to submit the request
+                                                                    type : "POST", // type of action POST || GET
+                                                                    contentType: "application/json", // set the request Content-Type header
+                                                                    dataType : 'json', // data type
+                                                                    data : JSON.stringify(jsonData), // post data || get data
+                                                                    success: function(data, status){
+                                                                    alert("Server response data: " + JSON.stringify(data) + "\nStatus: " + status);
+                                                                    },
+                                                                    error: function() {
+                                                                     alert("Failed to post JSON. Please ensure you have created a database");
+                                                                    }
+                                                                    })
+                                                             });
+                                     });
+                   // Script to send a Get request with query parameters to '/grades'
+                   $(document).ready(function(){
+                                     $('#submitQueryGet').click(function(){
+                                                                $.ajax({
+                                                                       url: '/database?' + $("#query_get_form").serialize(),
+                                                                       type: 'GET',
+                                                                       success: function(data,status){
+                                                                       alert("Server response data: " + JSON.stringify(data) + "\nStatus: " + status);
+                                                                       },
+                                                                       error: function() {
+                                                                         alert("Failed to post JSON. Please ensure you have created a database");
+                                                                       }
+                                                                       });
+                                                                });
+                                     });
+               // Script to send a DELETE request to '/books'
+               $(document).ready(function(){
+                                 $('#deleteButton').click(function(){
+                                                          $.ajax({
+                                                                 url: '/database',
+                                                                 type: 'DELETE',
+                                                                 success: function(data,status){
+                                                                 alert("Server successfully deleted \nStatus: " + status);
+                                                                 },
+                                                                 error: function() {
+                                                                     alert("Failed to post JSON. Please ensure you have created a database");
+                                                                 }
+                                                                 });
+                                                          });
+                                 });
+                 </script>
+             <title>Persisting with a database</title>
+             </head>
+     <body>
+       <h2 class="anim-type">Persisting with a database</h2>
+         <p>
+         This page will send HTTP requests to the "/database" route
+         of the Kitura sample server.<br> The server will then process the
+         incoming request to return or change the "grades" within an SQL database.<br>
+         This Database adds persistence so even if you restart your server the data will remain.<br>
+         This is a demonstration of databases using the ORM in Kitura.<br><br>
+         <a href="https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/DatabaseRoutes.swift" target="_blank" class="inLink">View the code</a>
+         </p>
+         <h2>
+             Start your Database:
+         </h2>
+         <ul><li>
+         <p>
+         Initially these routes are connected to a dummy database that stores the Grades on the server. To run the example against a real postgreSQL database you need to:<br>
+         </p>
+         <ol><li>
+             <p>
+             1. Install postgreSQL using the teminal:
+             </p>
+             $ brew install postgresql<br>
+             $ brew services start postgresql<br>
+             $ createdb school
+             <p>
+             2. Add Swift-Kuery-PostgreSQL to your <a href="https://github.com/IBM-Swift/Kitura-Sample/Package.swift" target="_blank">Package.swift</a>.
+             </p>
+             <p>
+             3. Connect to PostgreSQL in your <a href="https://github.com/IBM-Swift/Kitura-Sample/blob/master/Sources/Application/Routes/DatabaseRoutes.swift" target="_blank">DatabaseRoutes.swift</a>.
+             </p>
+        </li>
+         </ol>
+         
+         </li></ul>
+         <h2>
+             Run the Database Routes:
+         </h2>
+         <ul><li>
+             <p>Send an HTTP GET request to &quot;/database&quot; to receive an array of grades</p>
+             <input type="button" value="GET to &quot;/database&quot;" id="getButton" >
+                 </li></ul>
+         <ul><li>
+             <p>Add a grade by sending a JSON-encoded HTTP POST request to &quot;/database&quot;</p>
+             <form action="" method="post" id="json_post_form">
+                 Course: <input type="text" name="course" required="required"><br>
+                 Grade: <input type="number" name="grade" required="required" min="1" max="100"><br>
+                        <br><input id="submitJSONPost" type="button" name="Submit" value="Submit">
+             </form>
+         </li></ul>
+         <ul><li>
+             <p>Search for a course's grades by sending a HTTP GET request with the course as query parameters to &quot;/database&quot;</p>
+             <form action="/books" method="get" id="query_get_form" enctype="application/x-www-form-urlencoded">
+                 Course: <input type="text" name="course" required="required"><br>
+                         <br><input id="submitQueryGet" type="button" value="Submit">
+             </form>
+         </li></ul>
+         <ul><li>
+             <p>Empty the &quot;database&quot; dictionary by sending an HTTP DELETE request to &quot;/database&quot;</p>
+             <input type="button" value="DELETE to &quot;/grades&quot;" id="deleteButton">
+                 </li></ul>
+     </body>
+ </html>

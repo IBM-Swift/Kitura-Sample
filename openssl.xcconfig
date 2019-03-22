@@ -1,2 +1,0 @@
-HEADER_SEARCH_PATHS = /usr/local/opt/openssl/include
-LIBRARY_SEARCH_PATHS = /usr/local/opt/openssl/lib

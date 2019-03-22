@@ -22,6 +22,7 @@ import KituraSession
 class TestSessionsRoutes: KituraTest {
     
     static var allTests: [(String, (TestSessionsRoutes) -> () throws -> Void)] {
+        #if swift(>=4.1)
         return [
             ("testGetTypeSafeSession", testGetTypeSafeSession),
             ("testPostTypeSafeSession", testPostTypeSafeSession),
@@ -30,6 +31,13 @@ class TestSessionsRoutes: KituraTest {
             ("testPostRawSession", testPostRawSession),
             ("testRawSessionPersistence", testRawSessionPersistence),
         ]
+        #else
+        return [
+            ("testGetTypeSafeSession", testGetTypeSafeSession),
+            ("testPostTypeSafeSession", testPostTypeSafeSession),
+            ("testTypeSafeSessionPersistence", testTypeSafeSessionPersistence),
+        ]
+        #endif
     }
     
     func testGetTypeSafeSession() {
@@ -73,6 +81,7 @@ class TestSessionsRoutes: KituraTest {
             })
         })
     }
+    #if swift(>=4.1)
     func testGetRawSession() {
         let emptyBooks: [Book] = []
         performServerTest(asyncTasks: { expectation in
@@ -114,4 +123,5 @@ class TestSessionsRoutes: KituraTest {
             })
         })
     }
+    #endif
 }
