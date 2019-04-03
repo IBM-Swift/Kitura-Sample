@@ -40,9 +40,9 @@
 
             <li class="list"><button class="button" onclick="loadInnerPage('./jwtform.html')"><p>JWT: JSON web tokens</p></button></li>
 
-            <li class="list"><button class="button" onclick="loadInnerPage('./openapi/ui')"><p>OpenAPI interface</p></button></li>
+            <li class="list"><button class="button" onclick="window.open('./openapi/ui', '_blank')"><p>OpenAPI interface</p></button></li>
 
-            <li class="list"><button class="button" onclick="loadInnerPage('./chat')"><p>WebSockets demo</p></button></li>
+            <li class="list"><button class="button" onclick="window.open('./chat', '_blank')"><p>WebSockets demo</p></button></li>
         </ul>
     </div>
 
@@ -77,15 +77,14 @@
     </div>
 
     <div class="mainPane">
-        <object id="innerPage" type="text/html"></object>
+        <iframe id="innerPage" type="text/html"></iframe>
         <meta charset="UTF-8">
     </div>
 
     <script>
         function loadInnerPage(page) {
-            document.getElementById("innerPage").setAttribute('data', page);
+            document.getElementById("innerPage").setAttribute('src', page);
             document.getElementById("fillerTitle").setAttribute('style', 'display: none;');
-            console.log("Testing");
 
 
             // Refresh data to force the page to load
