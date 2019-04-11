@@ -12,9 +12,9 @@ branches:
 matrix:
   include:
     - os: linux
-      dist: trusty
+      dist: xenial 
       sudo: required
-      env: SWIFT_SNAPSHOT=4.0.3
+      env: DOCKER_IMAGE=swift:4.0.3 SWIFT_SNAPSHOT=4.0.3
     - os: linux
       dist: xenial
       sudo: required
@@ -24,7 +24,12 @@ matrix:
       dist: xenial
       sudo: required
       services: docker
-      env: DOCKER_IMAGE=swift:4.2.3
+      env: DOCKER_IMAGE=swift:4.2.4 SWIFT_SNAPSHOT=4.2.4
+    - os: linux
+      dist: xenial
+      sudo: required
+      services: docker
+      env: DOCKER_IMAGE=swift:4.2.4 SWIFT_SNAPSHOT=4.2.4 KITURA_NIO=1
 # Temporarily disabled: appid-serversdk-swift does not yet compile on Swift 5
 # https://github.com/ibm-cloud-security/appid-serversdk-swift/issues/83
 #    - os: linux
@@ -36,12 +41,28 @@ matrix:
       dist: xenial
       sudo: required
       services: docker
-      env: DOCKER_IMAGE=swift:4.2.3 KITURA_NIO=1
+      env: DOCKER_IMAGE=swift:5.0-xenial
     - os: linux
       dist: xenial
       sudo: required
       services: docker
-      env: DOCKER_IMAGE=ubuntu:18.04 KITURA_NIO=1
+      env: DOCKER_IMAGE=swift:5.0 SWIFT_SNAPSHOT=$SWIFT_DEVELOPMENT_SNAPSHOT
+    - os: linux
+      dist: xenial
+      sudo: required
+      services: docker
+      env: DOCKER_IMAGE=swift:5.0-xenial KITURA_NIO=1
+    - os: linux
+      dist: xenial
+      sudo: required
+      services: docker
+      env: DOCKER_IMAGE=swift:5.0 SWIFT_SNAPSHOT=$SWIFT_DEVELOPMENT_SNAPSHOT KITURA_NIO=1
+# This should be satisfired by previous build as long as compilation ok on swift 5
+#    - os: linux
+#      dist: xenial
+#      sudo: required
+#      services: docker
+#      env: DOCKER_IMAGE=ubuntu:18.04 KITURA_NIO=1
     - os: osx
       osx_image: xcode9.2
       sudo: required
@@ -53,10 +74,26 @@ matrix:
     - os: osx
       osx_image: xcode10.1
       sudo: required
+      env: SWIFT_SNAPSHOT=4.2.1
     - os: osx
       osx_image: xcode10.1
       sudo: required
+      env: SWIFT_SNAPSHOT=4.2.1 KITURA_NIO=1
+    - os: osx
+      osx_image: xcode10.2
+      sudo: required
+    - os: osx
+      osx_image: xcode10.2
+      sudo: required
       env: SWIFT_SNAPSHOT=$SWIFT_DEVELOPMENT_SNAPSHOT
+    - os: osx
+      osx_image: xcode10.2
+      sudo: required
+      env: KITURA_NIO=1
+    - os: osx
+      osx_image: xcode10.2
+      sudo: required
+      env: SWIFT_SNAPSHOT=$SWIFT_DEVELOPMENT_SNAPSHOT KITURA_NIO=1
 
 before_install:
   - git clone https://github.com/IBM-Swift/Package-Builder.git
