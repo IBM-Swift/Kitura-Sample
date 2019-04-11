@@ -20,18 +20,11 @@ import SwiftKuery
 // This class is a dummy SwiftKuery plugin that allows the saving and retrieval of "Grade" objects in local storage.
 // This allows the Database example to run prior to connecting to a real database.
 class DummyConnection: Connection {
-    var grades = [Grade]()
-    let queryBuilder: QueryBuilder
-    
-    init(withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false, createAutoIncrement: ((String, Bool) -> String)? = nil) {
-        self.queryBuilder = QueryBuilder(withDeleteRequiresUsing: withDeleteRequiresUsing, withUpdateRequiresFrom: withUpdateRequiresFrom, createAutoIncrement: createAutoIncrement)
+    func execute(preparedStatement: PreparedStatement, parameters: [String : Any?], onCompletion: @escaping ((QueryResult) -> ())) {
+        onCompletion(.successNoData)
     }
     
-    func connect(onCompletion: (QueryError?) -> ()) {}
-    
-    public var isConnected: Bool { return true }
-    
-    func closeConnection() {}
+    var grades = [Grade]()
     
     func execute(query: Query, onCompletion: @escaping ((QueryResult) -> ())) {
         do {
@@ -39,7 +32,11 @@ class DummyConnection: Connection {
             switch queryComponents[0] {
             case "SELECT":
                 if queryComponents[1] == "*" {
-                    return onCompletion(.resultSet(ResultSet(DummyResultFetcher(grades: grades))))
+                    if grades.isEmpty {
+                        return onCompletion(.successNoData)
+                    } else {
+                    return onCompletion(QueryResult.resultSet(ResultSet(DummyResultFetcher(grades: grades), connection: self)))
+                    }
                 }
             case "DELETE":
                 grades = []
@@ -64,7 +61,7 @@ class DummyConnection: Connection {
             case "SELECT":
                 if let course = parameters[0] as? String {
                     let matchingGrades = grades.filter { $0.course == course }
-                    return onCompletion(.resultSet(ResultSet(DummyResultFetcher(grades: matchingGrades))))
+                    return onCompletion(.resultSet(ResultSet(DummyResultFetcher(grades: matchingGrades), connection: self)))
                 }
             default:
                 return onCompletion(QueryResult.successNoData)
@@ -94,11 +91,34 @@ class DummyConnection: Connection {
         return (try? query.build(queryBuilder: queryBuilder)) ?? ""
     }
     
-    private func returnResult(_ onCompletion: @escaping ((QueryResult) -> ())) {
-        return onCompletion(.successNoData)
+    func execute(preparedStatement: PreparedStatement, parameters: [Any?], onCompletion: @escaping ((QueryResult) -> ())) {
+        onCompletion(.successNoData)
     }
     
-    func startTransaction(onCompletion: @escaping ((QueryResult) -> ())) {}
+    func execute(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {
+        onCompletion(.successNoData)
+    }
+    
+    init(withDeleteRequiresUsing: Bool = false, withUpdateRequiresFrom: Bool = false) {
+        self.queryBuilder = QueryBuilder(columnBuilder: DummySQLColumnBuilder())
+    }
+    
+    var queryBuilder: QueryBuilder
+    
+    func connect(onCompletion: @escaping (QueryResult) -> ()) {}
+    
+    func connectSync() -> QueryResult { return QueryResult.successNoData }
+    func closeConnection() {}
+    
+    var isConnected: Bool = true
+    
+    func prepareStatement(_ query: Query, onCompletion: @escaping ((QueryResult) -> ())) {}
+    
+    func prepareStatement(_ raw: String, onCompletion: @escaping ((QueryResult) -> ())) {}
+    
+    func release(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {}
+        
+    func startTransaction(onCompletion: @escaping ((QueryResult) -> ())) { }
     
     func commit(onCompletion: @escaping ((QueryResult) -> ())) {}
     
@@ -110,19 +130,6 @@ class DummyConnection: Connection {
     
     func release(savepoint: String, onCompletion: @escaping ((QueryResult) -> ())) {}
     
-    struct TestPreparedStatement: PreparedStatement {}
-    
-    func prepareStatement(_ query: Query) throws -> PreparedStatement { return TestPreparedStatement() }
-    
-    func prepareStatement(_ raw: String) throws -> PreparedStatement { return TestPreparedStatement() }
-    
-    func execute(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {}
-    
-    func execute(preparedStatement: PreparedStatement, parameters: [Any?], onCompletion: @escaping ((QueryResult) -> ())) {}
-    
-    func execute(preparedStatement: PreparedStatement, parameters: [String:Any?], onCompletion: @escaping ((QueryResult) -> ())) {}
-    
-    func release(preparedStatement: PreparedStatement, onCompletion: @escaping ((QueryResult) -> ())) {}
 }
 
 class DummyResultFetcher: ResultFetcher {
@@ -138,19 +145,55 @@ class DummyResultFetcher: ResultFetcher {
         }
     }
     
-    func fetchNext() -> [Any?]? {
+    func fetchNext(callback: @escaping (([Any?]?, Error?)) -> ()) {
         if fetched < numberOfRows {
             fetched += 1
-            return rows[fetched - 1]
+            callback((rows[fetched - 1], nil))
         }
-        return nil
+        callback((nil, nil))
     }
     
-    func fetchNext(callback: ([Any?]?) ->()) {
-        callback(fetchNext())
+    func fetchTitles(callback: @escaping (([String]?, Error?)) -> ()) {
+        callback((titles, nil))
     }
     
-    func fetchTitles() -> [String] {
-        return titles
+    func done() {}
+}
+
+class DummySQLColumnBuilder: ColumnCreator {
+    func buildColumn(for column: Column, using queryBuilder: QueryBuilder) -> String? {
+        guard let type = column.type else {
+            return nil
+        }
+        
+        var result = column.name
+        let identifierQuoteCharacter = queryBuilder.substitutions[QueryBuilder.QuerySubstitutionNames.identifierQuoteCharacter.rawValue]
+        if !result.hasPrefix(identifierQuoteCharacter) {
+            result = identifierQuoteCharacter + result + identifierQuoteCharacter + " "
+        }
+        
+        var typeString = type.create(queryBuilder: queryBuilder)
+        if let length = column.length {
+            typeString += "(\(length))"
+        }
+        
+        if column.isPrimaryKey {
+            result += " PRIMARY KEY"
+        }
+        if column.isNotNullable {
+            result += " NOT NULL"
+        }
+        if column.isUnique {
+            result += " UNIQUE"
+        }
+        if let checkExpression = column.checkExpression {
+            result += checkExpression.contains(column.name) ? " CHECK (" + checkExpression.replacingOccurrences(of: column.name, with: "\"\(column.name)\"") + ")" : " CHECK (" + checkExpression + ")"
+        }
+        if let collate = column.collate {
+            result += " COLLATE \"" + collate + "\""
+        }
+        return result
     }
+    
+    
 }
