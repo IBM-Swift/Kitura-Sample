@@ -21,9 +21,9 @@ import PackageDescription
 import Foundation
 
 var dependencies: [Package.Dependency] = [
-    .package(url: "https://github.com/IBM-Swift/Kitura.git", from: "2.5.0"),
+    .package(url: "https://github.com/IBM-Swift/Kitura.git", from: "2.6.0"),
     .package(url: "https://github.com/IBM-Swift/HeliumLogger.git", from: "1.7.1"),
-    .package(url: "https://github.com/IBM-Swift/CloudEnvironment.git", from: "8.0.0"),
+    .package(url: "https://github.com/IBM-Swift/CloudEnvironment.git", from: "9.0.0"),
     .package(url: "https://github.com/RuntimeTools/SwiftMetrics.git", from: "2.5.0"),
     .package(url: "https://github.com/IBM-Swift/Health.git", from: "1.0.0"),
     .package(url: "https://github.com/IBM-Swift/Kitura-OpenAPI.git", from: "1.1.0"),
@@ -34,7 +34,7 @@ var dependencies: [Package.Dependency] = [
     .package(url: "https://github.com/IBM-Swift/Kitura-CredentialsGoogle.git", from: "2.2.0"),
     .package(url: "https://github.com/IBM-Swift/Kitura-CredentialsFacebook.git", from: "2.2.0"),
     .package(url: "https://github.com/IBM-Swift/Swift-JWT", from: "3.0.0"),
-    .package(url: "https://github.com/IBM-Swift/Swift-Kuery-ORM.git", .upToNextMinor(from: "0.3.1")),
+    .package(url: "https://github.com/IBM-Swift/Swift-Kuery-ORM.git", .upToNextMinor(from: "0.5.0")),
 ]
 var targetDependencies: [Target.Dependency] = [ "Kitura", "CloudEnvironment","SwiftMetrics","Health", "KituraOpenAPI", "KituraMarkdown", "KituraStencil", "CredentialsHTTP", "KituraSession", "CredentialsGoogle", "CredentialsFacebook", "SwiftJWT", "SwiftKueryORM",
 ]
