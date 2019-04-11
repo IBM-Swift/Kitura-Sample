@@ -169,13 +169,17 @@ class KituraTest: XCTestCase {
                        expectedStatusCode: HTTPStatusCode = HTTPStatusCode.OK,
                        bodyChecker: BodyChecker? = nil) {
         XCTAssertEqual(response.statusCode, expectedStatusCode, "No success status code returned")
-        if let optionalBody = try? response.readString(), let body = optionalBody {
-            if let expectedResponseText = expectedResponseText {
-                XCTAssertEqual(body, expectedResponseText, "mismatch in body")
+        do {
+            if let body = try response.readString() {
+                if let expectedResponseText = expectedResponseText {
+                    XCTAssertEqual(body, expectedResponseText, "mismatch in body")
+                }
+                bodyChecker?(body)
+            } else {
+                XCTFail("No response body")
             }
-            bodyChecker?(body)
-        } else {
-            XCTFail("No response body")
+        } catch {
+            XCTFail("Error thrown getting response body: \(error)")
         }
     }
     
@@ -229,22 +233,26 @@ class KituraTest: XCTestCase {
                               expectedStatusCode: HTTPStatusCode = HTTPStatusCode.OK) {
         XCTAssertEqual(response.statusCode, expectedStatusCode,
                        "No success status code returned")
-        if let optionalBody = try? response.readString(), let body = optionalBody {
-            if body.isEmpty {
-                XCTAssertNil(expectedResponseArray)
-            } else {
-                let json = body.data(using: .utf8)!
-                do {
-                    let myStruct = try JSONDecoder().decode([T].self, from: json)
-                    if let expectedResponseArray = expectedResponseArray {
-                        XCTAssertTrue(myStruct.elementsEqual(expectedResponseArray))
+        do {
+            if let body = try response.readString() {
+                if body.isEmpty {
+                    XCTAssertNil(expectedResponseArray)
+                } else {
+                    let json = body.data(using: .utf8)!
+                    do {
+                        let myStruct = try JSONDecoder().decode([T].self, from: json)
+                        if let expectedResponseArray = expectedResponseArray {
+                            XCTAssertTrue(myStruct.elementsEqual(expectedResponseArray))
+                        }
+                    } catch {
+                        print("Error")
                     }
-                } catch {
-                    print("Error")
                 }
+            } else {
+                XCTFail("No response body")
             }
-        } else {
-            XCTFail("No response body")
+        } catch {
+            XCTFail("Error thrown getting response body: \(error)")
         }
     }
     
@@ -252,16 +260,20 @@ class KituraTest: XCTestCase {
                               expectedStatusCode: HTTPStatusCode = HTTPStatusCode.OK) {
         XCTAssertEqual(response.statusCode, expectedStatusCode,
                        "No success status code returned")
-        if let optionalBody = try? response.readString(), let body = optionalBody {
-            let json = body.data(using: .utf8)!
-            do {
-                let myStruct = try JSONDecoder().decode(T.self, from: json)
-                XCTAssertTrue(myStruct == expectedResponse)
-            } catch {
-                print("Error")
+        do {
+            if let body = try response.readString() {
+                let json = body.data(using: .utf8)!
+                do {
+                    let myStruct = try JSONDecoder().decode(T.self, from: json)
+                    XCTAssertTrue(myStruct == expectedResponse)
+                } catch {
+                    print("Error")
+                }
+            } else {
+                XCTFail("No response body")
             }
-        } else {
-            XCTFail("No response body")
+        } catch {
+            XCTFail("Error thrown getting response body: \(error)")
         }
     }
     
