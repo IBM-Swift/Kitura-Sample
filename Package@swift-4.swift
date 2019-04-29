@@ -21,7 +21,7 @@ import PackageDescription
 import Foundation
 
 var dependencies: [Package.Dependency] = [
-    .package(url: "https://github.com/IBM-Swift/Kitura.git", from: "2.6.0"),
+    .package(url: "https://github.com/IBM-Swift/Kitura.git", .upToNextMinor(from: "2.6.0")),
     .package(url: "https://github.com/IBM-Swift/HeliumLogger.git", from: "1.7.1"),
     .package(url: "https://github.com/IBM-Swift/CloudEnvironment.git", from: "9.0.0"),
     .package(url: "https://github.com/RuntimeTools/SwiftMetrics.git", from: "2.5.0"),
@@ -51,7 +51,7 @@ targetDependencies.append("IBMCloudAppID")
 
 // Temporarily use alternate branch of Kitura-WebSocket while building in NIO mode
 if ProcessInfo.processInfo.environment["KITURA_NIO"] != nil {
-    dependencies.append(.package(url: "https://github.com/IBM-Swift/Kitura-WebSocket.git", .exact("0.1.0-nio")))
+    dependencies.append(.package(url: "https://github.com/IBM-Swift/Kitura-WebSocket-NIO.git", from: "1.0.0"))
 } else {
     dependencies.append(.package(url: "https://github.com/IBM-Swift/Kitura-WebSocket.git", from: "2.0.0"))
 }
