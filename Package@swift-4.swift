@@ -49,7 +49,7 @@ dependencies.append(.package(url: "https://github.com/ibm-cloud-security/appid-s
 targetDependencies.append("IBMCloudAppID")
 #endif
 
-// Temporarily use alternate branch of Kitura-WebSocket while building in NIO mode
+// Use alternate implementation of Kitura-WebSocket while building in NIO mode
 if ProcessInfo.processInfo.environment["KITURA_NIO"] != nil {
     dependencies.append(.package(url: "https://github.com/IBM-Swift/Kitura-WebSocket-NIO.git", from: "1.0.0"))
 } else {
