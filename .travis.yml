@@ -12,9 +12,10 @@ branches:
 matrix:
   include:
     - os: linux
-      dist: xenial 
+      # Trusty build retained to provide 14.04 coverage (as paid support is still available)
+      dist: trusty
       sudo: required
-      env: DOCKER_IMAGE=swift:4.0.3 SWIFT_SNAPSHOT=4.0.3
+      env: SWIFT_SNAPSHOT=4.0.3
     - os: linux
       dist: xenial
       sudo: required
@@ -29,16 +30,19 @@ matrix:
       dist: xenial
       sudo: required
       services: docker
+      # Note: Ubuntu 16.04
       env: DOCKER_IMAGE=swift:5.0.1-xenial
     - os: linux
       dist: xenial
       sudo: required
       services: docker
+      # Note: Kitura-WebSocket-NIO requires zlib
       env: DOCKER_IMAGE=swift:5.0.1-xenial KITURA_NIO=1 DOCKER_PACKAGES="libz-dev"
     - os: linux
       dist: xenial
       sudo: required
       services: docker
+      # Note: Ubuntu 18.04
       env: DOCKER_IMAGE=swift:5.0.1 SWIFT_SNAPSHOT=$SWIFT_DEVELOPMENT_SNAPSHOT
     - os: linux
       dist: xenial
