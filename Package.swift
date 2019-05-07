@@ -45,7 +45,7 @@ var targetDependencies: [Target.Dependency] = [ "Kitura", "CloudEnvironment","Sw
 
 // IBMCloudAppID requires OpenSSL that is not included on Mac by default.
 #if os(Linux)
-dependencies.append(.package(url: "https://github.com/ibm-cloud-security/appid-serversdk-swift", .branch("development")))
+dependencies.append(.package(url: "https://github.com/ibm-cloud-security/appid-serversdk-swift", from: "5.1.0"))
 targetDependencies.append("IBMCloudAppID")
 #endif
 

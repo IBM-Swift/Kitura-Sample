@@ -22,7 +22,7 @@ import KituraSession
 // To use this on mac, install OpenSSL:
 // `$ brew install openssl`
 // then remove all the `#if os(Linux)` tags for AppID in Kitura sample.
-#if os(Linux)
+#if os(Linux) && swift(>=4.2)
 import IBMCloudAppID
 #endif
 
@@ -37,6 +37,7 @@ func initializeOauth2Routes(app: App) {
     let googleClientId = "<your Google app ID>"
     let googleClientSecret = "<your Google app secret>"
     
+#if os(Linux) && swift(>=4.2)
     // replace these values with those from your APP-ID application: https://console.bluemix.net/docs/services/appid/index.html
     let appIdOptions = [
         "clientId": "<your appid clientID>",
@@ -45,6 +46,7 @@ func initializeOauth2Routes(app: App) {
         "oauthServerUrl": "<your appid oauthServerUrl>",
         "redirectUri": app.cloudEnv.url + "/oauth2/appid/callback"
     ]
+#endif
     
     // Session is required to keep the user logged in after authentication
     // If a user is logged in with a redirecting authentication, all routes with this session will have a userProfile
@@ -86,11 +88,11 @@ func initializeOauth2Routes(app: App) {
     // App callback route
     app.router.get("/oauth2/google/callback", handler: oauthGoogleCredentials.authenticate(credentialsType: googleCredentials.name))
     
+// IBMCloudAppID requires OpenSSL that is not included on Mac by default.
+#if os(Linux) && swift(>=4.2)
     // AppID Oauth Setup
     let kituraCredentials = Credentials()
     
-    // IBMCloudAppID requires OpenSSL that is not included on Mac by default.
-    #if os(Linux)
     if #available(OSX 10.12, *) {
         let webappKituraCredentialsPlugin = WebAppKituraCredentialsPlugin(options: appIdOptions)
         kituraCredentials.register(plugin: webappKituraCredentialsPlugin)
@@ -106,7 +108,7 @@ func initializeOauth2Routes(app: App) {
                                                                failureRedirect: "/oauth2.html"
         ))
     }
-    #endif
+#endif
     
     // Route which only allows access if the user has authenticated with either AppID, Facebook or Google
     app.router.get("/oauth2/protected") { request, response, next in
